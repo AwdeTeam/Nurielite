@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
 
-namespace AlgGui
+namespace Nurielite
 {
 	public class NodeGraphic
 	{

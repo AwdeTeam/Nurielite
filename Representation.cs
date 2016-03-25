@@ -9,11 +9,11 @@ using System.Windows.Shapes;
 using System.Windows.Input;
 using System.Windows;
 
-namespace AlgGui
+namespace Nurielite
 {
 	public class Representation
 	{
-        public enum AlgorithmFamily { Classifier, Clustering, DimensionReduction, Operation };
+        public enum AlgorithmFamily { Input, Output, Classifier, Clustering, DimensionReduction, Operation };
 
 
 		// member variables
@@ -54,6 +54,8 @@ namespace AlgGui
 		public void setName(string name) { m_name = name; m_graphic.setName(m_name); }
 		public string getVersion() { return m_version; }
 		public string getAlgorithm() { return m_algorithm; }
+        public AlgorithmFamily getFamily() { return m_family; }
+        public void setFamily(AlgorithmFamily family) { m_family = family;  }
 
 		public RepresentationGraphic getGraphic() { return m_graphic; }
 		public List<Node> getNodes() { return m_nodes; }

@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 using System.Windows.Input;
 using System.Windows;
 
-namespace AlgGui
+namespace Nurielite
 {
 	public class RepresentationGraphic
 	{

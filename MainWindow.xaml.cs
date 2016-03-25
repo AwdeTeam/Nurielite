@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 
 // NOTE: IF AN ELEMENT HAS A TRANSPARENT FILL (hasn't been assigned) IT CAN BE CLICKED THROUGH AND WILL NOT REGISTER EVENTS
 
-namespace AlgGui
+namespace Nurielite
 {
 	public partial class MainWindow : Window
 	{
@@ -45,13 +45,11 @@ namespace AlgGui
             Datatype.testingTypes();
             Datatype t0 = Datatype.getType(0);
             Datatype t1 = Datatype.getType(1);
-            Datatype t2 = Datatype.aggregateTypes("Dataheavy Image", t0, t1);
-            Datatype t3 = Datatype.aggregateTypes("Datasheavy Image", t0, t1);
 			
 			// test representations
-			addRep(new Datatype[] {t0, t1}, new Datatype[] {t2});
-            addRep(new Datatype[] {t0}, new Datatype[] {t0});
-            addRep(new Datatype[] { t3 }, new Datatype[] { t0 });
+			addRep(new Datatype[] {t0, t1}, new Datatype[] {t0});
+            addRep(new Datatype[] {t0}, new Datatype[] {t0.join(t1)});
+            addRep(new Datatype[] { t1.join(t0) }, new Datatype[] { t0 });
             /*Representation r = new AlgorithmRepresentation(2, 3);
             m_representations.Add(r.getID(), r);
 			parseCommand("edit rep -1 -color -ff0000");*/
@@ -259,7 +257,54 @@ namespace AlgGui
 					}
 				}
 			}
+            else if(keys[0] == "list")
+            {
+                if(keys.Count == 0)
+                {
+                    log("hmm");
+                    keys.Add("");
+                }
+
+                switch (keys[1])
+                {
+                    case "rep":
+                    case "representations":
+                        log(listRepresentations());
+                        break;
+                    case "dt":
+                    case "datatypes":
+                        log(listDatatypes());
+                        break;
+                    case "":
+                    default:
+                        log("Please enter a type! (rep or dt)", Colors.Red);
+                        break;
+                }
+            }
+           
 		}
+
+        private string listRepresentations()
+        {
+            string r = "";
+            for(int i = 0; i < m_representations.Count; i++)
+            {
+                r += "\t" + m_representations[i].getID() + ")";
+                r += m_representations[i].getName() + ", ";
+                r += m_representations[i].getFamily() + ": " + m_representations[i].getAlgorithm() + "\n";
+            }
+            return r;
+        }
+
+        private string listDatatypes()
+        {
+            string r = "";
+            for(int i = 0; i < Datatype.numberOfTypes(); i++)
+            {
+                r += "\t" + i + ")" + Datatype.getType(i).stringRep() + "\n";
+            }
+            return r;
+        }
 
 		// ------------------------------------
 		//  COMMAND FUNCTIONS
@@ -269,8 +314,9 @@ namespace AlgGui
 		private void cmd_printHelp()
 		{
 			log("exit | quit", Colors.Yellow);
-			log("clear | cls     // clears console", Colors.Yellow);
+			log("clear | cls \t// clears console", Colors.Yellow);
 			log("help", Colors.Yellow);
+            log("list (rep, dt)", Colors.Yellow);
 			log("add rect[angle] -[x] -[y] -[width] -[height]\add rect[angle] -[x],[y],[width],[height]", Colors.Yellow);
 			log("add rep[resentation] -[numInputs],[numOutputs]", Colors.Yellow);
 			log("edit rep[resentation] -[id] -[attr] -[value]\n\tattr: color, lbl", Colors.Yellow);

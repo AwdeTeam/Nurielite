@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
-namespace AlgGui
+namespace Nurielite
 {
 	public class GraphicContainer
 	{

@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 // (connect format should be: "connect -[outputNodeRepresetnationID (from)],[nodeNum] -[inputNodeRepresentationID (to)],[nodeNum]
 
-namespace AlgGui
+namespace Nurielite
 {
 	public class Node
 	{

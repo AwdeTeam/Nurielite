@@ -54,7 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AlgorithmLoader.cs" />
     <Compile Include="ConnectionGraphic.cs" />
+    <Compile Include="Datalabel_2.cs" />
     <Compile Include="Datatype.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="GraphicContainer.cs" />

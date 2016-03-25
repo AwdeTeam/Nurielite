@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace AlgGui
+namespace Nurielite
 {
 	// Use this for necessary interactions between classes and window
 	// (so the window doesn't need to be passed into every class in order to have necessary functionality)

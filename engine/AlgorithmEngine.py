@@ -29,7 +29,9 @@ class Sharable():
 		self.usage = usage
 		
 	def saveState(self, path):
-		joblib.dump(self, path + name + "_" + version + ".saf", compress=2, cache_size=100, protocol=None)
+		joblib.dump(self, path + self.name + "_" + self.version + ".saf", compress=2, cache_size=100, protocol=None)
+		file = open(path + self.name + "_" + self.version + ".saf.clip", 'w+')
+		file.write(self.writeStub(path))
 		
 	def loadState(file): #verify upstream that this is a .saf, not a .paf
 		return joblib.load(file)
@@ -41,6 +43,9 @@ class Sharable():
 	def importPAF(self, path):
 		#some sort of hash verification to ensure this is the expected thing
 		return joblib.load(file)
+		
+	def writeStub(self, path):
+		return self.name + "," + self.version + "," + path + self.name + "_" + self.version + ".saf"
 
 class SupervisedClassifier():
 	
@@ -76,7 +81,7 @@ class SupervisedClassifier():
 	#	return fit(self, I.predict(I, set), exp)
 		
 class Datatype():
-	# can be Null, Boolean, Integer, BoundedReal, Real, Complex, String, Image, or Aggregate
+	# can be Null, Boolean, Integer, BoundedReal, Real, Complex, String, Image, or Aggregate NOPE!
     name = "unnamed";
     rank = -1;
     #private Datatype[] bundle = null;
@@ -237,4 +242,6 @@ print("Testing extends")
 S1 = numpy.asarray(testin.getColumn(sampleCol, True), dtype="float_")
 T1 = numpy.asarray(testin.excludeColumn(sampleCol, True), dtype="float_")
 print(algorithm.score(T1, S1))
-#print("nothing broken")
+#algorithm, name, version, statistics, computation, client_history, usage
+save = Sharable(algorithm, "Student Data", "00.1", None, None, None, None)
+save.saveState(".\\")

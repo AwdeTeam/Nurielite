@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows.Navigation;
 
-namespace AlgGui
+namespace Nurielite
 {
 	public class ConnectionGraphic
 	{
