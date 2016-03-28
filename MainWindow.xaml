@@ -55,6 +55,11 @@
 
             <Rectangle Fill="DarkCyan" Grid.Column="1"></Rectangle>
             <!-- split console and code -->
+            <ScrollViewer Grid.Column="2">
+                <Canvas Height="600">
+                    <Button>Create No-Op</Button>
+                </Canvas>
+            </ScrollViewer>
         </Grid>
 
     </Grid>
