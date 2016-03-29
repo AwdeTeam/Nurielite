@@ -322,5 +322,10 @@ namespace Nurielite
 			log("edit rep[resentation] -[id] -[attr] -[value]\n\tattr: color, lbl", Colors.Yellow);
 		}
 		private void cmd_clearConsole() { lblConsole.Document.Blocks.Clear(); }
+
+        private void Button_Click_createNoOp(object sender, RoutedEventArgs e)
+        {
+            log("commands work");
+        }
 	}
 }

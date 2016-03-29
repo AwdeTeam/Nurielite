@@ -63,7 +63,7 @@
                     </Grid.RowDefinitions>
                     
                     <Canvas Height="600">
-                    <Button Grid.Row="0" Canvas.Left="10" Canvas.Top="10">Create No-Op</Button>
+                    <Button Grid.Row="0" Canvas.Left="10" Canvas.Top="10" Click="Button_Click_createNoOp">Create No-Op</Button>
                     <Button Grid.Row="1" Canvas.Left="10" Canvas.Top="41" RenderTransformOrigin="0.004,0.109">Create Input</Button>
                 </Canvas>
                 </Grid>
