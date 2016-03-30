@@ -13,40 +13,48 @@ namespace Nurielite
 {
     class PythonGenerator
     {
-		public PythonGenerator() { }
+		// member variables
+		private ScriptRuntime m_runtime;
+		private ScriptScope m_scope;
+		private ScriptEngine m_engine;
+		
+		private MemoryStream m_outputStream;
+		private MemoryStream m_errorStream;
 
-		public string testme()
+		// construction
+		public PythonGenerator() 
 		{
-			ScriptRuntime ipy = Python.CreateRuntime();
-			ScriptEngine engine = ipy.GetEngine("Python");
-			ScriptScope scope = engine.CreateScope();
-			//var ipy = Python.CreateRuntime();
+			// set up python script engine stuff
+			m_runtime = Python.CreateRuntime();
+			m_engine = m_runtime.GetEngine("Python");
+			m_scope = m_engine.CreateScope();
 
-			// setup output stuff
-			//MemoryStream outputStream = new MemoryStream();
-			//MemoryStream outputStream = new MemoryStream(1024);
-			//StreamReader sr = new StreamReader(outputStream);
-			
-			
-			MemoryStream outputStream = new MemoryStream();
-			//StreamWriter outputStreamWriter = new StreamWriter(outputStream);
-			//ipy.IO.SetOutput(outputStream, outputStreamWriter);
-			ipy.IO.SetOutput(outputStream, new StreamWriter(outputStream));
+			m_outputStream = new MemoryStream();
+			m_errorStream = new MemoryStream();
 
-			engine.Execute("print 'hello from inside c#'");
-			dynamic test = ipy.UseFile("../../IPyTest.py");
+			// redirect python output to the memory stream
+			m_runtime.IO.SetOutput(m_outputStream, new StreamWriter(m_outputStream));
+			m_runtime.IO.SetErrorOutput(m_errorStream, new StreamWriter(m_errorStream));
+		}
+		
+		// properties
+		
+		// returns everything that python scripts have output since last clearRuntimeOutput()
+		public string getRuntimeOutput() { return readFromStream(m_outputStream); }
+		public string getRuntimeErrorOutput() { return readFromStream(m_errorStream); }
+		
+		// functions
+		public void clearRuntimeOutput() { m_outputStream.SetLength(0); }
+		
+		public void testme()
+		{
+			//engine.Execute("print 'hello from inside c#'");
+			dynamic test = m_runtime.UseFile("../../IPyTest.py");
 			test.simpleFunction();
-
-			string str = readFromStream(outputStream);
-			return str;
-
-			//return sr.ReadToEnd();
-
-			//return sr.ReadLine();
 		}
 
-		// https://blogs.msdn.microsoft.com/seshadripv/2008/07/08/how-to-redirect-output-from-python-using-the-dlr-hosting-api/
-		static string readFromStream(MemoryStream ms)
+		// thanks to https://blogs.msdn.microsoft.com/seshadripv/2008/07/08/how-to-redirect-output-from-python-using-the-dlr-hosting-api/
+		private string readFromStream(MemoryStream ms) // gets everything from inside the passed memory stream
 		{
 			int length = (int)ms.Length;
 			Byte[] bytes = new Byte[length];

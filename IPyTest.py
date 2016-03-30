@@ -1,5 +1,4 @@
-print("Hello world!")
+print("-------\nHello world!")
 
 def simpleFunction():
-	print("This was a simple function")
-	return "this is a string"
+	print("This was a simple function\n---")
