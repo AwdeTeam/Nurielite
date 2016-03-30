@@ -1,0 +1,12 @@
+﻿<Window x:Class="Nurielite.RepresentationDesigner"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RepresentationDesigner" Height="397.863" Width="610.375">
+    <Grid>
+        <Grid HorizontalAlignment="Left" Width="604" Margin="0,0,0,0.4">
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="68,14,0,0" TextWrapping="Wrap" Text="unnamed algorithm" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="27"/>
+        </Grid>
+
+    </Grid>
+</Window>

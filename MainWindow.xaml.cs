@@ -325,7 +325,9 @@ namespace Nurielite
 
         private void Button_Click_createNoOp(object sender, RoutedEventArgs e)
         {
-            log("commands work");
+            Representation newrep = AlgorithmLoader.generateRepresentation("unnamed", Representation.AlgorithmFamily.Operation,
+                new Datatype[] { Datatype.getType(0) }, new Datatype[] { Datatype.getType(1) });
+            System.Windows.Forms.MessageBox.Show("My message here");
         }
 	}
 }

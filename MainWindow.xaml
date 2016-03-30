@@ -13,6 +13,14 @@
             <RowDefinition Height="200" />
         </Grid.RowDefinitions>
 
+        <Popup Margin="10,10,0,13" Name="Popup1" HorizontalAlignment="Left"   
+ VerticalAlignment="Top" Width="194" Height="200" IsOpen="True">
+            <TextBlock Name="McTextBlock"   
+             Background="LightBlue" >  
+        This is popup text
+            </TextBlock>
+        </Popup>
+
         <Canvas Grid.Row="0" Name="world">
             <Rectangle Fill="#FFF4F4F5" Height="200" Canvas.Left="447" Stroke="Black" Canvas.Top="270" Width="297"/>
         </Canvas>
