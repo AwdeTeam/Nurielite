@@ -87,6 +87,7 @@
     <Compile Include="GraphicFactory.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeGraphic.cs" />
+    <Compile Include="PythonGenerator.cs" />
     <Compile Include="Representation.cs" />
     <Compile Include="RepresentationGraphic.cs" />
     <Page Include="MainWindow.xaml">
@@ -134,6 +135,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="IPyTest.py" />
     <Content Include="Lib\abc.py" />
     <Content Include="Lib\aifc.py" />
     <Content Include="Lib\antigravity.py" />

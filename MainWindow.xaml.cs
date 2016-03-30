@@ -56,6 +56,12 @@ namespace Nurielite
 			
 			// canvas initially wasn't handling events properly, so adding them to window instead
 			this.MouseMove += world_MouseMove;
+
+
+			log("Trying python thing");
+			PythonGenerator gen = new PythonGenerator();
+			log(gen.testme());
+			log("Finished python thing!");
 		}
 
 		// properties
