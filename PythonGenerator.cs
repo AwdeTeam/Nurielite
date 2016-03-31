@@ -21,6 +21,8 @@ namespace Nurielite
 		private MemoryStream m_outputStream;
 		private MemoryStream m_errorStream;
 
+		//private List<dynamic> m_algorithmClassFiles;
+
 		// construction
 		public PythonGenerator() 
 		{
@@ -35,6 +37,9 @@ namespace Nurielite
 			// redirect python output to the memory stream
 			m_runtime.IO.SetOutput(m_outputStream, new StreamWriter(m_outputStream));
 			m_runtime.IO.SetErrorOutput(m_errorStream, new StreamWriter(m_errorStream));
+
+			// other misc variable initlization
+			//m_algorithmClassFiles = new List<dynamic>();
 		}
 		
 		// properties
@@ -45,6 +50,17 @@ namespace Nurielite
 		
 		// functions
 		public void clearRuntimeOutput() { m_outputStream.SetLength(0); }
+
+		// returns index of dynamic instance (other classes can get that particular instance)
+		public PyAlgorithm loadPythonAlgorithm(string fileName)
+		{
+			dynamic algorithm = m_runtime.UseFile(fileName);
+
+			PyAlgorithm alg = new PyAlgorithm(algorithm);
+			return alg;
+		}
+		
+		
 		
 		public void testme()
 		{

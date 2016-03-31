@@ -87,6 +87,7 @@
     <Compile Include="GraphicFactory.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeGraphic.cs" />
+    <Compile Include="PyAlgorithm.cs" />
     <Compile Include="PythonGenerator.cs" />
     <Compile Include="Representation.cs" />
     <Compile Include="RepresentationDesigner.xaml.cs">

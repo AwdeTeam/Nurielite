@@ -72,6 +72,14 @@ namespace Nurielite
 			gen.testme();
 			log(gen.getRuntimeOutput());
 			log("Finished python thing!");
+
+
+			PyAlgorithm testAlg = gen.loadPythonAlgorithm("../../OperationTest.py");
+			Dictionary<string, dynamic> stuffs = testAlg.getOptions();
+			foreach (string key in stuffs.Keys)
+			{
+				log("PYTHON ALG OPTION: {" + key + ":" + stuffs[key] + "}");
+			}
 		}
 
 		// properties
