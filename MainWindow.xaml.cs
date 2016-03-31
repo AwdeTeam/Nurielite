@@ -96,7 +96,7 @@ namespace Nurielite
 		{
 			if (m_isTypingNotAvail) { return; }
 			if (m_isTyping) { return; }
-            if (Popup1.IsOpen) { return; }
+            //if (Popup1.IsOpen) { return; }
 
 			m_isTyping = true;
 			txtConsoleCommand.Focus();
@@ -350,14 +350,8 @@ namespace Nurielite
 
         private void Button_Click_createNoOp(object sender, RoutedEventArgs e)
         {
-            Popup1.IsOpen = true;
+            RepDesignerWin popup = new RepDesignerWin(this);
+            popup.Show();
         }
-
-        private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
-        {
-            Representation newrep = AlgorithmLoader.generateRepresentation(txtNameBox.Text, Representation.AlgorithmFamily.Operation,
-                    new Datatype[] { Datatype.getType(0) }, new Datatype[] { Datatype.getType(1) });
-            Popup1.IsOpen = false;
-        }
-	}
+    }
 }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="Nurielite.MainWindow"
+﻿<Window xmlns:Nurielite="clr-namespace:Nurielite"  x:Class="Nurielite.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Algorithm GUI" Height="500" Width="750" KeyDown="Window_KeyDown" MouseDown="world_MouseDown" MouseUp="world_MouseUp">
@@ -12,18 +12,6 @@
             <!-- For splitter -->
             <RowDefinition Height="200" />
         </Grid.RowDefinitions>
-
-        <Popup Margin="10,10,0,13" Name="Popup1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="194" Height="200" IsOpen="False">
-            <Grid>
-                <Grid HorizontalAlignment="Left" Width="604" Margin="0,0,0,0.4">
-                    <TextBox Name="txtNameBox" HorizontalAlignment="Left" Height="23" Margin="68,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                    <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="27" Foreground="AliceBlue"/>
-                    <Button HorizontalAlignment="Left" Margin="10,10,0,0" Height="27" Click="Button_Click_ConfirmNew">Enter</Button>
-                </Grid>
-
-            </Grid>
-        </Popup>
-
 
         <Canvas Grid.Row="0" Name="world">
             <Rectangle Fill="#FFF4F4F5" Height="200" Canvas.Left="447" Stroke="Black" Canvas.Top="270" Width="297"/>
