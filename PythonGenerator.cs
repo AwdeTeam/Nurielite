@@ -5,9 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+using System.Windows.Media;
+
 using IronPython.Hosting;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+
+using Microsoft.CSharp.RuntimeBinder; // needed for RuntimeBinderException
 
 namespace Nurielite
 {
@@ -56,8 +60,17 @@ namespace Nurielite
 		{
 			dynamic algorithm = m_runtime.UseFile(fileName);
 
-			PyAlgorithm alg = new PyAlgorithm(algorithm);
-			return alg;
+			try
+			{
+				PyAlgorithm alg = new PyAlgorithm(algorithm);
+				return alg;
+			}
+			catch (RuntimeBinderException e)
+			{
+				Master.log("Python class 'PyAlgorithmInterface' not found. the ironpython interface files MUST contain a class'PyAlgorithmInterface.'\nError text: " + e.Message, Colors.Red);
+			}
+
+			return PyAlgorithm.getUnloadedAlgorithm();
 		}
 		
 		
