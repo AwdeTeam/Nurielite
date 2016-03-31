@@ -46,7 +46,7 @@ namespace Nurielite
 
 		// construction
 		// TODO: overloaded part, make this a function that takes a lot more, than constructors just call different ones with some default parameters instead
-		public RepresentationGraphic(Representation parent, int numIn, int numOut)
+		public RepresentationGraphic(Representation parent, int numIn, int numOut, Color color)
 		{
 			m_parent = parent;
 
@@ -54,6 +54,8 @@ namespace Nurielite
 			m_name = parent.getName();
 			m_version = parent.getVersion();
 			m_algorithm = parent.getFamily();
+            m_baseColor = color;
+            Master.log(">" + m_algorithm);
 
 			createDrawing(100, 100, numIn, numOut, m_baseColor);
 

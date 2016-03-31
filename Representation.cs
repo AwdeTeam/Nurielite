@@ -26,21 +26,24 @@ namespace Nurielite
         private string m_name = "unnamed algorithm";
         private string m_version = "##.## XXX";
         private string m_algorithm = "No-Op"; //TODO Merge with Python Algorithm IDs
-		private String m_family = "operation";
+		private String m_family = "undefined";
 
  		private RepresentationGraphic m_graphic;
 
 		// construction
-        public Representation(Datatype[] inputs, Datatype[] outputs)
+        public Representation(Datatype[] inputs, Datatype[] outputs, String name, String family, Color color)
         {
             Master.log("----Creating representation----");
             m_id = Master.getNextRepID();
             Master.log("ID: " + m_id, Colors.GreenYellow);
+
+            m_name = name;
+            m_family = family;
           
             this.m_inputs = inputs;
             this.m_outputs = outputs;
           
-			m_graphic = GraphicFactory.createRepresentationGraphic(this, inputs.Length, outputs.Length);
+			m_graphic = GraphicFactory.createRepresentationGraphic(this, inputs.Length, outputs.Length, color);
 
 			// create nodes
 			for (int i = 0; i < m_inputs.Length; i++) { m_nodes.Add(new Node(this, true, i, m_inputs[i])); }
@@ -63,8 +66,8 @@ namespace Nurielite
 		public void setName(string name) { m_name = name; m_graphic.setName(m_name); }
 		public string getVersion() { return m_version; }
 		public string getAlgorithm() { return m_algorithm; }
-        public String getFamily() { return m_family; }
-        public void setFamily(String family) { m_family = family;  }
+        public String getFamily() { Master.log(">>>" + m_family);  return m_family; }
+        public void setFamily(String family) { m_family = family; Master.log(">>" + m_family); }
 
 		public RepresentationGraphic getGraphic() { return m_graphic; }
 		public List<Node> getNodes() { return m_nodes; }

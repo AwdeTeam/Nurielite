@@ -47,9 +47,9 @@ namespace Nurielite
             Datatype t1 = Datatype.getType(1);
 			
 			// test representations
-			addRep(new Datatype[] {t0, t1}, new Datatype[] {t0});
-            addRep(new Datatype[] {t0}, new Datatype[] {t0.join(t1)});
-            addRep(new Datatype[] { t1.join(t0) }, new Datatype[] { t0 });
+			AlgorithmLoader.generateRepresentation("a", 0, new Datatype[] {t0, t1}, new Datatype[] {t0});
+            AlgorithmLoader.generateRepresentation("b", 0, new Datatype[] { t0 }, new Datatype[] { t0.join(t1) });
+            AlgorithmLoader.generateRepresentation("c", 0, new Datatype[] { t1.join(t0) }, new Datatype[] { t0 });
             /*Representation r = new AlgorithmRepresentation(2, 3);
             m_representations.Add(r.getID(), r);
 			parseCommand("edit rep -1 -color -ff0000");*/
@@ -141,12 +141,6 @@ namespace Nurielite
 			Representation r = new Representation(inputs, outputs);
 			m_representations.Add(r.getID(), r);
 		}*/
-
-        private void addRep(Datatype[] inputs, Datatype[] outputs)
-        {
-            Representation r = new Representation(inputs, outputs);
-            m_representations.Add(r.getID(), r);
-        }
 
 		private void loadData(string fileName)
 		{

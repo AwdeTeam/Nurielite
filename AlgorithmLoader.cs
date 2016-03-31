@@ -12,9 +12,6 @@ namespace Nurielite
     {
         public static Representation generateRepresentation(String name, String family, Datatype[] inputs, Datatype[] outputs)
         {
-            Representation r = new Representation(inputs, outputs);
-            r.setFamily(family);
-            r.setName(name);
             Color color = Colors.Gray;
             switch(family)
             {
@@ -54,8 +51,7 @@ namespace Nurielite
                     break;
                 }
             }
-
-            return r;
+            return new Representation(inputs, outputs, name, family, color);
         }
 
         public static Representation generateRepresentation(String name, int family, Datatype[] inputs, Datatype[] outputs)
