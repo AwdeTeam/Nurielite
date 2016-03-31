@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 
 using IronPython.Hosting;
+using IronPython.Runtime;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 
@@ -38,11 +39,44 @@ namespace Nurielite
 			
 			dynamic pyOptions = m_pyClass.getOptions();
 
-			IronPython.Runtime.PythonDictionary dictPyOptions = (IronPython.Runtime.PythonDictionary)pyOptions; //....is this legal??? Will I be arrested for this?
+			PythonDictionary dictPyOptions = (PythonDictionary)pyOptions; //....is this legal??? Will I be arrested for this?
 
-			foreach (dynamic thing in dictPyOptions.Keys) { options.Add((string)thing, dictPyOptions.get(thing)); }
+			foreach (dynamic option in dictPyOptions.Keys) { options.Add((string)option, dictPyOptions.get(option)); }
 
 			return options;
+		}
+
+		// TODO: UNTESTED
+		public void setOptions(Dictionary<string, dynamic> options)
+		{
+			if (m_pyClass == null) { return; }
+			
+			// convert options to python dictionary
+			PythonDictionary pyOptions = new PythonDictionary();
+
+			foreach (string key in options.Keys) { pyOptions.Add(key, options[key]); }
+			m_pyClass.setOptions(pyOptions);
+		}
+
+		// TODO: UNTESTED
+		public Dictionary<string, string> getMetaData()
+		{
+			Dictionary<string, string> metaData = new Dictionary<string, string>();
+			if (m_pyClass == null) { return metaData; }
+
+			dynamic pyMetaData = m_pyClass.getMetaData();
+
+			PythonDictionary dictPyMetaData = (PythonDictionary)pyMetaData;
+
+			foreach (dynamic data in dictPyMetaData.Keys) { metaData.Add((string)data, (string)dictPyMetaData.get(data)); }
+
+			return metaData;
+		}
+
+		// generate lines of code or just code string?
+		public List<string> generateCode()
+		{
+			return null;
 		}
 
 		public static PyAlgorithm getUnloadedAlgorithm() { return new PyAlgorithm(); }

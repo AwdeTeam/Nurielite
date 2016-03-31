@@ -1,4 +1,4 @@
-class PyAlgorithmInterface2():
+class PyAlgorithmInterface():
 
 	algOptions = {
 		'option1': 3, 
