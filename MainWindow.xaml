@@ -14,9 +14,13 @@
         </Grid.RowDefinitions>
 
         <Popup Margin="10,10,0,13" Name="Popup1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="194" Height="200" IsOpen="False">
-            <Grid HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="193.6">
-                <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                <TextBox></TextBox>
+            <Grid>
+                <Grid HorizontalAlignment="Left" Width="604" Margin="0,0,0,0.4">
+                    <TextBox Name="txtNameBox" HorizontalAlignment="Left" Height="23" Margin="68,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                    <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="27" Foreground="AliceBlue"/>
+                    <Button HorizontalAlignment="Left" Margin="10,10,0,0" Height="27" Click="Button_Click_ConfirmNew">Enter</Button>
+                </Grid>
+
             </Grid>
         </Popup>
 
