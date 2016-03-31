@@ -19,18 +19,30 @@ namespace Nurielite
     /// </summary>
     public partial class RepDesignerWin : Window
     {
-        MainWindow m_parent;
+        private MainWindow m_parent;
 
         public RepDesignerWin(MainWindow parent)
         {
+            m_parent = parent;
             InitializeComponent();
         }
 
         private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
         {
-            Representation newrep = AlgorithmLoader.generateRepresentation(txtNameInput.Text, Representation.AlgorithmFamily.Operation,
+            m_parent.log("" + cmbAlgorithmType.SelectedIndex);
+            Representation newrep = AlgorithmLoader.generateRepresentation(txtNameInput.Text, cmbAlgorithmType.SelectedIndex,
                     new Datatype[] { Datatype.getType(0) }, new Datatype[] { Datatype.getType(1) });
             Close();
+        }
+
+        private void cmbAlgorithmType_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbAlgorithmType.ItemsSource = Representation.ALGORITHM_TYPES.ToList();
+        }
+
+        private void cmbAlgorithmType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            m_parent.log("" + Representation.ALGORITHM_TYPES[ cmbAlgorithmType.SelectedIndex ]);
         }
     }
 }

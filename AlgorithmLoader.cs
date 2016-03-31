@@ -10,7 +10,7 @@ namespace Nurielite
 {
     class AlgorithmLoader
     {
-        public static Representation generateRepresentation(String name, Representation.AlgorithmFamily family, Datatype[] inputs, Datatype[] outputs)
+        public static Representation generateRepresentation(String name, String family, Datatype[] inputs, Datatype[] outputs)
         {
             Representation r = new Representation(inputs, outputs);
             r.setFamily(family);
@@ -18,37 +18,37 @@ namespace Nurielite
             Color color = Colors.Gray;
             switch(family)
             {
-                case Representation.AlgorithmFamily.Classifier:
+                case "classifier":
                 {
                     color = Colors.SeaGreen;
                     break;
                 }
 
-                case Representation.AlgorithmFamily.Clustering:
+                case "clustering":
                 {
                     color = Colors.Turquoise;
                     break;
                 }
 
-                case Representation.AlgorithmFamily.DimensionReduction:
+                case "dimension_reduction":
                 {
                     color = Colors.Thistle;
                     break;
                 }
 
-                case Representation.AlgorithmFamily.Operation:
+                case "operation":
                 {
                     color = Colors.SkyBlue;
                     break;
                 }
 
-                case Representation.AlgorithmFamily.Input:
+                case "input":
                 {
                     color = Colors.Violet;
                     break;
                 }
 
-                case Representation.AlgorithmFamily.Output:
+                case "output":
                 {
                     color = Colors.Violet;
                     break;
@@ -58,12 +58,17 @@ namespace Nurielite
             return r;
         }
 
+        public static Representation generateRepresentation(String name, int family, Datatype[] inputs, Datatype[] outputs)
+        {
+            return generateRepresentation(name, Representation.ALGORITHM_TYPES[family], inputs, outputs);
+        }
+
         public static Representation load(String path)
         {
             string filePath = path;
             StreamReader sr = new StreamReader(filePath);
             string[] data = sr.ReadLine().Split(',');
-            return generateRepresentation(data[0], Representation.AlgorithmFamily.Input, null, null);
+            return generateRepresentation(data[0], "input", null, null);
         }
     }
 }

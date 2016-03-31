@@ -53,7 +53,7 @@ namespace Nurielite
 			m_id = parent.getID();
 			m_name = parent.getName();
 			m_version = parent.getVersion();
-			m_algorithm = parent.getAlgorithm();
+			m_algorithm = parent.getFamily();
 
 			createDrawing(100, 100, numIn, numOut, m_baseColor);
 
@@ -137,7 +137,7 @@ namespace Nurielite
 			Canvas.SetZIndex(m_lblName, GraphicContainer.REP_Z_LEVEL);
 
 			m_lblContent.Foreground = m_brushForeground;
-			m_lblContent.Content = m_algorithm + "\n" + "Accuracy stuff blah blah blah blah";
+			m_lblContent.Content = m_algorithm + "\n" + "Accuracy";
 			m_lblContent.IsHitTestVisible = false;
 			m_lblContent.Width = m_board.Width;
 			Canvas.SetZIndex(m_lblContent, GraphicContainer.REP_Z_LEVEL);

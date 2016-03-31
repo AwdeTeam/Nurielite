@@ -30,7 +30,7 @@ namespace Nurielite
 
         private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
         {
-            Representation newrep = AlgorithmLoader.generateRepresentation(txtNameBox.Text, Representation.AlgorithmFamily.Operation,
+            Representation newrep = AlgorithmLoader.generateRepresentation(txtNameBox.Text, "",
                     new Datatype[] { Datatype.getType(0) }, new Datatype[] { Datatype.getType(1) });
             //m_parent.closePopup();
         }

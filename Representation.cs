@@ -13,8 +13,7 @@ namespace Nurielite
 {
 	public class Representation
 	{
-        public enum AlgorithmFamily { Input, Output, Classifier, Clustering, DimensionReduction, Operation };
-
+        public static String[] ALGORITHM_TYPES = { "operation", "classifier", "clustering", "dimension_reduction", "input", "output"};
 
 		// member variables
 		private int m_id = 0;
@@ -27,7 +26,7 @@ namespace Nurielite
         private string m_name = "unnamed algorithm";
         private string m_version = "##.## XXX";
         private string m_algorithm = "No-Op"; //TODO Merge with Python Algorithm IDs
-		private AlgorithmFamily m_family = AlgorithmFamily.Operation;
+		private String m_family = "operation";
 
  		private RepresentationGraphic m_graphic;
 
@@ -48,14 +47,24 @@ namespace Nurielite
 			for (int i = 0; i < m_outputs.Length; i++) { m_nodes.Add(new Node(this, false, i, m_outputs[i])); }
         }
 
+        public static int FindType(String type)
+        {
+            int i = -1;
+            
+            for(i = 0; i < ALGORITHM_TYPES.Length; i++)
+                if(ALGORITHM_TYPES[i].Equals(type))
+                    return i;
+            return i;
+        }
+
 		// properties
 		public int getID() { return m_id; }
 		public string getName() { return m_name; }
 		public void setName(string name) { m_name = name; m_graphic.setName(m_name); }
 		public string getVersion() { return m_version; }
 		public string getAlgorithm() { return m_algorithm; }
-        public AlgorithmFamily getFamily() { return m_family; }
-        public void setFamily(AlgorithmFamily family) { m_family = family;  }
+        public String getFamily() { return m_family; }
+        public void setFamily(String family) { m_family = family;  }
 
 		public RepresentationGraphic getGraphic() { return m_graphic; }
 		public List<Node> getNodes() { return m_nodes; }
