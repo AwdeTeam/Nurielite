@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <Canvas Grid.Row="0" Name="world">
-            <Rectangle Fill="#FFF4F4F5" Height="200" Canvas.Left="447" Stroke="Black" Canvas.Top="270" Width="297"/>
+            <!--<Rectangle Fill="#FFF4F4F5" Height="200" Canvas.Left="447" Stroke="Black" Canvas.Top="270" Width="297"/>-->
         </Canvas>
 
         <Rectangle Grid.Row="1" Height="2" Fill="DarkCyan" />
