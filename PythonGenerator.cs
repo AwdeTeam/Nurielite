@@ -51,6 +51,7 @@ namespace Nurielite
 		public void clearRuntimeOutput() { m_outputStream.SetLength(0); }
 
 		// returns index of dynamic instance (other classes can get that particular instance)
+		// TODO: don't forget to check that it contains necessary methods
 		public PyAlgorithm loadPythonAlgorithm(string fileName)
 		{
 			dynamic algorithm = m_runtime.UseFile(fileName);
@@ -102,9 +103,9 @@ namespace Nurielite
 					runnableCode = "import " + libName + "\n" + runnableCode;
 					imports.Add(libName);
 					
-					if (libraries[libName] != "") 
+					if (libraries[libName] != "") // copy library to compile folder if not external
 					{
-						File.WriteAllText(outputPath + "\\" + libName + ".py", libraries[libName]); // copy library to compile folder
+						File.WriteAllText(outputPath + "\\" + libName + ".py", libraries[libName]); 
 					}
 				}
 
@@ -116,6 +117,7 @@ namespace Nurielite
 				{
 					inStage++;
 
+					// connect input of this algorithm to output of last algorithm
 					verbatimCode = "\nstage" + inStage + "InputData = stage" + outStage + "OutputData\n" + verbatimCode;
 					verbatimCode = verbatimCode.Replace("IN_DATA", "stage" + inStage + "InputData");
 				}
@@ -127,29 +129,15 @@ namespace Nurielite
 					verbatimCode += "\nprint('\\nStage " + outStage + " out:' + str(stage" + outStage + "OutputData))\n";
 				}
 
-				/*verbatimCode = verbatimCode.Replace("OUT_DATA", "stageOneInputData");
-				verbatimCode += "\nprint(stageOneInputData)";*/
-
 				runnableCode += "\n" + verbatimCode;
 			}
 
 			// write runnable code to output
-			/*StreamWriter runnableSW = new StreamWriter(outputPath + "\\driver.py");
-			runnableSW.Write(runnableCode);*/
 			File.WriteAllText(outputPath + "\\driver.py", runnableCode);
 
 			Master.log("Python generated!");
 		}
 		
-		
-		
-		public void testme()
-		{
-			//engine.Execute("print 'hello from inside c#'");
-			dynamic test = m_runtime.UseFile("../../IPyTest.py");
-			test.simpleFunction();
-		}
-
 		// thanks to https://blogs.msdn.microsoft.com/seshadripv/2008/07/08/how-to-redirect-output-from-python-using-the-dlr-hosting-api/
 		private string readFromStream(MemoryStream ms) // gets everything from inside the passed memory stream
 		{

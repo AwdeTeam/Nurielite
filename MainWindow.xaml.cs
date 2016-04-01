@@ -54,20 +54,6 @@ namespace Nurielite
 
 
 			// python generator testing
-			/*log("Trying python thing");
-			PythonGenerator gen = new PythonGenerator();
-			//log(gen.testme());
-			gen.testme();
-			log(gen.getRuntimeOutput());
-			log("Running again:");
-			gen.testme();
-			log(gen.getRuntimeOutput());
-			log("Clearing now:");
-			gen.clearRuntimeOutput();
-			gen.testme();
-			log(gen.getRuntimeOutput());
-			log("Finished python thing!");*/
-
 			log("----PYTHON----");
 			PythonGenerator gen = new PythonGenerator();
 
