@@ -98,19 +98,13 @@ namespace Nurielite
 				{
 					if (imports.Contains(libName)) { continue; } // don't do anything if we've already done something with the libraries needed for this algorithm 
 					
+					// TODO: check if it starts with 'from'?
 					runnableCode = "import " + libName + "\n" + runnableCode;
+					imports.Add(libName);
 					
-					if (libraries[libName] == "") // external import
+					if (libraries[libName] != "") 
 					{
-						imports.Add(libName);
-
-						// TODO: check if it starts with 'from'?
-					}
-					else // write the library content to the output folder
-					{
-						/*StreamWriter sw = new StreamWriter(outputPath + "\\" + libName + ".py");
-						sw.Write(libraries[libName]);*/
-						File.WriteAllText(outputPath + "\\" + libName + ".py", libraries[libName]);
+						File.WriteAllText(outputPath + "\\" + libName + ".py", libraries[libName]); // copy library to compile folder
 					}
 				}
 

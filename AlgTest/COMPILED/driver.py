@@ -1,5 +1,4 @@
 import SumOperation
-import SumOperation
 import sys
 import FileInput
 
