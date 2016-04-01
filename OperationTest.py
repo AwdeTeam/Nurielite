@@ -5,14 +5,21 @@ class PyAlgorithmInterface():
 		'option2': "THINGY"
 		};
 
+	metaData = {
+		'Name': "THE THING",
+		'Creator': "Nathan",
+		'Version': "1.0.0",
+		'Accuracy': ".0009"
+		};
+
 	def getMetaData(self):
-		return "This is ma data of meta!" 
+		return self.metaData
 
 	def getOptions(self):
-		return self.algOptions;
+		return self.algOptions
 		
 	def setOptions(self, options):
 		self.algOptions = options
 
 	def generateCode(self):
-		return "<CODE FOR OPERATION TEST>"
+		return "<CODE FOR OPERATION TEST " + str(self.algOptions["option2"]) + " " + str(self.algOptions["option1"]) + ">"

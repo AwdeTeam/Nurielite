@@ -54,7 +54,7 @@ namespace Nurielite
 
 
 			// python generator testing
-			log("Trying python thing");
+			/*log("Trying python thing");
 			PythonGenerator gen = new PythonGenerator();
 			//log(gen.testme());
 			gen.testme();
@@ -66,8 +66,10 @@ namespace Nurielite
 			gen.clearRuntimeOutput();
 			gen.testme();
 			log(gen.getRuntimeOutput());
-			log("Finished python thing!");
+			log("Finished python thing!");*/
 
+			log("----PYTHON----");
+			PythonGenerator gen = new PythonGenerator();
 
 			PyAlgorithm testAlg = gen.loadPythonAlgorithm("../../OperationTest.py");
 			Dictionary<string, dynamic> stuffs = testAlg.getOptions();
@@ -75,6 +77,25 @@ namespace Nurielite
 			{
 				log("PYTHON ALG OPTION: {" + key + ":" + stuffs[key] + "}");
 			}
+
+			// unsure if not enforcing metadata types is a good idea....
+			Dictionary<string, string> metaData = testAlg.getMetaData();
+			log("Algorithm name: " + metaData["Name"]);
+			log("Algorithm creator: " + metaData["Creator"]);
+			log("Algorithm version: " + metaData["Version"]);
+			log("Algorithm accuracy: " + metaData["Accuracy"]);
+
+			log("\nChanging option1 to 4...");
+			stuffs["option1"] = 4;
+			testAlg.setOptions(stuffs);
+
+			Dictionary<string, dynamic> stuffs2 = testAlg.getOptions();
+			foreach (string key in stuffs2.Keys)
+			{
+				log("New python alg option: {" + key + ":" + stuffs2[key] + "}");
+			}
+
+			log("code:\n" + testAlg.generateCode());
 		}
 
 		// properties

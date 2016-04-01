@@ -46,7 +46,6 @@ namespace Nurielite
 			return options;
 		}
 
-		// TODO: UNTESTED
 		public void setOptions(Dictionary<string, dynamic> options)
 		{
 			if (m_pyClass == null) { return; }
@@ -58,7 +57,6 @@ namespace Nurielite
 			m_pyClass.setOptions(pyOptions);
 		}
 
-		// TODO: UNTESTED
 		public Dictionary<string, string> getMetaData()
 		{
 			Dictionary<string, string> metaData = new Dictionary<string, string>();
@@ -73,10 +71,11 @@ namespace Nurielite
 			return metaData;
 		}
 
-		// generate lines of code or just code string?
-		public List<string> generateCode()
+		public string generateCode()
 		{
-			return null;
+			if (m_pyClass == null) { return "NULL ALGORITHM"; }
+			dynamic code = m_pyClass.generateCode();
+			return (string)code;
 		}
 
 		public static PyAlgorithm getUnloadedAlgorithm() { return new PyAlgorithm(); }
