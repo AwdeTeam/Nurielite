@@ -13,7 +13,7 @@ namespace Nurielite
         private int m_reals = 0;
         private Datalabel m_labels;
 
-        private static Datatype[] Directory = null; //This is a VERY temporary solution; will need a more effecient structure later
+        public static Datatype[] Directory = null; //This is a VERY temporary solution; will need a more effecient structure later
 
         private Datatype(){}
 
@@ -123,6 +123,16 @@ namespace Nurielite
 			catch(Exception e) { return null; }
         }
 
+        public static Datatype getType(String type)
+        {
+            for(int i = 0; i < Directory.Length; i++)
+            {
+                if (Directory[i].getName().Equals(type))
+                    return Directory[i];
+            }
+            return null;
+        }
+
 		public override string ToString()
 		{
 			return this.m_name;
@@ -163,6 +173,14 @@ namespace Nurielite
         internal Datalabel getDatalabel()
         {
             return m_labels;
+        }
+
+        internal static System.Collections.IEnumerable getTypeList()
+        {
+            List<String> r = new List<String>();
+            for (int i = 0; i < Directory.Length; i++)
+                r.Add(Directory[i].getName());
+            return r;
         }
     }
 }

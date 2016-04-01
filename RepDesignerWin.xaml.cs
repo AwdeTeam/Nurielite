@@ -29,10 +29,17 @@ namespace Nurielite
 
         private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
         {
-            m_parent.log("" + cmbAlgorithmType.SelectedIndex);
             Representation newrep = AlgorithmLoader.generateRepresentation(txtNameInput.Text, cmbAlgorithmType.SelectedIndex,
-                    new Datatype[] { Datatype.getType(0) }, new Datatype[] { Datatype.getType(1) });
+                    ray(lstInputs.SelectedItems), ray(lstOutputs.SelectedItems) );
             Close();
+        }
+
+        private Datatype[] ray(System.Collections.IList list)
+        {
+            Datatype[] ray = new Datatype[list.Count];
+            for (int i = 0; i < list.Count; i++)
+                ray[i] = (Datatype)list[i];
+            return ray;
         }
 
         private void cmbAlgorithmType_Loaded(object sender, RoutedEventArgs e)
@@ -42,7 +49,23 @@ namespace Nurielite
 
         private void cmbAlgorithmType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            m_parent.log("" + Representation.ALGORITHM_TYPES[ cmbAlgorithmType.SelectedIndex ]);
+            
+        }
+
+        private void lstOutputs_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstOutputs.ItemsSource = Datatype.Directory;
+        }
+
+        private void lstInputs_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstInputs.ItemsSource = Datatype.Directory;
+        }
+
+        private static Datatype[] getSelectedTypes(ListBox box)
+        {
+            //List dexes = box.SelectedIndices;
+            return null;
         }
     }
 }

@@ -91,6 +91,12 @@ namespace Nurielite
 		//  EVENT HANDLERS
 		// ------------------------------------
 
+        private void Button_Click_addNode(object sender, RoutedEventArgs e)
+        {
+            RepDesignerWin popup = new RepDesignerWin(this);
+            popup.Show();
+        }
+
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{
@@ -341,11 +347,5 @@ namespace Nurielite
 			log("edit rep[resentation] -[id] -[attr] -[value]\n\tattr: color, lbl", Colors.Yellow);
 		}
 		private void cmd_clearConsole() { lblConsole.Document.Blocks.Clear(); }
-
-        private void Button_Click_createNoOp(object sender, RoutedEventArgs e)
-        {
-            RepDesignerWin popup = new RepDesignerWin(this);
-            popup.Show();
-        }
     }
 }

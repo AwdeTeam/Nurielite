@@ -66,8 +66,8 @@ namespace Nurielite
 		public void setName(string name) { m_name = name; m_graphic.setName(m_name); }
 		public string getVersion() { return m_version; }
 		public string getAlgorithm() { return m_algorithm; }
-        public String getFamily() { Master.log(">>>" + m_family);  return m_family; }
-        public void setFamily(String family) { m_family = family; Master.log(">>" + m_family); }
+        public String getFamily() { return m_family; }
+        public void setFamily(String family) { m_family = family; }
 
 		public RepresentationGraphic getGraphic() { return m_graphic; }
 		public List<Node> getNodes() { return m_nodes; }

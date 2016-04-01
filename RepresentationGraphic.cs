@@ -55,7 +55,6 @@ namespace Nurielite
 			m_version = parent.getVersion();
 			m_algorithm = parent.getFamily();
             m_baseColor = color;
-            Master.log(">" + m_algorithm);
 
 			createDrawing(100, 100, numIn, numOut, m_baseColor);
 
