@@ -24,3 +24,11 @@ beast = SumOperation.SummationBeast()
 stage3OutputData = beast.addThings(stage2InputData, 1)
 		
 print('\nStage 3 out:' + str(stage3OutputData))
+
+
+stage3InputData = stage3OutputData
+
+fileOut = open("OUTPUT.dat", "w")
+for dataPoint in stage3InputData: 
+	fileOut.write(str(dataPoint) + str("\n"))
+		

@@ -119,6 +119,12 @@ namespace Nurielite
 			sumAlg2.setOptions(sumAlg2Options);
 			algs.Add(sumAlg2);
 
+			PyAlgorithm outAlg = gen.loadPythonAlgorithm("../../AlgTest/FileOutput.py");
+			Dictionary<string, dynamic> outAlgOptions = outAlg.getOptions();
+			outAlgOptions["File Path"] = "OUTPUT.dat";
+			outAlg.setOptions(outAlgOptions);
+			algs.Add(outAlg);
+
 			gen.generatePythonCode(algs, "../../AlgTest", "./COMPILED");
 		}
 
