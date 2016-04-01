@@ -20,8 +20,8 @@ class PyAlgorithmInterface():
 
 	def generateRunnableCode(self):
 		code = """
-fileInput = FileInput()
-fileInput.load({FILE_NAME})
+fileInput = FileInput.FileInputNode()
+fileInput.loadFile("{FILE_NAME}")
 OUT_DATA = fileInput.getData()
 		"""
 		return code.format(FILE_NAME=self.algOptions["File Path"])

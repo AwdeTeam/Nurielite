@@ -97,6 +97,7 @@ namespace Nurielite
 
 			log("code:\n" + testAlg.generateRunnableCode());
 
+			// ----- python generation test -------
 
 			List<PyAlgorithm> algs = new List<PyAlgorithm>();
 
@@ -105,6 +106,18 @@ namespace Nurielite
 			inputAlgOptions["File Path"] = "TestData.dat"; // theoretically, depending on what the goal is, this is something that the meta compiler doesn't even need, just generates python code USER can use (manually supplying input makes more sense)
 			inputAlg.setOptions(inputAlgOptions);
 			algs.Add(inputAlg);
+
+			PyAlgorithm sumAlg = gen.loadPythonAlgorithm("../../AlgTest/SumOperation.py");
+			Dictionary<string, dynamic> sumAlgOptions = sumAlg.getOptions();
+			sumAlgOptions["Sum Amount"] = 5;
+			sumAlg.setOptions(sumAlgOptions);
+			algs.Add(sumAlg);
+			
+			PyAlgorithm sumAlg2 = gen.loadPythonAlgorithm("../../AlgTest/SumOperation.py");
+			Dictionary<string, dynamic> sumAlg2Options = sumAlg2.getOptions();
+			sumAlg2Options["Sum Amount"] = 1;
+			sumAlg2.setOptions(sumAlg2Options);
+			algs.Add(sumAlg2);
 
 			gen.generatePythonCode(algs, "../../AlgTest", "./COMPILED");
 		}

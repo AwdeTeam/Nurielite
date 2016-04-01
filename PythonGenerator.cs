@@ -68,6 +68,7 @@ namespace Nurielite
 			return PyAlgorithm.getUnloadedAlgorithm();
 		}
 
+		// TODO: make loadpython function work based off of a common inputpath as well, maybe make inputpath a class member variable?
 
 		// NOTE: eventually pass in representation list, each representation should have an associated pyAlgorithm
 		// also note that all functions in algorithms that are made to take data should on some level have the first param be previous layer data 
@@ -84,6 +85,10 @@ namespace Nurielite
 
 			string runnableCode = "";
 
+			// tempoary stage variables, change this cause it won't work with branching diagrams
+			int inStage = 0;
+			int outStage = 0;
+
 			foreach (PyAlgorithm alg in algorithms)
 			{
 				// handle libraries first
@@ -93,7 +98,7 @@ namespace Nurielite
 				{
 					if (imports.Contains(libName)) { continue; } // don't do anything if we've already done something with the libraries needed for this algorithm 
 					
-					runnableCode += "import " + libName + "\n";
+					runnableCode = "import " + libName + "\n" + runnableCode;
 					
 					if (libraries[libName] == "") // external import
 					{
@@ -108,6 +113,30 @@ namespace Nurielite
 						File.WriteAllText(outputPath + "\\" + libName + ".py", libraries[libName]);
 					}
 				}
+
+				// parse template code for data connections
+				// TODO: this will eventually have to be based on representation connections 
+				string verbatimCode = alg.generateRunnableCode();
+
+				if (verbatimCode.Contains("IN_DATA"))
+				{
+					inStage++;
+
+					verbatimCode = "\nstage" + inStage + "InputData = stage" + outStage + "OutputData\n" + verbatimCode;
+					verbatimCode = verbatimCode.Replace("IN_DATA", "stage" + inStage + "InputData");
+				}
+				if (verbatimCode.Contains("OUT_DATA"))
+				{
+					outStage++;
+					verbatimCode = verbatimCode.Replace("OUT_DATA", "stage" + outStage + "OutputData");
+
+					verbatimCode += "\nprint('\\nStage " + outStage + " out:' + str(stage" + outStage + "OutputData))\n";
+				}
+
+				/*verbatimCode = verbatimCode.Replace("OUT_DATA", "stageOneInputData");
+				verbatimCode += "\nprint(stageOneInputData)";*/
+
+				runnableCode += "\n" + verbatimCode;
 			}
 
 			// write runnable code to output
