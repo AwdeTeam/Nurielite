@@ -21,5 +21,8 @@ class PyAlgorithmInterface():
 	def setOptions(self, options):
 		self.algOptions = options
 
-	def generateCode(self):
+	def generateRunnableCode(self):
 		return "<CODE FOR OPERATION TEST " + str(self.algOptions["option2"]) + " " + str(self.algOptions["option1"]) + ">"
+
+	def generateCodeLibraries(self):
+		return {}

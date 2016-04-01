@@ -24,6 +24,7 @@ namespace Nurielite
 		{ 
 			m_pyFile = pyFile; 
 			m_pyClass = m_pyFile.PyAlgorithmInterface(); // (this will throw runtimebinderexception if that class not found. This exception is handled in PythonGenerator)
+			// TODO: check that the file has all the needed functions
 		}
 		private PyAlgorithm() // NOTE: this is just so that things don't crash if use loads invalid py file or class isn't found (program should then just pass this back instead and display an error message)
 		{
@@ -37,6 +38,7 @@ namespace Nurielite
 			Dictionary<string, dynamic> options = new Dictionary<string, dynamic>();
 			if (m_pyClass == null) { return options; }
 			
+			// call getOptions from ironpython interface
 			dynamic pyOptions = m_pyClass.getOptions();
 
 			PythonDictionary dictPyOptions = (PythonDictionary)pyOptions; //....is this legal??? Will I be arrested for this?
@@ -62,6 +64,7 @@ namespace Nurielite
 			Dictionary<string, string> metaData = new Dictionary<string, string>();
 			if (m_pyClass == null) { return metaData; }
 
+			// call getMetaData from ironpython interface
 			dynamic pyMetaData = m_pyClass.getMetaData();
 
 			PythonDictionary dictPyMetaData = (PythonDictionary)pyMetaData;
@@ -71,11 +74,28 @@ namespace Nurielite
 			return metaData;
 		}
 
-		public string generateCode()
+		public string generateRunnableCode()
 		{
+			// in generated python incoming data should be labeled as IN_DATA, and the pythongenerator will take care of changing it as needed
+			// returned data should be labeled as a variable OUT_DATA
 			if (m_pyClass == null) { return "NULL ALGORITHM"; }
-			dynamic code = m_pyClass.generateCode();
+			dynamic code = m_pyClass.generateRunnableCode();
 			return (string)code;
+		}
+
+		public Dictionary<string, string> generateCodeLibraries()
+		{
+			Dictionary<string, string> libraries = new Dictionary<string, string>();
+			if (m_pyClass == null) { return libraries; }
+
+			// call generateCodeLibraries on ironPython interface 
+			dynamic pyLibraries = m_pyClass.generateCodeLibraries();
+			PythonDictionary dictPyLibraries = (PythonDictionary)pyLibraries;			
+
+			// TODO: don't forget try catches in case programmer forgot to return stuff from function! (not that that happened or anything, this is hypothetical, of course)
+			foreach (dynamic data in dictPyLibraries.Keys) { libraries.Add((string)data, (string)dictPyLibraries.get(data)); }
+			
+			return libraries;
 		}
 
 		public static PyAlgorithm getUnloadedAlgorithm() { return new PyAlgorithm(); }

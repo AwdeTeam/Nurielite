@@ -25,8 +25,6 @@ namespace Nurielite
 		private MemoryStream m_outputStream;
 		private MemoryStream m_errorStream;
 
-		//private List<dynamic> m_algorithmClassFiles;
-
 		// construction
 		public PythonGenerator() 
 		{
@@ -41,9 +39,6 @@ namespace Nurielite
 			// redirect python output to the memory stream
 			m_runtime.IO.SetOutput(m_outputStream, new StreamWriter(m_outputStream));
 			m_runtime.IO.SetErrorOutput(m_errorStream, new StreamWriter(m_errorStream));
-
-			// other misc variable initlization
-			//m_algorithmClassFiles = new List<dynamic>();
 		}
 		
 		// properties
@@ -71,6 +66,56 @@ namespace Nurielite
 			}
 
 			return PyAlgorithm.getUnloadedAlgorithm();
+		}
+
+
+		// NOTE: eventually pass in representation list, each representation should have an associated pyAlgorithm
+		// also note that all functions in algorithms that are made to take data should on some level have the first param be previous layer data 
+		// OUTPUT PATH SHOULD NOT INCLUDE TRAILING SLASH, input path is so local files can be found (also note that output path is in relation to input path
+		public void generatePythonCode(List<PyAlgorithm> algorithms, string inputPath, string outputPath)
+		{
+			Directory.SetCurrentDirectory(inputPath);
+			Master.log("Generating python...");
+			// take care of classes and imports, obviously ignore duplicates 
+
+			// if a library dictionary from a pyalgorithm has a value of blank, just add that import (means to external library)
+
+			List<string> imports = new List<string>();
+
+			string runnableCode = "";
+
+			foreach (PyAlgorithm alg in algorithms)
+			{
+				// handle libraries first
+				Dictionary<string, string> libraries = alg.generateCodeLibraries();
+
+				foreach (string libName in libraries.Keys)
+				{
+					if (imports.Contains(libName)) { continue; } // don't do anything if we've already done something with the libraries needed for this algorithm 
+					
+					runnableCode += "import " + libName + "\n";
+					
+					if (libraries[libName] == "") // external import
+					{
+						imports.Add(libName);
+
+						// TODO: check if it starts with 'from'?
+					}
+					else // write the library content to the output folder
+					{
+						/*StreamWriter sw = new StreamWriter(outputPath + "\\" + libName + ".py");
+						sw.Write(libraries[libName]);*/
+						File.WriteAllText(outputPath + "\\" + libName + ".py", libraries[libName]);
+					}
+				}
+			}
+
+			// write runnable code to output
+			/*StreamWriter runnableSW = new StreamWriter(outputPath + "\\driver.py");
+			runnableSW.Write(runnableCode);*/
+			File.WriteAllText(outputPath + "\\driver.py", runnableCode);
+
+			Master.log("Python generated!");
 		}
 		
 		

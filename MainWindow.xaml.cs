@@ -95,7 +95,18 @@ namespace Nurielite
 				log("New python alg option: {" + key + ":" + stuffs2[key] + "}");
 			}
 
-			log("code:\n" + testAlg.generateCode());
+			log("code:\n" + testAlg.generateRunnableCode());
+
+
+			List<PyAlgorithm> algs = new List<PyAlgorithm>();
+
+			PyAlgorithm inputAlg = gen.loadPythonAlgorithm("../../AlgTest/FileInput.py");
+			Dictionary<string, dynamic> inputAlgOptions = inputAlg.getOptions();
+			inputAlgOptions["File Path"] = "TestData.dat"; // theoretically, depending on what the goal is, this is something that the meta compiler doesn't even need, just generates python code USER can use (manually supplying input makes more sense)
+			inputAlg.setOptions(inputAlgOptions);
+			algs.Add(inputAlg);
+
+			gen.generatePythonCode(algs, "../../AlgTest", "./COMPILED");
 		}
 
 		// properties
