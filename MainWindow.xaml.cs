@@ -42,14 +42,9 @@ namespace Nurielite
 			Master.assignWindow(this);
 
 			log("Program initialized!");
-            Datatype.testingTypes();
-            Datatype t0 = Datatype.getType(0);
-            Datatype t1 = Datatype.getType(1);
-			
-			// test representations
-			AlgorithmLoader.generateRepresentation("a", 0, new Datatype[] {t0, t1}, new Datatype[] {t0});
-            AlgorithmLoader.generateRepresentation("b", 0, new Datatype[] { t0 }, new Datatype[] { t0.join(t1) });
-            AlgorithmLoader.generateRepresentation("c", 0, new Datatype[] { t1.join(t0) }, new Datatype[] { t0 });
+            Datatype.genericTypes();
+            log("Datatypes Loaded!");
+
             /*Representation r = new AlgorithmRepresentation(2, 3);
             m_representations.Add(r.getID(), r);
 			parseCommand("edit rep -1 -color -ff0000");*/
@@ -94,6 +89,12 @@ namespace Nurielite
         private void Button_Click_addNode(object sender, RoutedEventArgs e)
         {
             RepDesignerWin popup = new RepDesignerWin(this);
+            popup.Show();
+        }
+
+        private void Button_Click_addType(object sender, RoutedEventArgs e)
+        {
+            DatatypeDesigner popup = new DatatypeDesigner();
             popup.Show();
         }
 

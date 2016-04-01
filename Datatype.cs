@@ -103,6 +103,27 @@ namespace Nurielite
                 new Datalabel(new string[] {"Hats", "Anteaters"}, new string[] {"Lion Ferocity"}, new int[] {1,1}, new int[] {1}));
         }
 
+        public static void genericTypes()
+        {
+            defineDatatype("Null", 0, 0, null);
+            defineDatatype("Scalar Integer", 1, 0, null);
+            defineDatatype("Scalar Real", 0, 1, null);
+
+            defineDatatype("32x32 Grayscale", 32 * 32, 0, null);
+            defineDatatype("256x256 Grayscale", 256 * 256, 0, null);
+            defineDatatype("1024x1024 Grayscale", 1024 * 1024, 0, null);
+            defineDatatype("1024x1024 Color", 1024 * 1024 * 3, 0, null);
+            defineDatatype("1024x1024 Alpha", 1024 * 1024 * 4, 0, null);
+
+            defineDatatype("2D Point", 0, 2, null);
+            defineDatatype("3D Point", 0, 3, null);
+            defineDatatype("2D Triangle", 0, 2 * 3, null);
+            defineDatatype("3D Triangle", 0, 3 * 3, null);
+
+            defineDatatype("2D Point Mass", 0, 2 * 3 + 1, null);
+            defineDatatype("3D Point Mass", 0, 3 * 3 + 1, null);
+        }
+
         public static int numberOfTypes()
         {
             return Directory.Count();

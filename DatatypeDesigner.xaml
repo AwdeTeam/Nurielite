@@ -1,0 +1,14 @@
+﻿<Window x:Class="Nurielite.DatatypeDesigner"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DatatypeDesigner" Height="240.647" Width="300">
+    <Grid>
+        <Label Content="Integers:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtNumInts" Text="{Binding Number, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" HorizontalAlignment="Left" Height="22" Margin="71,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157"/>
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="56"/>
+        <TextBox Name="txtNameInput" HorizontalAlignment="Left" Height="23" Margin="71,13,0,0" TextWrapping="Wrap" Text="unnamed" VerticalAlignment="Top" Width="157"/>
+        <Label Content="Reals:" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="56"/>
+        <TextBox Name="txtNumReals" HorizontalAlignment="Left" Height="23" Margin="71,75,0,0" TextWrapping="Wrap" Text="{Binding Number, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" VerticalAlignment="Top" Width="157"/>
+        <Button Content="&#x2713;" FontSize="20" Background="WhiteSmoke" Foreground="Green" HorizontalAlignment="Left" Margin="252,169,0,0" VerticalAlignment="Top" Width="32" Height="32" Click="Button_Click_ConfirmNew"/>
+    </Grid>
+</Window>

@@ -39,17 +39,39 @@ namespace Nurielite
             Datatype[] ray = new Datatype[list.Count];
             for (int i = 0; i < list.Count; i++)
                 ray[i] = (Datatype)list[i];
+
             return ray;
         }
 
         private void cmbAlgorithmType_Loaded(object sender, RoutedEventArgs e)
         {
             cmbAlgorithmType.ItemsSource = Representation.ALGORITHM_TYPES.ToList();
+            cmbAlgorithmType.SelectedIndex = 0;
         }
 
         private void cmbAlgorithmType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            if(cmbAlgorithmType.SelectedItem.Equals("input"))
+            {
+                lstInputs.IsEnabled = false;
+                lstInputs.SelectedIndex = -1;
+                lstOutputs.IsEnabled = true;
+            }
+
+            if (cmbAlgorithmType.SelectedItem.Equals("output"))
+            {
+                lstOutputs.IsEnabled = false;
+                lstOutputs.SelectedIndex = -1;
+                lstInputs.IsEnabled = true;
+            }
+
+            if(!((cmbAlgorithmType.SelectedItem.Equals("input"))||(cmbAlgorithmType.SelectedItem.Equals("output"))))
+            {
+                lstOutputs.IsEnabled = true;
+                lstInputs.IsEnabled = true;
+            }
+
+
         }
 
         private void lstOutputs_Loaded(object sender, RoutedEventArgs e)

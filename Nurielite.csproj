@@ -86,6 +86,9 @@
     <Compile Include="Datalabel.cs" />
     <Compile Include="Datatype.cs" />
     <Compile Include="Connection.cs" />
+    <Compile Include="DatatypeDesigner.xaml.cs">
+      <DependentUpon>DatatypeDesigner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GraphicContainer.cs" />
     <Compile Include="GraphicFactory.cs" />
     <Compile Include="Node.cs" />
@@ -100,6 +103,10 @@
     <Compile Include="RepDesignerControl.xaml.cs">
       <DependentUpon>RepDesignerControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="DatatypeDesigner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
