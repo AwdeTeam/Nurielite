@@ -135,6 +135,11 @@ namespace Nurielite
             popup.Show();
         }
 
+        private void Button_Click_generatePython(object sender, RoutedEventArgs e)
+        {
+            //TODO make this work
+        }
+
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{

@@ -64,7 +64,8 @@
                     
                     <Canvas Height="600">
                     <Button Grid.Row="0" Canvas.Left="10" Canvas.Top="10" Click="Button_Click_addNode" Height="25" Width="70" Background="WhiteSmoke">Add Node</Button>
-                        <Button Grid.Row="0" Canvas.Left="10" Canvas.Top="40" Click="Button_Click_addType" Height="25" Width="70" Background="WhiteSmoke">Add Type</Button>
+                    <Button Grid.Row="0" Canvas.Left="10" Canvas.Top="40" Click="Button_Click_addType" Height="25" Width="70" Background="WhiteSmoke">Add Type</Button>
+                    <Button Grid.Row="0" Canvas.Left="10" Canvas.Top="70" Click="Button_Click_generatePython" Height="25" Width="70" Background="WhiteSmoke">Generate</Button>
                     </Canvas>
                 </Grid>
             </ScrollViewer>
