@@ -10,13 +10,16 @@
             </Grid.ColumnDefinitions>
             <Label Grid.ColumnSpan="2" Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
             <TextBox Name="txtNameInput" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="60,14,0,0" TextWrapping="Wrap" Text="unnamed" VerticalAlignment="Top" Width="120"/>
-            <Button Grid.ColumnSpan="2" Content="&#x2713;" FontSize="20" Background="WhiteSmoke" Foreground="Green" HorizontalAlignment="Left" Margin="552,187,0,0" VerticalAlignment="Top" Width="32" Height="32" Click="Button_Click_ConfirmNew" RenderTransformOrigin="2.085,0.343"/>
+            <Button Grid.ColumnSpan="2" Content="&#x2713;" FontSize="14" Background="WhiteSmoke" Foreground="Green" HorizontalAlignment="Left" Margin="561,199,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="Button_Click_ConfirmNew" RenderTransformOrigin="2.085,0.343"/>
             <Label Grid.ColumnSpan="2" Content="Type:" HorizontalAlignment="Left" Margin="206,11,0,0" VerticalAlignment="Top"/>
             <ComboBox Name="cmbAlgorithmType" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="248,15,0,0" VerticalAlignment="Top" Width="120" Loaded="cmbAlgorithmType_Loaded" SelectionChanged="cmbAlgorithmType_SelectionChanged"/>
             <Label Grid.ColumnSpan="2" Content="Inputs" HorizontalAlignment="Left" Margin="81,42,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.271,-0.09"/>
             <ListBox Name="lstInputs" SelectionMode="Multiple" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="126" Margin="23,68,0,0" VerticalAlignment="Top" Width="157" Loaded="lstInputs_Loaded"/>
             <ListBox Name="lstOutputs" SelectionMode="Multiple" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="126" Margin="218,68,0,0" VerticalAlignment="Top" Width="150" Loaded="lstOutputs_Loaded"/>
             <Label Grid.ColumnSpan="2" Content="Outputs" HorizontalAlignment="Left" Margin="264,42,0,0" VerticalAlignment="Top"/>
+            <Canvas Name="DesignerControl" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="151" Margin="395,42,0,0" VerticalAlignment="Top" Width="189"/>
+            <Label Name="lblType" Grid.ColumnSpan="2" Content="Operation:" HorizontalAlignment="Left" Margin="395,14,0,0" VerticalAlignment="Top" Height="24"/>
+            <ComboBox Name="cmbAlgorithmSpecific" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="466,16,0,0" VerticalAlignment="Top" Width="118"/>
         </Grid>
 
     </Grid>

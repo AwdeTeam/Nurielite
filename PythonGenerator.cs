@@ -50,6 +50,17 @@ namespace Nurielite
 		// functions
 		public void clearRuntimeOutput() { m_outputStream.SetLength(0); }
 
+        public static List<string> getAllOfType(string type)
+        {
+            switch(type)
+            {
+                case "operation":
+                    return new List<string>() { "Scalar Add", "Scalar Multiply" };
+                default:
+                    return null;
+            }
+        }
+
 		// returns index of dynamic instance (other classes can get that particular instance)
 		// TODO: don't forget to check that it contains necessary methods
 		public PyAlgorithm loadPythonAlgorithm(string fileName)

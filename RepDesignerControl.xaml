@@ -4,11 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="151" d:DesignWidth="189">
     <Grid>
-        <Canvas HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="300" Background="White">
-            <Label Content="Name" Canvas.Left="10" Canvas.Top="10"/>
-            <TextBox Name="txtNameBox" Height="22" Canvas.Left="74" TextWrapping="Wrap" Text="" Canvas.Top="14" Width="120"/>
+        <Canvas HorizontalAlignment="Left" Height="151" VerticalAlignment="Top" Width="189" Background="White" Margin="0,0,-0.2,0">
+            <Label Content="Value" Height="25" Canvas.Top="63" Width="40" RenderTransformOrigin="0.627,-0.23" Canvas.Left="10"/>
+            <TextBox Name="ScalarValue" Height="17" Canvas.Left="59" TextWrapping="Wrap" Text="0" Canvas.Top="67" Width="120" RenderTransformOrigin="0.514,-0.2"/>
+            <Label Content="Scalar Increment" Canvas.Left="45" Canvas.Top="10" Width="98"/>
         </Canvas>
 
     </Grid>

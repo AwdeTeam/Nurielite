@@ -71,6 +71,37 @@ namespace Nurielite
                 lstInputs.IsEnabled = true;
             }
 
+            switch(cmbAlgorithmType.SelectedItem.ToString())
+            {
+                case "operation":
+                    lblType.Content = "operation:";
+                    cmbAlgorithmSpecific.IsEnabled = true;
+                    cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType("operation");
+                    break;
+                case "classifier":
+                    lblType.Content = "classifier:";
+                    cmbAlgorithmSpecific.IsEnabled = true;
+                    cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType("classifier");
+                    break;
+                case "clustering":
+                    lblType.Content = "clustering:";
+                    cmbAlgorithmSpecific.IsEnabled = true;
+                    cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType("clustering");
+                    break;
+                case "input":
+                    lblType.Content = "input";
+                    cmbAlgorithmSpecific.IsEnabled = false;
+                    break;
+                case "output":
+                    lblType.Content = "output";
+                    cmbAlgorithmSpecific.IsEnabled = false;
+                    break;
+                default:
+                    lblType.Content = "";
+                    cmbAlgorithmSpecific.IsEnabled = false;
+                    break;
+            }
+
 
         }
 
