@@ -13,3 +13,4 @@ list -- > generate (must change generate to support toposort)
 
 {unnamed node-thingy}
 	must export to PyAlgorithm
+	
