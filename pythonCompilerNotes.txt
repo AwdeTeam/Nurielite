@@ -1,0 +1,12 @@
+A -> B ->D ->C ->E ->F
+
+a = A.getOutput()
+b = B.getOutput(a)
+d = D.getOutput(b)
+c = c.getOutput(a)
+e = E.getOutput(a,b)
+F.proc(e)
+
+User made graph -- > graph obj
+graph obj -- > sorted list
+list -- > generate (must change generate to support toposort)
