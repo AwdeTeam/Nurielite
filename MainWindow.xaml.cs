@@ -140,7 +140,12 @@ namespace Nurielite
 
         private void Button_Click_generatePython(object sender, RoutedEventArgs e)
         {
-            //TODO make this work
+            InterGraph graph = new InterGraph();
+
+            foreach(Object v in m_representations)
+            {
+
+            }
         }
 
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar
