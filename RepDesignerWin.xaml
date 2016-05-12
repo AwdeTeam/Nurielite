@@ -14,12 +14,13 @@
             <Label Grid.ColumnSpan="2" Content="Type:" HorizontalAlignment="Left" Margin="206,11,0,0" VerticalAlignment="Top"/>
             <ComboBox Name="cmbAlgorithmType" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="248,15,0,0" VerticalAlignment="Top" Width="120" Loaded="cmbAlgorithmType_Loaded" SelectionChanged="cmbAlgorithmType_SelectionChanged"/>
             <Label Grid.ColumnSpan="2" Content="Inputs" HorizontalAlignment="Left" Margin="81,42,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.271,-0.09"/>
-            <ListBox Name="lstInputs" SelectionMode="Multiple" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="126" Margin="23,68,0,0" VerticalAlignment="Top" Width="157" Loaded="lstInputs_Loaded"/>
-            <ListBox Name="lstOutputs" SelectionMode="Multiple" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="126" Margin="218,68,0,0" VerticalAlignment="Top" Width="150" Loaded="lstOutputs_Loaded"/>
-            <Label Grid.ColumnSpan="2" Content="Outputs" HorizontalAlignment="Left" Margin="264,42,0,0" VerticalAlignment="Top"/>
-            <Canvas Name="DesignerControl" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="151" Margin="395,42,0,0" VerticalAlignment="Top" Width="189"/>
+            <ListBox Name="lstInputs" SelectionMode="Multiple" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="126" Margin="23,68,0,0" VerticalAlignment="Top" Width="157" Loaded="lstInputs_Loaded" SelectionChanged="lstInputs_SelectionChanged"/>
+            <ListBox Name="lstOutputs" SelectionMode="Single" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="126" Margin="264,67,0,0" VerticalAlignment="Top" Width="150" Loaded="lstOutputs_Loaded"/>
+            <Label Grid.ColumnSpan="2" Content="Outputs" HorizontalAlignment="Left" Margin="315,42,0,0" VerticalAlignment="Top"/>
+            <Canvas Name="DesignerControl" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="151" Margin="433,42,0,0" VerticalAlignment="Top" Width="151"/>
             <Label Name="lblType" Grid.ColumnSpan="2" Content="Operation:" HorizontalAlignment="Left" Margin="395,14,0,0" VerticalAlignment="Top" Height="24"/>
             <ComboBox Name="cmbAlgorithmSpecific" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="466,16,0,0" VerticalAlignment="Top" Width="118"/>
+            <DataGrid Name="MultiplicityGrid" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="185,67,0,0" VerticalAlignment="Top" Height="127" Width="58"/>
         </Grid>
 
     </Grid>

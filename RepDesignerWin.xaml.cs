@@ -29,7 +29,7 @@ namespace Nurielite
 
         private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
         {
-            Representation newrep = AlgorithmLoader.generateRepresentation(txtNameInput.Text, cmbAlgorithmType.SelectedIndex,
+            Representation newrep = AlgorithmLoader.generateRepresentation( txtNameInput.Text, cmbAlgorithmType.SelectedIndex,
                     ray(lstInputs.SelectedItems), ray(lstOutputs.SelectedItems) );
             Close();
         }
@@ -113,6 +113,11 @@ namespace Nurielite
         private void lstInputs_Loaded(object sender, RoutedEventArgs e)
         {
             lstInputs.ItemsSource = Datatype.Directory;
+        }
+
+        private void lstInputs_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         private static Datatype[] getSelectedTypes(ListBox box)
