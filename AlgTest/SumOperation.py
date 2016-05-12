@@ -30,4 +30,3 @@ OUT_DATA = beast.addThings(IN_DATA, {AMOUNT})
 		SumOperationLib = f.read()
 		libraries = { "SumOperation":SumOperationLib };
 		return libraries
-	
