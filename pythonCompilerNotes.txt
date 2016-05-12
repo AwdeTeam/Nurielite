@@ -7,6 +7,9 @@ c = c.getOutput(a)
 e = E.getOutput(a,b)
 F.proc(e)
 
-User made graph -- > graph obj
+User made graph -- > graph obj (of {unnamed node-thingy})
 graph obj -- > sorted list
 list -- > generate (must change generate to support toposort)
+
+{unnamed node-thingy}
+	must export to PyAlgorithm
