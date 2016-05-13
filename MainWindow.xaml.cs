@@ -141,11 +141,13 @@ namespace Nurielite
         private void Button_Click_generatePython(object sender, RoutedEventArgs e)
         {
             InterGraph graph = new InterGraph();
-
-            foreach(Object v in m_representations)
+            
+            foreach(KeyValuePair<int, Representation> kvp in m_representations)
             {
-
+                graph.append( new InterNode(kvp.Value, graph) );
             }
+
+            List<PyAlgorithm> algs = graph.topoSort();
         }
 
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar
