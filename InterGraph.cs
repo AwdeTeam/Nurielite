@@ -8,7 +8,12 @@ namespace Nurielite
 {
     class InterGraph
     {
-        private List<InterNode> inodes;
+        private List<InterNode> m_inodes;
+
+        public InterGraph()
+        {
+            m_inodes = new List<InterNode>();
+        }
 
         /*  Thank you wikipedia!
          * 
@@ -30,10 +35,13 @@ namespace Nurielite
         public List<PyAlgorithm> topoSort() //This might break if there are cycles, 
                                             //so we need to check for them further up the chain
         {
+            if (m_inodes == null)
+                return new List<PyAlgorithm>();
+
             List<InterNode> L = new List<InterNode>();
             List<InterNode> S = new List<InterNode>();
 
-            foreach (InterNode n in inodes)
+            foreach (InterNode n in m_inodes)
                 if (n.inDegree() == 0)
                     S.Add(n);
             
@@ -61,13 +69,13 @@ namespace Nurielite
 
         public InterNode get(Representation r) 
         {
-            foreach (InterNode n in inodes)
+            foreach (InterNode n in m_inodes)
                 if (n.getCore().Equals(r))
                     return n;
             return null;
         }
 
-        public Boolean contains(InterNode n) { return inodes.Contains(n); }
-        public void append(InterNode n) { inodes.Add(n); }
+        public Boolean contains(InterNode n) { return m_inodes.Contains(n); }
+        public void append(InterNode n) { m_inodes.Add(n); }
     }
 }

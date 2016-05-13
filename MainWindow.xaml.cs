@@ -148,6 +148,8 @@ namespace Nurielite
             }
 
             List<PyAlgorithm> algs = graph.topoSort();
+
+            (new PythonGenerator()).generatePythonCode(algs, "../../AlgTest", "./COMPILED");
         }
 
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar
