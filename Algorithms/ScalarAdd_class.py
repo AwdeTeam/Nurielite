@@ -1,7 +1,7 @@
 class ScalarAdder():
 	
 	def add(self, inputArray, scalarValue):
-		newArray = [];
+		newArray = []
 		for i in range(len(inputArray)):
 			newArray.append(int(int(inputArray[i]) + int(scalarValue))
 
