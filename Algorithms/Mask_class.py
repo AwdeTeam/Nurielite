@@ -1,4 +1,4 @@
-class MaskOperation():
+class Masker():
 
 	def mask(self, inputArray, maskIndicies):
 		newArray = []

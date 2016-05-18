@@ -23,7 +23,7 @@ class PyAlgorithmInterface():
 
 	def generateRunnableCode(self):
 		code = """
-multiplier = ScalarMultiplier.ScalarMultiplier()
+multiplier = ScalarMultiplyOperation.ScalarMultiplier()
 OUT_DATA = multiplier.multiply(IN_DATA, {VALUE})
 		"""
 		return code.format(VALUE=self.algOptions["scalarVal"])
@@ -31,5 +31,5 @@ OUT_DATA = multiplier.multiply(IN_DATA, {VALUE})
 	def generateCodeLibraries(self):
 		f = open("ScalarMultiply_class.py")
 		ScalarMultiplyLibrary = f.read()
-		libraries = { "ScalarMutliplier":ScalarMultiplyLibrary };
+		libraries = { "ScalarMultiplyOperation":ScalarMultiplyLibrary };
 		return libraries

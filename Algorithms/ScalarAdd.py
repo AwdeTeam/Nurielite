@@ -23,7 +23,7 @@ class PyAlgorithmInterface():
 
 	def generateRunnableCode(self):
 		code = """
-adder = ScalarAdder.ScalarAdder()
+adder = ScalarAddOperation.ScalarAdder()
 OUT_DATA = adder.add(IN_DATA, {VALUE})
 		"""
 		return code.format(VALUE=self.algOptions["scalarVal"])
@@ -31,5 +31,5 @@ OUT_DATA = adder.add(IN_DATA, {VALUE})
 	def generateCodeLibraries(self):
 		f = open("ScalarAdd_class.py")
 		ScalarAddLibrary = f.read()
-		libraries = { "ScalarAdder":ScalarAddLibrary };
+		libraries = { "ScalarAddOperation":ScalarAddLibrary };
 		return libraries

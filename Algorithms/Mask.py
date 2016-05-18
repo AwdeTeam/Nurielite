@@ -24,7 +24,7 @@ class PyAlgorithmInterface():
 
 	def generateRunnableCode(self):
 		code = """
-masker = MaskOperation.MaskOperation()
+masker = MaskOperation.Masker()
 OUT_DATA = masker.mask(IN_DATA, {VALUE})
 		"""
 		return code.format(VALUE=self.algOptions["ColIndicies"])
