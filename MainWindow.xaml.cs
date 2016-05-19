@@ -113,6 +113,18 @@ namespace Nurielite
 			algs.Add(outAlg);
 
 			gen.generatePythonCode(algs, "../../AlgTest", "./COMPILED");
+
+
+
+			//Representation inputRep = new Representation()
+			Representation inprep = AlgorithmLoader.generateRepresentation("inputthingy", "input", new Datatype[0], new Datatype[] { Datatype.findType("Scalar Integer") });
+			Representation oprep = AlgorithmLoader.generateRepresentation("sumthingy", "operation", new Datatype[] { Datatype.findType("Scalar Integer") }, new Datatype[] { Datatype.findType("Scalar Integer") });
+			Representation outrep = AlgorithmLoader.generateRepresentation("output", "output",  new Datatype[] { Datatype.findType("Scalar Integer") },new Datatype[0]);
+
+			m_representations.Add(0, inprep);
+			m_representations.Add(1, oprep);
+			m_representations.Add(2, outrep);
+			
 		}
 
         //END STUFF
@@ -120,6 +132,7 @@ namespace Nurielite
 		// properties
 		public Canvas getMainCanvas() { return world; }
 		public GraphicContainer getGraphicContainer() { return m_gc; }
+		//public Dictionary<int, Representation> getRepresentations() { return m_representations; } 
 		
 
 		// ------------------------------------
@@ -142,14 +155,23 @@ namespace Nurielite
         {
             InterGraph graph = new InterGraph();
             
-            foreach(KeyValuePair<int, Representation> kvp in m_representations)
+            /*foreach(KeyValuePair<int, Representation> kvp in m_representations)
             {
                 graph.append( new InterNode(kvp.Value, graph) );
-            }
+            }*/
 
+			graph.append(new InterNode(m_representations[0], graph));
+			
             List<PyAlgorithm> algs = graph.topoSort();
 
-            (new PythonGenerator()).generatePythonCode(algs, "../../AlgTest", "./COMPILED");
+			foreach (PyAlgorithm alg in algs)
+			{
+				Dictionary<string, dynamic> dic = alg.getOptions();
+				Representation rep = (Representation)dic["thing"];
+				log(rep.getID().ToString());
+			}
+
+            //(new PythonGenerator()).generatePythonCode(algs, "../../AlgTest", "./COMPILED");
         }
 
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar

@@ -77,7 +77,10 @@ namespace Nurielite
 
         public void disconnect(InterNode node)
         {
-            foreach(InterNode n in m_inNodes)
+			if (this.m_inNodes.Contains(node)) { m_inNodes.Remove(node); }
+			if (this.m_outNodes.Contains(node)) { m_outNodes.Remove(node); }
+			
+            /*foreach(InterNode n in m_inNodes)
             {
                 if(node.Equals(n))
                 {
@@ -91,6 +94,7 @@ namespace Nurielite
                     }
                 }
             }
+			
 
             foreach (InterNode n in m_outNodes)
             {
@@ -106,6 +110,7 @@ namespace Nurielite
                     }
                 }
             }
+			*/
         }
 
         public int inDegree() { return m_inNodes.Count; }
@@ -120,7 +125,13 @@ namespace Nurielite
 
         public PyAlgorithm getAlgorithm()
         {
-            return null;
+			PythonGenerator pgen = new PythonGenerator();
+			PyAlgorithm py = pgen.loadPythonAlgorithm("C:/dwl/lab/AwdeMachineLearning/Nurielite/AlgTest/FileOutput.py");
+			Dictionary<string, dynamic> options = new Dictionary<string, dynamic>();
+			options.Add("thing", m_core);
+			py.setOptions(options);
+
+			return py;
         }
     }
 }
