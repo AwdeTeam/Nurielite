@@ -74,5 +74,23 @@ namespace Nurielite
 
 
 		// -- FUNCTIONS --
-	}
+
+        public List<Representation> getOutgoing()
+        {
+            List<Representation> lout = new List<Representation>();
+
+            foreach (Node n in m_nodes)
+            {
+                if (!n.isInput())
+                {
+                    foreach(Connection c in n.getConnections())
+                    {
+                        lout.Add(c.getOutputNode().getParent());
+                    }
+                }
+            }
+
+            return lout;
+        }
+    }
 }

@@ -24,49 +24,70 @@ namespace Nurielite
 
                 master.append(this);
 
-                foreach (Node n in m_core.getNodes()) //Caution! Might be unstable!
+                updateLinks();
+            }
+        }
+
+        private void updateLinks()
+        {
+            List<Representation> lrep = m_core.getOutgoing();
+
+            foreach(Representation r in lrep)
+            {
+                if (m_master.contains(r))
                 {
-                    if (n.isInput())
-                    {
-                        foreach (Connection c in n.getConnections())
-                        {
-                            Representation rep = c.getOutputNode().getParent();
-                            InterNode inode = m_master.get(rep);
+                    connectTo(m_master.get(r));
+                }
+                else
+                {
+                    InterNode inode = new InterNode(r, m_master);
+                    connectTo(inode);
+                }
+            }
 
-                            if (inode != null)
-                            {
-                                m_inNodes.AddLast(inode);
-                            }
-                            else
-                            {
-                                inode = new InterNode(rep, m_master);
-                                m_inNodes.AddLast(inode);
-                                m_master.append(inode);
-                            }
+            /*
+            foreach (Node n in m_core.getNodes()) //Caution! Might be unstable!  You don't say...
+            {
+                if (n.isInput())
+                {
+                    foreach (Connection c in n.getConnections())
+                    {
+                        Representation rep = c.getOutputNode().getParent();
+                        InterNode inode = m_master.get(rep);
+
+                        if (inode != null)
+                        {
+                            m_inNodes.AddLast(inode);
                         }
-                    }
-                    else
-                    {
-                        foreach (Connection c in n.getConnections())
+                        else
                         {
-                            Representation rep = c.getInputNode().getParent();
-                            InterNode inode = m_master.get(rep);
-
-                            if (inode != null)
-                            {
-                                m_outNodes.AddLast(inode);
-                            }
-                            else
-                            {
-                                inode = new InterNode(rep, m_master);
-                                m_outNodes.AddLast(inode);
-                                m_master.append(inode);
-                            }
+                            inode = new InterNode(rep, m_master);
+                            m_inNodes.AddLast(inode);
+                            m_master.append(inode);
                         }
                     }
                 }
+                else
+                {
+                    foreach (Connection c in n.getConnections())
+                    {
+                        Representation rep = c.getInputNode().getParent();
+                        InterNode inode = m_master.get(rep);
 
+                        if (inode != null)
+                        {
+                            m_outNodes.AddLast(inode);
+                        }
+                        else
+                        {
+                            inode = new InterNode(rep, m_master);
+                            m_outNodes.AddLast(inode);
+                            m_master.append(inode);
+                        }
+                    }
+                }
             }
+             * */
         }
 
         public void connectTo(InterNode node)
@@ -79,38 +100,6 @@ namespace Nurielite
         {
 			if (this.m_inNodes.Contains(node)) { m_inNodes.Remove(node); }
 			if (this.m_outNodes.Contains(node)) { m_outNodes.Remove(node); }
-			
-            /*foreach(InterNode n in m_inNodes)
-            {
-                if(node.Equals(n))
-                {
-                    foreach(InterNode m in node.m_outNodes)
-                    {
-                        if(m.Equals(this))
-                        {
-                            m_inNodes.Remove(n);
-                            node.m_outNodes.Remove(m);
-                        }
-                    }
-                }
-            }
-			
-
-            foreach (InterNode n in m_outNodes)
-            {
-                if (node.Equals(n))
-                {
-                    foreach (InterNode m in node.m_inNodes)
-                    {
-                        if (m.Equals(this))
-                        {
-                            m_outNodes.Remove(n);
-                            node.m_inNodes.Remove(m);
-                        }
-                    }
-                }
-            }
-			*/
         }
 
         public int inDegree() { return m_inNodes.Count; }

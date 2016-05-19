@@ -77,5 +77,14 @@ namespace Nurielite
 
         public Boolean contains(InterNode n) { return m_inodes.Contains(n); }
         public void append(InterNode n) { m_inodes.Add(n); }
+
+        internal bool contains(Representation r)
+        {
+            foreach (InterNode i in m_inodes)
+                if (i.getCore().Equals(r))
+                    return true;
+
+            return false;
+        }
     }
 }
