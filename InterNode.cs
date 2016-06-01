@@ -45,49 +45,6 @@ namespace Nurielite
                 }
             }
 
-            /*
-            foreach (Node n in m_core.getNodes()) //Caution! Might be unstable!  You don't say...
-            {
-                if (n.isInput())
-                {
-                    foreach (Connection c in n.getConnections())
-                    {
-                        Representation rep = c.getOutputNode().getParent();
-                        InterNode inode = m_master.get(rep);
-
-                        if (inode != null)
-                        {
-                            m_inNodes.AddLast(inode);
-                        }
-                        else
-                        {
-                            inode = new InterNode(rep, m_master);
-                            m_inNodes.AddLast(inode);
-                            m_master.append(inode);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (Connection c in n.getConnections())
-                    {
-                        Representation rep = c.getInputNode().getParent();
-                        InterNode inode = m_master.get(rep);
-
-                        if (inode != null)
-                        {
-                            m_outNodes.AddLast(inode);
-                        }
-                        else
-                        {
-                            inode = new InterNode(rep, m_master);
-                            m_outNodes.AddLast(inode);
-                            m_master.append(inode);
-                        }
-                    }
-                }
-            }
-             * */
         }
 
         public void connectTo(InterNode node)
