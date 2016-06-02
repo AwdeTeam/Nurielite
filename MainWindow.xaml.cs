@@ -52,7 +52,7 @@ namespace Nurielite
 			// canvas initially wasn't handling events properly, so adding them to window instead
 			this.MouseMove += world_MouseMove;
 
-            //START STUFF
+            /*START STUFF
 
 			// python generator testing
 			log("----PYTHON----");
@@ -113,10 +113,10 @@ namespace Nurielite
 			algs.Add(outAlg);
 
 			gen.generatePythonCode(algs, "../../AlgTest", "./COMPILED");
+            */
 
 
-
-			//Representation inputRep = new Representation()
+            //Representation inputRep = new Representation()
 			Representation inprep = AlgorithmLoader.generateRepresentation("inputthingy", "input", new Datatype[0], new Datatype[] { Datatype.findType("Scalar Integer") });
 			Representation oprep = AlgorithmLoader.generateRepresentation("sumthingy", "operation", new Datatype[] { Datatype.findType("Scalar Integer") }, new Datatype[] { Datatype.findType("Scalar Integer") });
 			Representation outrep = AlgorithmLoader.generateRepresentation("output", "output",  new Datatype[] { Datatype.findType("Scalar Integer") },new Datatype[0]);
@@ -160,10 +160,10 @@ namespace Nurielite
                 graph.append( new InterNode(kvp.Value, graph) );
             }*/
 
-			graph.append(new InterNode(m_representations[0], graph));
+			new InterNode(m_representations[0], graph);
 			
             List<PyAlgorithm> algs = graph.topoSort();
-
+            log("Count: " + algs.Count);
 			foreach (PyAlgorithm alg in algs)
 			{
 				Dictionary<string, dynamic> dic = alg.getOptions();

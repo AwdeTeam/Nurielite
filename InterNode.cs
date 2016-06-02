@@ -15,8 +15,10 @@ namespace Nurielite
 
         public InterNode(Representation core, InterGraph master)
         {
-            if (!master.contains(this))
+            Master.log(core.getID() + " : " + master.contains(core.getID()));
+            if (!master.contains(core.getID()))
             {
+                Master.log("----->I ran for " + core.getID() + "!");
                 m_inNodes = new LinkedList<InterNode>();
                 m_outNodes = new LinkedList<InterNode>();
                 m_core = core;
@@ -34,13 +36,15 @@ namespace Nurielite
 
             foreach(Representation r in lrep)
             {
-                if (m_master.contains(r))
+                if (m_master.contains(r.getID()))
                 {
+                    Master.log("InterNode with rep id " + m_core.getID() + " is connecting to already extant InterNode " + r.getID());
                     connectTo(m_master.get(r));
                 }
                 else
                 {
                     InterNode inode = new InterNode(r, m_master);
+                    Master.log("InterNode with rep id " + m_core.getID() + " is connecting to new InterNode " + r.getID());
                     connectTo(inode);
                 }
             }
@@ -72,7 +76,7 @@ namespace Nurielite
         public PyAlgorithm getAlgorithm()
         {
 			PythonGenerator pgen = new PythonGenerator();
-			PyAlgorithm py = pgen.loadPythonAlgorithm("C:/dwl/lab/AwdeMachineLearning/Nurielite/AlgTest/FileOutput.py");
+			PyAlgorithm py = pgen.loadPythonAlgorithm("../../AlgTest/FileOutput.py");
 			Dictionary<string, dynamic> options = new Dictionary<string, dynamic>();
 			options.Add("thing", m_core);
 			py.setOptions(options);

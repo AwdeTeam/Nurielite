@@ -85,7 +85,7 @@ namespace Nurielite
                 {
                     foreach(Connection c in n.getConnections())
                     {
-                        lout.Add(c.getOutputNode().getParent());
+                        lout.Add(c.getInputNode().getParent());
                     }
                 }
             }

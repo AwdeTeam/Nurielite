@@ -44,7 +44,9 @@ namespace Nurielite
             foreach (InterNode n in m_inodes)
                 if (n.inDegree() == 0)
                     S.Add(n);
-            
+
+            List<PyAlgorithm> algs = new List<PyAlgorithm>();
+
             while(S.Count > 0)
             {
                 InterNode n = S.ElementAt(0);
@@ -59,7 +61,7 @@ namespace Nurielite
                 }
             }
 
-            List<PyAlgorithm> algs = new List<PyAlgorithm>();
+            
 
             foreach (InterNode n in L)
                 algs.Add(n.getAlgorithm());
@@ -76,12 +78,24 @@ namespace Nurielite
         }
 
         public Boolean contains(InterNode n) { return m_inodes.Contains(n); }
-        public void append(InterNode n) { m_inodes.Add(n); }
+        public void append(InterNode n) { 
+            m_inodes.Add(n);
+            Master.log("Appending InterNode with ID " + n.getCore().getID() + " to graph");
+        }
 
         internal bool contains(Representation r)
         {
             foreach (InterNode i in m_inodes)
-                if (i.getCore().Equals(r))
+                if (i.getCore().getID() == r.getID())
+                    return true;
+
+            return false;
+        }
+
+        internal bool contains(int id)
+        {
+            foreach (InterNode i in m_inodes)
+                if (i.getCore().getID() == id)
                     return true;
 
             return false;
