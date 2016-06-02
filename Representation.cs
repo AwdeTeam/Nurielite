@@ -60,6 +60,12 @@ namespace Nurielite
             return i;
         }
 
+		public string Name { get; set; }
+		
+		public void name()
+		{
+		}
+
 		// properties
 		public int getID() { return m_id; }
 		public string getName() { return m_name; }

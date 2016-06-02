@@ -1,0 +1,76 @@
+VARIABLES
+
+Local variable names:
+iNumber
+bBoolean
+cCharacter
+sString
+aArray
+eEnum
+pComplexType (pointer)
+
+member variable names
+m_iNumber
+m_pComplexType
+etc....
+
+PROPERTIES
+
+public string Name { get { return m_sName; } set { m_sName = value; } } 
+
+FUNCTIONS
+
+camelCase(string sMyString, MyClass pMyClass)
+{
+	
+}
+
+names should make sense!!!!!!
+
+EVERY function should have a comment explanation!!
+
+function documentation RULE OF THUMB:
+
+if function is longer than ~8 lines, document inner blocks as needed
+
+---------
+ideal:
+//explanation of function
+public void someFunction()
+{
+	//step one explanation
+	Type pType = something.getType();
+
+	//step two
+	/* do something else */
+
+	//step three
+	
+
+	//step four iteration
+	foreach(string sPart in sParts)
+	{
+		//iteration comment
+		sPart += "hello";
+	}
+}
+---------
+
+if ({CONDITION}) 
+	doSomething();
+
+
+
+CLASS STRUCTURE
+
+//static variables
+
+//member variables
+
+//construction
+
+//properties
+
+//functions
+
+//static functions
