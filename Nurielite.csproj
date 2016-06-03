@@ -100,8 +100,8 @@
     <Compile Include="RepDesignerWin.xaml.cs">
       <DependentUpon>RepDesignerWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Representation.cs" />
-    <Compile Include="RepresentationGraphic.cs" />
+    <Compile Include="Block.cs" />
+    <Compile Include="BlockGraphic.cs" />
     <Compile Include="RepDesignerControl.xaml.cs">
       <DependentUpon>RepDesignerControl.xaml</DependentUpon>
     </Compile>

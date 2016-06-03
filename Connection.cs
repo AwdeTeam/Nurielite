@@ -13,17 +13,17 @@ namespace Nurielite
 	public class Connection
 	{
 		// member variables
-		private Node m_inNode, m_outNode; // same as below, but referenced for different reasons
+		private Nodule m_inNode, m_outNode; // same as below, but referenced for different reasons
 
-		private Node m_origin;
-		private Node m_end;
+		private Nodule m_origin;
+		private Nodule m_end;
 
 		private bool m_completed = false; // if connection has been created/assigned to two nodes
 
 		private ConnectionGraphic m_graphic;
 
 		// construction
-		public Connection(Node start)
+		public Connection(Nodule start)
 		{
 			Master.log("Connection initialized");
 			m_origin = start;
@@ -41,13 +41,13 @@ namespace Nurielite
 		}
 
 		// properties
-		public Node getOrigin() { return m_origin; }
-		public Node getEnd() { return m_end; }
+		public Nodule getOrigin() { return m_origin; }
+		public Nodule getEnd() { return m_end; }
 
 		public bool isComplete() { return m_completed; }
 
-		public Node getInputNode() { return m_inNode; }
-		public Node getOutputNode() { return m_outNode; }
+		public Nodule getInputNode() { return m_inNode; }
+		public Nodule getOutputNode() { return m_outNode; }
 
 		public ConnectionGraphic getGraphic() { return m_graphic; }
 
@@ -55,7 +55,7 @@ namespace Nurielite
 
 		// finishes creating connection/adds connection to both involved nodes
 		// returns true on success, false on failure
-		public bool completeConnection(Node other)
+		public bool completeConnection(Nodule other)
 		{
 			m_end = other;
 			if (m_outNode == null) { m_outNode = other; }

@@ -10,15 +10,13 @@ namespace Nurielite
     {
         private LinkedList<InterNode> m_inNodes;
         private LinkedList<InterNode> m_outNodes;
-        private Representation m_core;
+        private Block m_core;
         private InterGraph m_master;
 
-        public InterNode(Representation core, InterGraph master)
+        public InterNode(Block core, InterGraph master)
         {
-            Master.log(core.getID() + " : " + master.contains(core.getID()));
             if (!master.contains(core.getID()))
             {
-                Master.log("----->I ran for " + core.getID() + "!");
                 m_inNodes = new LinkedList<InterNode>();
                 m_outNodes = new LinkedList<InterNode>();
                 m_core = core;
@@ -32,9 +30,9 @@ namespace Nurielite
 
         private void updateLinks()
         {
-            List<Representation> lrep = m_core.getOutgoing();
+            List<Block> lrep = m_core.getOutgoing();
 
-            foreach(Representation r in lrep)
+            foreach(Block r in lrep)
             {
                 if (m_master.contains(r.getID()))
                 {
@@ -69,7 +67,7 @@ namespace Nurielite
         public List<InterNode> getOutgoing() { return m_outNodes.ToList(); }
         public List<InterNode> getIncoming() { return m_inNodes.ToList(); }
 
-        public Representation getCore() { return m_core; }
+        public Block getCore() { return m_core; }
 
         public bool Equals(InterNode n) { return n.getCore().Equals(m_core); }
 

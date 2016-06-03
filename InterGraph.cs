@@ -69,7 +69,7 @@ namespace Nurielite
             return algs;
         }
 
-        public InterNode get(Representation r) 
+        public InterNode get(Block r) 
         {
             foreach (InterNode n in m_inodes)
                 if (n.getCore().Equals(r))
@@ -83,7 +83,7 @@ namespace Nurielite
             Master.log("Appending InterNode with ID " + n.getCore().getID() + " to graph");
         }
 
-        internal bool contains(Representation r)
+        internal bool contains(Block r)
         {
             foreach (InterNode i in m_inodes)
                 if (i.getCore().getID() == r.getID())

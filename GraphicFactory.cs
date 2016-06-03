@@ -9,23 +9,23 @@ namespace Nurielite
 {
 	public class GraphicFactory
 	{
-		public static RepresentationGraphic createRepresentationGraphic(Representation parent, int numIn, int numOut, Color color)
+		public static BlockGraphic createBlockGraphic(Block parent, int numIn, int numOut, Color color)
 		{
-			RepresentationGraphic rg = new RepresentationGraphic(parent, numIn, numOut, color);
-			Master.getGraphicContainer().addRepresentationGraphic(rg);
-			return rg;
+			BlockGraphic bg = new BlockGraphic(parent, numIn, numOut, color);
+			Master.getGraphicContainer().addBlockGraphic(bg);
+			return bg;
 		}
 
-		public static RepresentationGraphic createRepresentationGraphic(Representation parent, Color color)
+		public static BlockGraphic createBlockGraphic(Block parent, Color color)
 		{
-			RepresentationGraphic rg = new RepresentationGraphic(parent, 1, 1, color);
-			Master.getGraphicContainer().addRepresentationGraphic(rg);
-			return rg;
+			BlockGraphic bg = new BlockGraphic(parent, 1, 1, color);
+			Master.getGraphicContainer().addBlockGraphic(bg);
+			return bg;
 		}
 	
-		public static NodeGraphic createNodeGraphic(Node parent)
+		public static NoduleGraphic createNoduleGraphic(Nodule parent)
 		{
-			return new NodeGraphic(parent);
+			return new NoduleGraphic(parent);
 		}
 
 		public static ConnectionGraphic createConnectionGraphic(Connection parent)

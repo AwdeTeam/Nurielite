@@ -33,7 +33,7 @@ namespace Nurielite
 
 		private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
 		{
-			Representation newrep = AlgorithmLoader.generateRepresentation(txtNameInput.Text, cmbAlgorithmType.SelectedIndex,
+			Block newrep = AlgorithmLoader.generateBlock(txtNameInput.Text, cmbAlgorithmType.SelectedIndex,
 					ray(lstInputs.SelectedItems), ray(lstOutputs.SelectedItems));
 			Close();
 		}
@@ -49,7 +49,7 @@ namespace Nurielite
 
 		private void cmbAlgorithmType_Loaded(object sender, RoutedEventArgs e)
 		{
-			cmbAlgorithmType.ItemsSource = Representation.ALGORITHM_TYPES.ToList();
+			cmbAlgorithmType.ItemsSource = Block.ALGORITHM_TYPES.ToList();
 			cmbAlgorithmType.SelectedIndex = 0;
 		}
 

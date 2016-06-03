@@ -10,7 +10,7 @@ namespace Nurielite
 {
     class AlgorithmLoader
     {
-        public static Representation generateRepresentation(String name, String family, Datatype[] inputs, Datatype[] outputs)
+        public static Block generateBlock(String name, String family, Datatype[] inputs, Datatype[] outputs)
         {
             Color color = Colors.Gray;
             switch(family)
@@ -51,20 +51,20 @@ namespace Nurielite
                     break;
                 }
             }
-            return new Representation(inputs, outputs, name, family, color);
+            return new Block(inputs, outputs, name, family, color);
         }
 
-        public static Representation generateRepresentation(String name, int family, Datatype[] inputs, Datatype[] outputs)
+        public static Block generateBlock(String name, int family, Datatype[] inputs, Datatype[] outputs)
         {
-            return generateRepresentation(name, Representation.ALGORITHM_TYPES[family], inputs, outputs);
+            return generateBlock(name, Block.ALGORITHM_TYPES[family], inputs, outputs);
         }
 
-        public static Representation load(String path)
+        public static Block load(String path)
         {
             string filePath = path;
             StreamReader sr = new StreamReader(filePath);
             string[] data = sr.ReadLine().Split(',');
-            return generateRepresentation(data[0], "input", null, null);
+            return generateBlock(data[0], "input", null, null);
         }
     }
 }

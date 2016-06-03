@@ -11,13 +11,13 @@ using System.Windows;
 
 namespace Nurielite
 {
-	public class Representation
+	public class Block
 	{
         public static String[] ALGORITHM_TYPES = { "operation", "classifier", "clustering", "dimension_reduction", "input", "output"};
 
 		// member variables
 		private int m_id = 0;
-        private List<Node> m_nodes = new List<Node>();
+        private List<Nodule> m_nodes = new List<Nodule>();
 
 		// TODO: make lists
         private Datatype[] m_inputs;
@@ -28,12 +28,12 @@ namespace Nurielite
         private string m_algorithm = "No-Op"; //TODO Merge with Python Algorithm IDs
 		private String m_family = "undefined";
 
- 		private RepresentationGraphic m_graphic;
+ 		private BlockGraphic m_graphic;
 
 		// construction
-        public Representation(Datatype[] inputs, Datatype[] outputs, String name, String family, Color color)
+        public Block(Datatype[] inputs, Datatype[] outputs, String name, String family, Color color)
         {
-            Master.log("----Creating representation----");
+            Master.log("----Creating block----");
             m_id = Master.getNextRepID();
             Master.log("ID: " + m_id, Colors.GreenYellow);
 
@@ -43,11 +43,11 @@ namespace Nurielite
             this.m_inputs = inputs;
             this.m_outputs = outputs;
           
-			m_graphic = GraphicFactory.createRepresentationGraphic(this, inputs.Length, outputs.Length, color);
+			m_graphic = GraphicFactory.createBlockGraphic(this, inputs.Length, outputs.Length, color);
 
 			// create nodes
-			for (int i = 0; i < m_inputs.Length; i++) { m_nodes.Add(new Node(this, true, i, m_inputs[i])); }
-			for (int i = 0; i < m_outputs.Length; i++) { m_nodes.Add(new Node(this, false, i, m_outputs[i])); }
+			for (int i = 0; i < m_inputs.Length; i++) { m_nodes.Add(new Nodule(this, true, i, m_inputs[i])); }
+			for (int i = 0; i < m_outputs.Length; i++) { m_nodes.Add(new Nodule(this, false, i, m_outputs[i])); }
         }
 
         public static int FindType(String type)
@@ -69,23 +69,23 @@ namespace Nurielite
 		// properties
 		public int getID() { return m_id; }
 		public string getName() { return m_name; }
-		public void setName(string name) { m_name = name; m_graphic.setName(m_name); }
+		public void setName(string name) { m_name = name; m_graphic.Name = m_name; }
 		public string getVersion() { return m_version; }
 		public string getAlgorithm() { return m_algorithm; }
         public String getFamily() { return m_family; }
         public void setFamily(String family) { m_family = family; }
 
-		public RepresentationGraphic getGraphic() { return m_graphic; }
-		public List<Node> getNodes() { return m_nodes; }
+		public BlockGraphic getGraphic() { return m_graphic; }
+		public List<Nodule> getNodes() { return m_nodes; }
 
 
 		// -- FUNCTIONS --
 
-        public List<Representation> getOutgoing()
+        public List<Block> getOutgoing()
         {
-            List<Representation> lout = new List<Representation>();
+            List<Block> lout = new List<Block>();
 
-            foreach (Node n in m_nodes)
+            foreach (Nodule n in m_nodes)
             {
                 if (!n.isInput())
                 {

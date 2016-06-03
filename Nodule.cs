@@ -13,13 +13,13 @@ using System.Windows.Input;
 
 namespace Nurielite
 {
-	public class Node
+	public class Nodule
 	{
 		// TODO: add labels on hover (right click allows you to change?) [for naming groups?]
 
 		// member variables
-		private Representation m_parent;
-		private NodeGraphic m_graphic;
+		private Block m_parent;
+		private NoduleGraphic m_graphic;
 
 		private List<Connection> m_connections = new List<Connection>();
 
@@ -29,19 +29,19 @@ namespace Nurielite
         private Datatype m_datatype = null;
         
 		// construction
-		public Node(Representation parent, bool isInput, int groupNum, Datatype datatype) // PASS IN X AND Y OF REPRESENTATION
+		public Nodule(Block parent, bool isInput, int groupNum, Datatype datatype) // PASS IN X AND Y OF BLOCK
 		{
 			m_parent = parent;
 			m_isInput = isInput;
 			m_groupNum = groupNum;
 			m_datatype = datatype;
 
-			m_graphic = GraphicFactory.createNodeGraphic(this);
+			m_graphic = GraphicFactory.createNoduleGraphic(this);
 		}
 
 		// properties
-		public Representation getParent() { return m_parent; }
-		public NodeGraphic getGraphic() { return m_graphic; }
+		public Block getParent() { return m_parent; }
+		public NoduleGraphic getGraphic() { return m_graphic; }
 
 		public bool isInput() { return m_isInput; }
 		public int getGroupNum() { return m_groupNum; }

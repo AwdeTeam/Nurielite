@@ -11,11 +11,11 @@ using System.Windows.Input;
 
 namespace Nurielite
 {
-	public class NodeGraphic
+	public class NoduleGraphic
 	{
 		private Ellipse m_body = new Ellipse();
 		
-		private Node m_parent;
+		private Nodule m_parent;
 
 		private SolidColorBrush m_brushFill = new SolidColorBrush(Colors.White);
 		private SolidColorBrush m_brushBorder = new SolidColorBrush(Colors.Black);
@@ -24,7 +24,7 @@ namespace Nurielite
 		private int m_offsetY = 0;
 
 		// construction
-		public NodeGraphic(Node parent)
+		public NoduleGraphic(Nodule parent)
 		{
 			m_parent = parent;
 			m_offsetX = parent.getParent().getGraphic().getNodeOffsetX(parent.isInput(), parent.getGroupNum());
@@ -50,7 +50,7 @@ namespace Nurielite
 			Canvas.SetZIndex(m_body, GraphicContainer.NODE_Z_LEVEL);
 
 			// inital position
-			move(m_parent.getParent().getGraphic().getCurrentX(), m_parent.getParent().getGraphic().getCurrentY());
+			move(m_parent.getParent().getGraphic().CurrentX, m_parent.getParent().getGraphic().CurrentY);
 
 			// add to canvas
 			Master.getCanvas().Children.Add(m_body);

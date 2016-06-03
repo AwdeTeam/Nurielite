@@ -14,7 +14,7 @@ namespace Nurielite
 	{
 		// private:
 		private static MainWindow win;
-		private static int RepID = -1; // incrementing counter for assigning representation ids
+		private static int RepID = -1; // incrementing counter for assigning block ids
 		
 		// public:
 
@@ -26,7 +26,7 @@ namespace Nurielite
 
 		public static GraphicContainer getGraphicContainer() { return win.getGraphicContainer(); }
 		public static Canvas getCanvas() { return win.getMainCanvas(); } // I know the name for this now!! Delegation!
-		public static void setDraggingRepresentation(bool dragging, RepresentationGraphic dragRep) { win.getGraphicContainer().setDraggingRepresentation(dragging, dragRep); }
+		public static void setDraggingBlock(bool dragging, BlockGraphic dragBlk) { win.getGraphicContainer().setDraggingBlock(dragging, dragBlk); }
 		public static void setDraggingConnection(bool dragging, ConnectionGraphic con) { win.getGraphicContainer().setDraggingConnection(dragging, con); }
 		public static ConnectionGraphic getDraggingConnection() { return win.getGraphicContainer().getDraggingConnection(); }
 		public static void setCommandPrompt(string text) { win.setCommandPrompt(text); }

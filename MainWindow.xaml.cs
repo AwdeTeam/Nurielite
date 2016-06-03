@@ -30,7 +30,7 @@ namespace Nurielite
 		private int m_commandIndex = 0; // keeps track of where in command history you are
 
 		// hashmap is probably unnecessary, but I actually understand how they work now, so yeah ^_^
-		private Dictionary<int, Representation> m_representations = new Dictionary<int, Representation>();
+		private Dictionary<int, Block> m_blocks = new Dictionary<int, Block>();
 
 		private GraphicContainer m_gc = new GraphicContainer();
 
@@ -117,13 +117,13 @@ namespace Nurielite
 
 
             //Representation inputRep = new Representation()
-			Representation inprep = AlgorithmLoader.generateRepresentation("inputthingy", "input", new Datatype[0], new Datatype[] { Datatype.findType("Scalar Integer") });
-			Representation oprep = AlgorithmLoader.generateRepresentation("sumthingy", "operation", new Datatype[] { Datatype.findType("Scalar Integer") }, new Datatype[] { Datatype.findType("Scalar Integer") });
-			Representation outrep = AlgorithmLoader.generateRepresentation("output", "output",  new Datatype[] { Datatype.findType("Scalar Integer") },new Datatype[0]);
+			Block inprep = AlgorithmLoader.generateBlock("inputthingy", "input", new Datatype[0], new Datatype[] { Datatype.findType("Scalar Integer") });
+			Block oprep = AlgorithmLoader.generateBlock("sumthingy", "operation", new Datatype[] { Datatype.findType("Scalar Integer") }, new Datatype[] { Datatype.findType("Scalar Integer") });
+			Block outrep = AlgorithmLoader.generateBlock("output", "output",  new Datatype[] { Datatype.findType("Scalar Integer") },new Datatype[0]);
 
-			m_representations.Add(0, inprep);
-			m_representations.Add(1, oprep);
-			m_representations.Add(2, outrep);
+			m_blocks.Add(0, inprep);
+			m_blocks.Add(1, oprep);
+			m_blocks.Add(2, outrep);
 			
 		}
 
@@ -160,14 +160,14 @@ namespace Nurielite
                 graph.append( new InterNode(kvp.Value, graph) );
             }*/
 
-			new InterNode(m_representations[0], graph);
+			new InterNode(m_blocks[0], graph);
 			
             List<PyAlgorithm> algs = graph.topoSort();
             log("Count: " + algs.Count);
 			foreach (PyAlgorithm alg in algs)
 			{
 				Dictionary<string, dynamic> dic = alg.getOptions();
-				Representation rep = (Representation)dic["thing"];
+				Block rep = (Block)dic["thing"];
 				log(rep.getID().ToString());
 			}
 
@@ -345,17 +345,17 @@ namespace Nurielite
 					string attr = vals[1];
 					string val = vals[2];
 
-					Representation r = m_representations[id];
+					Block r = m_blocks[id];
 
 					if (attr == "lbl") 
 					{ 
 						r.setName(val);
-						log("Updated representation label to '" + val + "'");
+						log("Updated block label to '" + val + "'");
 					}
 					else if (attr == "color") 
 					{
-                        r.getGraphic().setBaseColor(((SolidColorBrush)(new BrushConverter().ConvertFrom("#" + val))).Color); 
-						log("Updated representation color to #" + val);
+                        r.getGraphic().BaseColor = ((SolidColorBrush)(new BrushConverter().ConvertFrom("#" + val))).Color; 
+						log("Updated block color to #" + val);
 					}
 				}
 			}
@@ -369,9 +369,9 @@ namespace Nurielite
 
                 switch (keys[1])
                 {
-                    case "rep":
-                    case "representations":
-                        log(listRepresentations());
+                    case "blk":
+                    case "blocks":
+                        log(listBlocks());
                         break;
                     case "dt":
                     case "datatypes":
@@ -386,14 +386,14 @@ namespace Nurielite
            
 		}
 
-        private string listRepresentations()
+        private string listBlocks()
         {
             string r = "";
-            for(int i = 0; i < m_representations.Count; i++)
+            for(int i = 0; i < m_blocks.Count; i++)
             {
-                r += "\t" + m_representations[i].getID() + ")";
-                r += m_representations[i].getName() + ", ";
-                r += m_representations[i].getFamily() + ": " + m_representations[i].getAlgorithm() + "\n";
+                r += "\t" + m_blocks[i].getID() + ")";
+                r += m_blocks[i].getName() + ", ";
+                r += m_blocks[i].getFamily() + ": " + m_blocks[i].getAlgorithm() + "\n";
             }
             return r;
         }

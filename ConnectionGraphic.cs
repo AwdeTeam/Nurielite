@@ -46,7 +46,7 @@ namespace Nurielite
 		{
 			m_body.Stroke = m_brushStroke;
 			m_body.StrokeThickness = 2;
-			Node origin = m_parent.getOrigin();
+			Nodule origin = m_parent.getOrigin();
 			m_body.X1 = origin.getGraphic().getCurrentX() + GraphicContainer.NODE_SIZE / 2;
 			m_body.Y1 = origin.getGraphic().getCurrentY() + GraphicContainer.NODE_SIZE / 2;
 			m_body.X2 = origin.getGraphic().getCurrentX();
@@ -70,7 +70,7 @@ namespace Nurielite
 		}
 
 		// visually attaches connection to passed node
-		public void finishVisualConnection(Node n)
+		public void finishVisualConnection(Nodule n)
 		{
 			adjustSecondPoint((int)(n.getGraphic().getCurrentX() + GraphicContainer.NODE_SIZE / 2), (int)(n.getGraphic().getCurrentY() + GraphicContainer.NODE_SIZE / 2));
 			m_body.IsHitTestVisible = true; // make clickable
@@ -78,10 +78,10 @@ namespace Nurielite
 		}
 
 		// moves the end of the line attached to passed node
-		public void adjustRelatedPoint(Node node)
+		public void adjustRelatedPoint(Nodule node)
 		{
-			Node origin = m_parent.getOrigin();
-			Node end = m_parent.getEnd();
+			Nodule origin = m_parent.getOrigin();
+			Nodule end = m_parent.getEnd();
 			if (node.Equals(origin)) { adjustFirstPoint((int)(origin.getGraphic().getCurrentX() + GraphicContainer.NODE_SIZE / 2), (int)(origin.getGraphic().getCurrentY() + GraphicContainer.NODE_SIZE / 2)); }
 			else if (node.Equals(end)) { adjustSecondPoint((int)(end.getGraphic().getCurrentX() + GraphicContainer.NODE_SIZE / 2), (int)(end.getGraphic().getCurrentY() + GraphicContainer.NODE_SIZE / 2)); }
 		}
