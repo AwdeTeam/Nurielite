@@ -15,7 +15,7 @@ namespace Nurielite
 		/*private bool m_isDraggingRepresentation;
 		private RepresentationGraphic m_draggingRepresentation;*/
 
-		// this class is "central hub" for all event handlers. Takes any events from mainwindow and distributes as necessary.
+		// this class is "central hub" for all event handlers. Takes any events from MainWindow and distributes as necessary.
 		// (handles dragging controls, etc)
 		// ONLY GOAL OF EVENT HANDLERS HERE ARE TO CALL/ROUTE THE APPROPRIATE EVENT HANDLERS ON COMPONENTS (unless global thing like panning)
 

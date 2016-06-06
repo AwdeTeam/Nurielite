@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Nurielite.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -93,7 +94,7 @@
     <Compile Include="GraphicFactory.cs" />
     <Compile Include="InterGraph.cs" />
     <Compile Include="InterNode.cs" />
-    <Compile Include="Node.cs" />
+    <Compile Include="Nodule.cs" />
     <Compile Include="NodeGraphic.cs" />
     <Compile Include="PyAlgorithm.cs" />
     <Compile Include="PythonGenerator.cs" />

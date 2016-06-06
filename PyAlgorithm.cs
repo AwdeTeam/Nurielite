@@ -23,7 +23,7 @@ namespace Nurielite
 		public PyAlgorithm(dynamic pyFile)
 		{ 
 			m_pyFile = pyFile; 
-			m_pyClass = m_pyFile.PyAlgorithmInterface(); // (this will throw runtimebinderexception if that class not found. This exception is handled in PythonGenerator)
+			m_pyClass = m_pyFile.PyAlgorithmInterface(); // (this will throw RuntimeBinderException if that class not found. This exception is handled in PythonGenerator)
 			// TODO: check that the file has all the needed functions
 		}
 		private PyAlgorithm() // NOTE: this is just so that things don't crash if use loads invalid py file or class isn't found (program should then just pass this back instead and display an error message)
@@ -38,7 +38,7 @@ namespace Nurielite
 			Dictionary<string, dynamic> options = new Dictionary<string, dynamic>();
 			if (m_pyClass == null) { return options; }
 			
-			// call getOptions from ironpython interface
+			// call getOptions from IronPython interface
 			dynamic pyOptions = m_pyClass.getOptions();
 
 			PythonDictionary dictPyOptions = (PythonDictionary)pyOptions; //....is this legal??? Will I be arrested for this?
@@ -64,7 +64,7 @@ namespace Nurielite
 			Dictionary<string, string> metaData = new Dictionary<string, string>();
 			if (m_pyClass == null) { return metaData; }
 
-			// call getMetaData from ironpython interface
+			// call getMetaData from IronPython interface
 			dynamic pyMetaData = m_pyClass.getMetaData();
 
 			PythonDictionary dictPyMetaData = (PythonDictionary)pyMetaData;
@@ -76,7 +76,7 @@ namespace Nurielite
 
 		public string generateRunnableCode()
 		{
-			// in generated python incoming data should be labeled as IN_DATA, and the pythongenerator will take care of changing it as needed
+			// in generated python incoming data should be labeled as IN_DATA, and the PythonGenerator will take care of changing it as needed
 			// returned data should be labeled as a variable OUT_DATA
 			if (m_pyClass == null) { return "NULL ALGORITHM"; }
 			dynamic code = m_pyClass.generateRunnableCode();

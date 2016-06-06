@@ -11,15 +11,23 @@ using System.Windows;
 
 namespace Nurielite
 {
+    /// <summary>
+    /// Represents a single operation or algorithm and the input and output values related to it.
+    /// </summary>
+    /// <seealso cref="BlockGraphic"/>
+    /// <seealso cref="InterNode"/>
+    /// <seealso cref="PyAlgorithm"/>
 	public class Block
 	{
+        /// <summary>
+        /// 
+        /// </summary>
         public static String[] ALGORITHM_TYPES = { "operation", "classifier", "clustering", "dimension_reduction", "input", "output"};
 
 		// member variables
 		private int m_id = 0;
         private List<Nodule> m_nodes = new List<Nodule>();
 
-		// TODO: make lists
         private Datatype[] m_inputs;
         private Datatype[] m_outputs;
 

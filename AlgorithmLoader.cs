@@ -8,6 +8,12 @@ using System.Windows.Media;
 
 namespace Nurielite
 {
+    /// <summary>
+    /// Builds a Block from a set of constraints
+    /// </summary>
+    /// <remarks>
+    /// So... this class might be pretty much pointless as it's basically just a constructor for Block
+    /// </remarks>
     class AlgorithmLoader
     {
         public static Block generateBlock(String name, String family, Datatype[] inputs, Datatype[] outputs)

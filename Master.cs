@@ -10,6 +10,9 @@ namespace Nurielite
 {
 	// Use this for necessary interactions between classes and window
 	// (so the window doesn't need to be passed into every class in order to have necessary functionality)
+    /// <summary>
+    /// Testing Summary
+    /// </summary>
 	class Master
 	{
 		// private:
