@@ -36,4 +36,14 @@ namespace Nurielite
 
 		public static int getNextRepID() { RepID++; return RepID; }
 	}
+
+	public enum AlgorithmType
+	{
+		Undefined = 0,
+		Operation = 1,
+		Classifier = 2,
+		Clustering = 3,
+		Input = 4,
+		Output = 5
+	}
 }
