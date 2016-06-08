@@ -22,7 +22,7 @@ namespace Nurielite
         /// <summary>
         /// 
         /// </summary>
-        public static string[] ALGORITHM_TYPES = { "operation", "classifier", "clustering", "dimension_reduction", "input", "output"};
+        public static string[] ALGORITHM_TYPES = { "operation", "classifier", "clustering", "dimension_reduction", "input", "output"}; //TODO: REMOVE
 
 		// member variables
 		private int m_iID = 0;
@@ -34,7 +34,7 @@ namespace Nurielite
         private string m_sName = "unnamed algorithm";
         private string m_sVersion = "##.## XXX";
         private string m_sAlgorithmName = "No-Op"; //TODO Merge with Python Algorithm IDs
-		private string m_sFamily = "undefined";
+		private string m_sFamily = "undefined"; //TODO: REMOVE
 		private AlgorithmType m_eFamily = AlgorithmType.Undefined;
 
  		private BlockGraphic m_pGraphic;
@@ -86,20 +86,20 @@ namespace Nurielite
 
         public List<Block> getOutgoing()
         {
-            List<Block> lout = new List<Block>();
+            List<Block> pOutgoingBlocks = new List<Block>();
 
             foreach (Nodule pNodule in m_pNodules)
             {
                 if (!pNodule.isInput())
                 {
-                    foreach(Connection c in pNodule.getConnections())
+                    foreach(Connection c in pNodule.Connections)
                     {
-                        lout.Add(c.getInputNode().getParent());
+                        pOutgoingBlocks.Add(c.InputNodule.Parent);
                     }
                 }
             }
 
-            return lout;
+            return pOutgoingBlocks;
         }
     }
 }

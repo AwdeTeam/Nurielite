@@ -13,79 +13,88 @@ namespace Nurielite
 	public class Connection
 	{
 		// member variables
-		private Nodule m_inNode, m_outNode; // same as below, but referenced for different reasons
+		private Nodule m_pInNodule, m_pOutNodule; // same as below, but referenced for different reasons
 
-		private Nodule m_origin;
-		private Nodule m_end;
+		private Nodule m_pOrigin;
+		private Nodule m_pEnd;
 
-		private bool m_completed = false; // if connection has been created/assigned to two nodes
+		private bool m_bCompleted = false; // if connection has been created/assigned to two nodes
 
-		private ConnectionGraphic m_graphic;
+		private ConnectionGraphic m_pGraphic;
 
 		// construction
-		public Connection(Nodule start)
+		public Connection(Nodule pStart)
 		{
 			Master.log("Connection initialized");
-			m_origin = start;
-			if (start.isInput()) 
+			m_pOrigin = pStart;
+			if (pStart.isInput()) 
             {
-                m_inNode = start;
-                if(start.getNumConnections() > 0)
+                m_pInNodule = pStart;
+                if(pStart.getNumConnections() > 0)
                 {
-                    Connection x = start.getConnection(0);
+                    Connection x = pStart.getConnection(0);
                     x.removeConnection();
                 }
             }
-			else { m_outNode = start; }
-			m_graphic = GraphicFactory.createConnectionGraphic(this);
+			else { m_pOutNodule = pStart; }
+			m_pGraphic = new ConnectionGraphic(this);
 		}
 
 		// properties
-		public Nodule getOrigin() { return m_origin; }
-		public Nodule getEnd() { return m_end; }
+		// TODO: find references for previous properties and update
+		public Nodule Origin { get { return m_pOrigin; } set { m_pOrigin = value; } }
+		public Nodule End { get { return m_pEnd; } set { m_pEnd = value; } }
+		public Nodule InputNodule { get { return m_pInNodule; } set { m_pInNodule = value; } }
+		public Nodule OutputNodule { get { return m_pOutNodule; } set { m_pOutNodule = value; } }
+		public bool IsComplete { get { return m_bCompleted; } set { m_bCompleted = value; } }
+		public ConnectionGraphic Graphic { get { return m_pGraphic; } set { m_pGraphic = value; } }
+		
 
-		public bool isComplete() { return m_completed; }
+		public Nodule getOrigin() { return m_pOrigin; }
+		public Nodule getEnd() { return m_pEnd; }
 
-		public Nodule getInputNode() { return m_inNode; }
-		public Nodule getOutputNode() { return m_outNode; }
+		public bool isComplete() { return m_bCompleted; }
 
-		public ConnectionGraphic getGraphic() { return m_graphic; }
+		public Nodule getInputNode() { return m_pInNodule; }
+		public Nodule getOutputNode() { return m_pOutNodule; }
+
+		public ConnectionGraphic getGraphic() { return m_pGraphic; }
 
 		// -- FUNCTIONS --
 
 		// finishes creating connection/adds connection to both involved nodes
 		// returns true on success, false on failure
-		public bool completeConnection(Nodule other)
+		public bool completeConnection(Nodule pOther)
 		{
-			m_end = other;
-			if (m_outNode == null) { m_outNode = other; }
-			else { m_inNode = other; }
+			m_pEnd = pOther;
+			if (m_pOutNodule == null) { m_pOutNodule = pOther; }
+			else { m_pInNodule = pOther; }
 
 			// make sure the nodes aren't the same and are not both inputs or outputs
-			if (m_origin.Equals(m_end) || 
-				m_origin.isInput() == m_end.isInput() || 
-                m_origin.getParent() == m_end.getParent() || 
-                !m_origin.getDatatype().fits(m_end.getDatatype()))
+			if (m_pOrigin.Equals(m_pEnd) || 
+				m_pOrigin.IsInput == m_pEnd.IsInput || 
+                m_pOrigin.Parent == m_pEnd.Parent || 
+                !m_pOrigin.Datatype.fits(m_pEnd.Datatype))
 			{
-				m_graphic.removeGraphic();
+				m_pGraphic.removeGraphic();
 				return false;
 			}
 
-            if(!m_origin.getDatatype().equals(m_end.getDatatype()))
+            if(!m_pOrigin.Datatype.equals(m_pEnd.Datatype))
             {
-				m_graphic.setStrokeColor(Colors.Red);
+				m_pGraphic.setStrokeColor(Colors.Red);
             }
 
 			// set end point to end node center
-			m_graphic.finishVisualConnection(m_end);
+			m_pGraphic.finishVisualConnection(m_pEnd);
 
-			m_completed = true;
+			m_bCompleted = true;
 
-			int inputRepID = m_inNode.getParent().getID();
-			int inputNodeID = m_inNode.getGroupNum();
-			int outputRepID = m_outNode.getParent().getID();
-			int outputNodeID = m_outNode.getGroupNum();
-			Master.log("Connection created - OutputID: " + outputRepID + " (out-node " + outputNodeID + ") InputID: " + inputRepID + " (in-node " + inputNodeID + ")");
+			int iInputBlockID = m_pInNodule.Parent.ID;
+			int iInputNodeID = m_pInNodule.GroupNum;
+			int iOutputBlockID = m_pOutNodule.Parent.ID;
+			int iOutputNodeID = m_pOutNodule.GroupNum;
+			Master.log("Connection created - OutputID: " + iOutputBlockID + " (out-node " + iOutputNodeID + ") InputID: " + iInputBlockID + " (in-node " + iInputNodeID + ")");
 
 			return true;
 		}
@@ -94,9 +103,9 @@ namespace Nurielite
         public void removeConnection()
         {
             // remove all the things! (effectively delete connection)
-            m_origin.removeConnection(this);
-            m_end.removeConnection(this);
-			m_graphic.removeGraphic();
+            m_pOrigin.removeConnection(this);
+            m_pEnd.removeConnection(this);
+			m_pGraphic.removeGraphic();
 
             Master.log("Connection destroyed");
         }
