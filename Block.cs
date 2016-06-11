@@ -34,20 +34,20 @@ namespace Nurielite
         private string m_sName = "unnamed algorithm";
         private string m_sVersion = "##.## XXX";
         private string m_sAlgorithmName = "No-Op"; //TODO Merge with Python Algorithm IDs
-		private string m_sFamily = "undefined"; //TODO: REMOVE
+		//private string m_sFamily = "undefined"; //TODO: REMOVE
 		private AlgorithmType m_eFamily = AlgorithmType.Undefined;
 
  		private BlockGraphic m_pGraphic;
 
 		// construction
-        public Block(Datatype[] aInputs, Datatype[] aOutputs, string sName, string sFamily, Color pColor)
+        public Block(Datatype[] aInputs, Datatype[] aOutputs, string sName, AlgorithmType eFamily, Color pColor)
         {
             Master.log("----Creating block----");
             m_iID = Master.getNextRepID();
             Master.log("ID: " + m_iID, Colors.GreenYellow);
 
             m_sName = sName;
-            m_sFamily = sFamily;
+            m_eFamily = eFamily;
           
             this.m_aInputs = aInputs;
             this.m_aOutputs = aOutputs;
@@ -61,7 +61,7 @@ namespace Nurielite
         }
 
 		// properties 
-		// TODO: go through oririnal getters/setters and find references, and update them to new properties
+		// TODO: go through original getters/setters and find references, and update them to new properties
 		public int ID { get { return m_iID; } set { m_iID = value; } }
 		public string Name { get { return m_sName; } set { m_sName = value; } }
 		public string Version { get { return m_sVersion; } set { m_sVersion = value; } } 
@@ -75,8 +75,8 @@ namespace Nurielite
 		public void setName(string name) { m_sName = name; m_pGraphic.Name = m_sName; }
 		public string getVersion() { return m_sVersion; }
 		public string getAlgorithm() { return m_sAlgorithmName; }
-        public String getFamily() { return m_sFamily; }
-        public void setFamily(String family) { m_sFamily = family; }
+        public AlgorithmType getFamily() { return m_eFamily; }
+        public void setFamily(AlgorithmType family) { m_eFamily = family; }
 
 		public BlockGraphic getGraphic() { return m_pGraphic; }
 		public List<Nodule> getNodes() { return m_pNodules; }

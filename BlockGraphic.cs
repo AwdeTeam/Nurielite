@@ -21,7 +21,7 @@ namespace Nurielite
 		private int m_iID;
 		private string m_sName;
 		private string m_sVersion;
-		private string m_algorithm; //TODO: merge with python algorithm
+		private AlgorithmType m_eAlgorithm;
 
 		private int m_iInputNoduleOffset = 0;
 		private int m_iOutputNoduleOffset = 0;
@@ -62,7 +62,7 @@ namespace Nurielite
 			m_iID = parent.getID();
 			m_sName = parent.getName();
 			m_sVersion = parent.getVersion();
-			m_algorithm = parent.getFamily();
+			m_eAlgorithm = parent.getFamily();
             m_pColorBase = color;
 
 			createDrawing(100, 100, numIn, numOut, m_pColorBase);
@@ -139,7 +139,7 @@ namespace Nurielite
 			Canvas.SetZIndex(m_pLblName, GraphicContainer.REP_Z_LEVEL);
 
 			m_pLblContent.Foreground = m_pBrushForeground;
-			m_pLblContent.Content = m_algorithm + "\n" + "Accuracy";
+			m_pLblContent.Content = Master.getAlgorithmTypeName(m_eAlgorithm) + "\n" + "Accuracy";  //Oops
 			m_pLblContent.IsHitTestVisible = false;
 			m_pLblContent.Width = m_pRecBoard.Width;
 			Canvas.SetZIndex(m_pLblContent, GraphicContainer.REP_Z_LEVEL);

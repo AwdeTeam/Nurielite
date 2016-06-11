@@ -35,6 +35,21 @@ namespace Nurielite
 		public static void setCommandPrompt(string text) { win.setCommandPrompt(text); }
 
 		public static int getNextRepID() { RepID++; return RepID; }
+
+        public static string getAlgorithmTypeName(AlgorithmType eType)
+        {
+            switch (eType)
+            {
+                case AlgorithmType.Classifier: { return "Classifier"; }
+                case AlgorithmType.Clustering: { return "Clustering"; }
+                case AlgorithmType.DimensionReduction: { return "DimensionReduction"; }
+                case AlgorithmType.Operation: { return "Operation"; }
+                case AlgorithmType.Input: { return "Input"; }
+                case AlgorithmType.Output: { return "Output"; }
+                case AlgorithmType.Undefined: { return "Undefined"; }
+            }
+            return "Undefined and also something broke.";
+        }
 	}
 
 	public enum AlgorithmType
@@ -43,7 +58,8 @@ namespace Nurielite
 		Operation = 1,
 		Classifier = 2,
 		Clustering = 3,
-		Input = 4,
-		Output = 5
+        DimensionReduction = 4,
+		Input = 5,
+		Output = 6
 	}
 }

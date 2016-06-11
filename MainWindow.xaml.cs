@@ -117,9 +117,9 @@ namespace Nurielite
 
 
             //Representation inputRep = new Representation()
-			Block inprep = AlgorithmLoader.generateBlock("inputthingy", "input", new Datatype[0], new Datatype[] { Datatype.findType("Scalar Integer") });
-			Block oprep = AlgorithmLoader.generateBlock("sumthingy", "operation", new Datatype[] { Datatype.findType("Scalar Integer") }, new Datatype[] { Datatype.findType("Scalar Integer") });
-			Block outrep = AlgorithmLoader.generateBlock("output", "output",  new Datatype[] { Datatype.findType("Scalar Integer") },new Datatype[0]);
+			Block inprep = AlgorithmLoader.generateBlock("inputthingy", AlgorithmType.Input, new Datatype[0], new Datatype[] { Datatype.findType("Scalar Integer") });
+			Block oprep = AlgorithmLoader.generateBlock("sumthingy", AlgorithmType.Operation, new Datatype[] { Datatype.findType("Scalar Integer") }, new Datatype[] { Datatype.findType("Scalar Integer") });
+			Block outrep = AlgorithmLoader.generateBlock("output", AlgorithmType.Output,  new Datatype[] { Datatype.findType("Scalar Integer") },new Datatype[0]);
 
 			m_blocks.Add(0, inprep);
 			m_blocks.Add(1, oprep);

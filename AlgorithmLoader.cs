@@ -16,42 +16,42 @@ namespace Nurielite
     /// </remarks>
     class AlgorithmLoader
     {
-        public static Block generateBlock(String name, String family, Datatype[] inputs, Datatype[] outputs)
+        public static Block generateBlock(String name, AlgorithmType family, Datatype[] inputs, Datatype[] outputs)
         {
             Color color = Colors.Gray;
             switch(family)
             {
-                case "classifier":
+                case AlgorithmType.Classifier:
                 {
                     color = Colors.SeaGreen;
                     break;
                 }
 
-                case "clustering":
+                case AlgorithmType.Clustering:
                 {
                     color = Colors.Turquoise;
                     break;
                 }
 
-                case "dimension_reduction":
+                case AlgorithmType.DimensionReduction:
                 {
                     color = Colors.Thistle;
                     break;
                 }
 
-                case "operation":
+                case AlgorithmType.Operation:
                 {
                     color = Colors.SkyBlue;
                     break;
                 }
 
-                case "input":
+                case AlgorithmType.Input:
                 {
                     color = Colors.Violet;
                     break;
                 }
 
-                case "output":
+                case AlgorithmType.Output:
                 {
                     color = Colors.Violet;
                     break;
@@ -62,7 +62,7 @@ namespace Nurielite
 
         public static Block generateBlock(String name, int family, Datatype[] inputs, Datatype[] outputs)
         {
-            return generateBlock(name, Block.ALGORITHM_TYPES[family], inputs, outputs);
+            return generateBlock(name, (AlgorithmType) family, inputs, outputs);
         }
 
         public static Block load(String path)
@@ -70,7 +70,7 @@ namespace Nurielite
             string filePath = path;
             StreamReader sr = new StreamReader(filePath);
             string[] data = sr.ReadLine().Split(',');
-            return generateBlock(data[0], "input", null, null);
+            return generateBlock(data[0], AlgorithmType.Input, null, null);
         }
     }
 }

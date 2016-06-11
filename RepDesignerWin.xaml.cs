@@ -49,7 +49,7 @@ namespace Nurielite
 
 		private void cmbAlgorithmType_Loaded(object sender, RoutedEventArgs e)
 		{
-			cmbAlgorithmType.ItemsSource = Block.ALGORITHM_TYPES.ToList();
+			cmbAlgorithmType.ItemsSource = new string[] { "operation", "classifier", "clustering", "dimension_reduction", "input", "output"}; //TODO, is there a way to make this work with the enum?
 			cmbAlgorithmType.SelectedIndex = 0;
 		}
 
