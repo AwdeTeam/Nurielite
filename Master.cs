@@ -50,6 +50,21 @@ namespace Nurielite
             }
             return "Undefined and also something broke.";
         }
+
+        public static string getAlgorithmTypeNameLowerCase(AlgorithmType eType)
+        {
+            switch (eType)
+            {
+                case AlgorithmType.Classifier: { return "classifier"; }
+                case AlgorithmType.Clustering: { return "clustering"; }
+                case AlgorithmType.DimensionReduction: { return "dimension_reduction"; }
+                case AlgorithmType.Operation: { return "operation"; }
+                case AlgorithmType.Input: { return "input"; }
+                case AlgorithmType.Output: { return "output"; }
+                case AlgorithmType.Undefined: { return "undefined"; }
+            }
+            return "undefined and also something broke.";
+        }
 	}
 
 	public enum AlgorithmType

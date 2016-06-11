@@ -18,6 +18,8 @@ namespace Nurielite
 {
     class PythonGenerator
     {
+        public static string ALGORITHM_DIRECTORY = "..\\..\\Algorithms\\algorithm_correct\\";
+
 		// member variables
 		private ScriptRuntime m_runtime;
 		private ScriptScope m_scope;
@@ -51,15 +53,57 @@ namespace Nurielite
 		// functions
 		public void clearRuntimeOutput() { m_outputStream.SetLength(0); }
 
-        public static List<string> getAllOfType(string type)
+        public static List<string> getAllOfType(AlgorithmType type)
         {
             switch(type)
             {
-                case "operation":
-                    return new List<string>() { "Scalar Add", "Scalar Multiply" };
+                case AlgorithmType.Operation:
+                    {
+                        return listLocalAlgorithms("operation");
+                    }
+
+                case AlgorithmType.Clustering:
+                    {
+                        return listLocalAlgorithms("clustering");
+                    }
+
+                case AlgorithmType.DimensionReduction:
+                    {
+                        return listLocalAlgorithms("dimension_reduction");
+                    }
+
+                case AlgorithmType.Input:
+                    {
+                        return listLocalAlgorithms("input");
+                    }
+
+                case AlgorithmType.Output:
+                    {
+                        return listLocalAlgorithms("output");
+                    }
+
+                case AlgorithmType.Undefined:
                 default:
                     return null;
             }
+        }
+
+        public static List<string> listLocalAlgorithms(string sPath)
+        {
+            List<string> r = Directory.EnumerateDirectories(ALGORITHM_DIRECTORY + sPath).ToList();
+
+            for (int i = 0; i < r.Count; i++)
+            {
+                r[i] = r[i].Substring(r[i].IndexOf("alg_") + "alg_".Length);
+            }
+
+                return r;
+        }
+
+        public static string getAlgorithmPath(AlgorithmType type, int index)
+        {
+            List<string> dir = Directory.EnumerateDirectories(ALGORITHM_DIRECTORY + Master.getAlgorithmTypeNameLowerCase(type)).ToList();
+            return dir[index];
         }
 
 		// returns index of dynamic instance (other classes can get that particular instance)

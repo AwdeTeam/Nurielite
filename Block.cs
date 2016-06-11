@@ -19,11 +19,6 @@ namespace Nurielite
     /// <seealso cref="PyAlgorithm"/>
 	public class Block
 	{
-        /// <summary>
-        /// 
-        /// </summary>
-        public static string[] ALGORITHM_TYPES = { "operation", "classifier", "clustering", "dimension_reduction", "input", "output"}; //TODO: REMOVE
-
 		// member variables
 		private int m_iID = 0;
         private List<Nodule> m_pNodules = new List<Nodule>();

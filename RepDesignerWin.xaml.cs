@@ -80,17 +80,17 @@ namespace Nurielite
 				case "operation":
 					lblType.Content = "operation:";
 					cmbAlgorithmSpecific.IsEnabled = true;
-					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType("operation");
+					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType(AlgorithmType.Operation);
 					break;
 				case "classifier":
 					lblType.Content = "classifier:";
 					cmbAlgorithmSpecific.IsEnabled = true;
-					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType("classifier");
+					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType(AlgorithmType.Classifier);
 					break;
 				case "clustering":
 					lblType.Content = "clustering:";
 					cmbAlgorithmSpecific.IsEnabled = true;
-					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType("clustering");
+					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType(AlgorithmType.Clustering);
 					break;
 				case "input":
 					lblType.Content = "input";
