@@ -33,8 +33,10 @@ namespace Nurielite
 
 		private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
 		{
-			Block newrep = AlgorithmLoader.generateBlock(txtNameInput.Text, cmbAlgorithmType.SelectedIndex,
+			Block newrep = AlgorithmLoader.generateBlock(txtNameInput.Text, 
+                PythonGenerator.getAlgorithmPath((AlgorithmType)cmbAlgorithmType.SelectedIndex, cmbAlgorithmSpecific.SelectedIndex), cmbAlgorithmType.SelectedIndex,
 					ray(lstInputs.SelectedItems), ray(lstOutputs.SelectedItems));
+            m_parent.appendBlock(newrep);
 			Close();
 		}
 
@@ -94,11 +96,13 @@ namespace Nurielite
 					break;
 				case "input":
 					lblType.Content = "input";
-					cmbAlgorithmSpecific.IsEnabled = false;
+					cmbAlgorithmSpecific.IsEnabled = true;
+					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType(AlgorithmType.Input);
 					break;
 				case "output":
 					lblType.Content = "output";
-					cmbAlgorithmSpecific.IsEnabled = false;
+					cmbAlgorithmSpecific.IsEnabled = true;
+					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType(AlgorithmType.Output);
 					break;
 				default:
 					lblType.Content = "";

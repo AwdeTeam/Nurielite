@@ -16,7 +16,7 @@ namespace Nurielite
     /// </remarks>
     class AlgorithmLoader
     {
-        public static Block generateBlock(String name, AlgorithmType family, Datatype[] inputs, Datatype[] outputs)
+        public static Block generateBlock(string name, string path, AlgorithmType family, Datatype[] inputs, Datatype[] outputs)
         {
             Color color = Colors.Gray;
             switch(family)
@@ -57,20 +57,20 @@ namespace Nurielite
                     break;
                 }
             }
-            return new Block(inputs, outputs, name, family, color);
+            return new Block(inputs, outputs, name, path, family, color);
         }
 
-        public static Block generateBlock(String name, int family, Datatype[] inputs, Datatype[] outputs)
+        public static Block generateBlock(string name, string path, int family, Datatype[] inputs, Datatype[] outputs)
         {
-            return generateBlock(name, (AlgorithmType) family, inputs, outputs);
+            return generateBlock(name, path, (AlgorithmType) family, inputs, outputs);
         }
 
-        public static Block load(String path)
+        public static Block load(string path)
         {
             string filePath = path;
             StreamReader sr = new StreamReader(filePath);
             string[] data = sr.ReadLine().Split(',');
-            return generateBlock(data[0], AlgorithmType.Input, null, null);
+            return generateBlock(data[0], path, AlgorithmType.Input, null, null);
         }
     }
 }

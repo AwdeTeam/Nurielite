@@ -29,13 +29,13 @@ namespace Nurielite
         private string m_sName = "unnamed algorithm";
         private string m_sVersion = "##.## XXX";
         private string m_sAlgorithmName = "No-Op"; //TODO Merge with Python Algorithm IDs
-		//private string m_sFamily = "undefined"; //TODO: REMOVE
+        private string m_sAlgorithmPath;
 		private AlgorithmType m_eFamily = AlgorithmType.Undefined;
 
  		private BlockGraphic m_pGraphic;
 
 		// construction
-        public Block(Datatype[] aInputs, Datatype[] aOutputs, string sName, AlgorithmType eFamily, Color pColor)
+        public Block(Datatype[] aInputs, Datatype[] aOutputs, string sName, string path, AlgorithmType eFamily, Color pColor)
         {
             Master.log("----Creating block----");
             m_iID = Master.getNextRepID();
@@ -43,6 +43,8 @@ namespace Nurielite
 
             m_sName = sName;
             m_eFamily = eFamily;
+            m_sAlgorithmPath = path;
+            m_sAlgorithmName = path.Substring(path.IndexOf("alg_") + "alg_".Length);
           
             this.m_aInputs = aInputs;
             this.m_aOutputs = aOutputs;
@@ -61,6 +63,7 @@ namespace Nurielite
 		public string Name { get { return m_sName; } set { m_sName = value; } }
 		public string Version { get { return m_sVersion; } set { m_sVersion = value; } } 
 		public string AlgorithmName { get { return m_sAlgorithmName; } set { m_sAlgorithmName = value; } }
+        public string AlgorithmPath { get { return m_sAlgorithmPath; } }
 		public AlgorithmType Family { get { return m_eFamily; } set { m_eFamily = value; } }
 		public BlockGraphic Graphic { get { return m_pGraphic; } set { m_pGraphic = value; } }
 		public List<Nodule> Nodules { get { return m_pNodules; } set { m_pNodules = value; } }

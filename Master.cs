@@ -69,12 +69,12 @@ namespace Nurielite
 
 	public enum AlgorithmType
 	{
-		Undefined = 0,
-		Operation = 1,
-		Classifier = 2,
-		Clustering = 3,
-        DimensionReduction = 4,
-		Input = 5,
-		Output = 6
+		Undefined = -1,
+		Operation = 0,
+		Classifier = 1,
+		Clustering = 2,
+        DimensionReduction = 3,
+		Input = 4,
+		Output = 5
 	}
 }
