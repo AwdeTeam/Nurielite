@@ -172,7 +172,7 @@ namespace Nurielite
 				log(rep.getID().ToString());
 			}
 
-            //(new PythonGenerator()).generatePythonCode(algs, "../../AlgTest", "./COMPILED");
+            (new PythonGenerator()).generatePythonCode(algs, "../../AlgTest", "./COMPILED");
         }
 
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar

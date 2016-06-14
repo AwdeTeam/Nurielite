@@ -25,7 +25,7 @@ class PyAlgorithmInterface():
 importer = FileInputInput.FileInput()
 OUT_DATA = importer.loadCSV({VALUE})
 		"""
-		return code.format(VALUE=self.algOptions["path"])
+		return code #TODO fix this!!
 
 	def generateCodeLibraries(self):
 		f = open("FileInput_class.py")
