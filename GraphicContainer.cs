@@ -33,41 +33,41 @@ namespace Nurielite
 		public const int CONNECTION_Z_LEVEL = 9;
 
 		// member variables
-		private bool m_isDraggingScreen = false;
-		private bool m_isDraggingConnection = false;
-		private bool m_isDraggingBlock = false; 
+		private bool m_bIsDraggingScreen = false;
+		private bool m_bIsDraggingConnection = false;
+		private bool m_bIsDraggingBlock = false; 
 		
 
-		private BlockGraphic m_draggingBlock;
-		private ConnectionGraphic m_draggingConnection;
+		private BlockGraphic m_pDraggingBlock;
+		private ConnectionGraphic m_pDraggingConnection;
 
-		private Dictionary<int, BlockGraphic> m_repGraphics = new Dictionary<int, BlockGraphic>();
+		private Dictionary<int, BlockGraphic> m_pBlockGraphics = new Dictionary<int, BlockGraphic>();
 
 		public GraphicContainer() { }
 
 		// PROPERTIES
-		public BlockGraphic getBlockGraphic(int id) { return m_repGraphics[id]; }
-		public void addBlockGraphic(BlockGraphic rg) { m_repGraphics.Add(rg.Parent.getID(), rg); }
+		public BlockGraphic getBlockGraphic(int id) { return m_pBlockGraphics[id]; }
+		public void addBlockGraphic(BlockGraphic rg) { m_pBlockGraphics.Add(rg.Parent.ID, rg); }
 
-		public void setDraggingBlock(bool dragging, BlockGraphic blk)
+		public void setDraggingBlock(bool bDragging, BlockGraphic pBlockGraphic)
 		{
-			m_isDraggingBlock = dragging;
-			m_draggingBlock = blk;
+			m_bIsDraggingBlock = bDragging;
+			m_pDraggingBlock = pBlockGraphic;
 		}
 
 		public void setDraggingConnection(bool dragging, ConnectionGraphic cg)
 		{
-			m_isDraggingConnection = dragging;
-			m_draggingConnection = cg;
+			m_bIsDraggingConnection = dragging;
+			m_pDraggingConnection = cg;
 		}
-		public ConnectionGraphic getDraggingConnection() { return m_draggingConnection; }
+		public ConnectionGraphic getDraggingConnection() { return m_pDraggingConnection; }
 
 		// EVENT HANDLERS
 		public void evt_MouseMove(object sender, MouseEventArgs e)
 		{
-			if (m_isDraggingScreen)
+			if (m_bIsDraggingScreen)
 			{
-				foreach (BlockGraphic rg in m_repGraphics.Values)
+				foreach (BlockGraphic rg in m_pBlockGraphics.Values)
 				{
 					Point p = e.GetPosition(Master.getCanvas());
                     double x = p.X - rg.RelativeX;
@@ -75,8 +75,8 @@ namespace Nurielite
 					rg.move(x, y);
 				}
 			}
-			else if (m_isDraggingBlock) { m_draggingBlock.evt_MouseMove(sender, e); }
-			else if (m_isDraggingConnection) { m_draggingConnection.evt_MouseMove(sender, e); }
+			else if (m_bIsDraggingBlock) { m_pDraggingBlock.evt_MouseMove(sender, e); }
+			else if (m_bIsDraggingConnection) { m_pDraggingConnection.evt_MouseMove(sender, e); }
 		}
 
 		public void evt_MouseDown(object sender, MouseButtonEventArgs e)
@@ -85,8 +85,8 @@ namespace Nurielite
 			// (in other words, NOT routed through this class)
 			if (e.MiddleButton == MouseButtonState.Pressed)
 			{
-				m_isDraggingScreen = true;
-				foreach (BlockGraphic rg in m_repGraphics.Values)
+				m_bIsDraggingScreen = true;
+				foreach (BlockGraphic rg in m_pBlockGraphics.Values)
 				{
 					Point p = e.GetPosition(Master.getCanvas());
 					rg.RelativeX = p.X - rg.CurrentX;
@@ -97,21 +97,21 @@ namespace Nurielite
 
 		public void evt_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			if (m_isDraggingScreen)
+			if (m_bIsDraggingScreen)
 			{
-				m_isDraggingScreen = false;
-				foreach (BlockGraphic rg in m_repGraphics.Values)
+				m_bIsDraggingScreen = false;
+				foreach (BlockGraphic rg in m_pBlockGraphics.Values)
 				{
                     rg.RelativeX = 0;
                     rg.RelativeY = 0;
 				}
 			}
-			else if (m_isDraggingBlock) { m_draggingBlock.evt_MouseUp(sender, e); }
-			else if (m_isDraggingConnection)
+			else if (m_bIsDraggingBlock) { m_pDraggingBlock.evt_MouseUp(sender, e); }
+			else if (m_bIsDraggingConnection)
 			{
-				if (m_draggingConnection != null && !m_draggingConnection.getParent().isComplete()) { m_draggingConnection.removeGraphic(); }
-				m_draggingConnection = null;
-				m_isDraggingConnection = false;
+				if (m_pDraggingConnection != null && !m_pDraggingConnection.Parent.IsComplete) { m_pDraggingConnection.removeGraphic(); }
+				m_pDraggingConnection = null;
+				m_bIsDraggingConnection = false;
 			}
 		}
 	}

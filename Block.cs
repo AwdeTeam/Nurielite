@@ -58,7 +58,6 @@ namespace Nurielite
         }
 
 		// properties 
-		// TODO: go through original getters/setters and find references, and update them to new properties
 		public int ID { get { return m_iID; } set { m_iID = value; } }
 		public string Name { get { return m_sName; } set { m_sName = value; } }
 		public string Version { get { return m_sVersion; } set { m_sVersion = value; } } 
@@ -68,18 +67,6 @@ namespace Nurielite
 		public BlockGraphic Graphic { get { return m_pGraphic; } set { m_pGraphic = value; } }
 		public List<Nodule> Nodules { get { return m_pNodules; } set { m_pNodules = value; } }
 		
-		public int getID() { return m_iID; }
-		public string getName() { return m_sName; }
-		public void setName(string name) { m_sName = name; m_pGraphic.Name = m_sName; }
-		public string getVersion() { return m_sVersion; }
-		public string getAlgorithm() { return m_sAlgorithmName; }
-        public AlgorithmType getFamily() { return m_eFamily; }
-        public void setFamily(AlgorithmType family) { m_eFamily = family; }
-
-		public BlockGraphic getGraphic() { return m_pGraphic; }
-		public List<Nodule> getNodes() { return m_pNodules; }
-
-
 		// -- FUNCTIONS --
 
         public List<Block> getOutgoing()
@@ -88,7 +75,7 @@ namespace Nurielite
 
             foreach (Nodule pNodule in m_pNodules)
             {
-                if (!pNodule.isInput())
+                if (!pNodule.IsInput)
                 {
                     foreach(Connection c in pNodule.Connections)
                     {

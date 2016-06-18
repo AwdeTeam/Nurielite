@@ -40,7 +40,7 @@ namespace Nurielite
 		}
 
 		// properties
-		// TODO: find references and update. Also do these really need setters?
+		// TODO: some of these don't need setters?
 		public Block Parent { get { return m_pParent; } set { m_pParent = value; } }
 		public NoduleGraphic Graphic { get { return m_pGraphic; } set { m_pGraphic = value; } }
 		public bool IsInput { get { return m_bIsInput; } set { m_bIsInput = value; } }
@@ -50,22 +50,9 @@ namespace Nurielite
 		public Datatype Datatype { get { return m_pDataType; } set { m_pDataType = value; } }
 		
 		
-		
-		public Block getParent() { return m_pParent; } 
-		public NoduleGraphic getGraphic() { return m_pGraphic; }
-
-		public bool isInput() { return m_bIsInput; }
-		public int getGroupNum() { return m_iGroupNum; }
-
-		public List<Connection> getConnections() { return m_pConnections; }
+		// -- FUNCTIONS --
 		public void addConnection(Connection c) { m_pConnections.Add(c); }
 		public void removeConnection(Connection c) { m_pConnections.Remove(c); }
-        public int getNumConnections() { return m_pConnections.Count;  }
-        public Connection getConnection(int i) { return m_pConnections[i]; }
-
-		public Datatype getDatatype() { return m_pDataType; }
-		
-		// -- FUNCTIONS --
 
 		// finishes out the connection
 		public void connect(Connection pConnection)
@@ -75,7 +62,7 @@ namespace Nurielite
 
 			// add connection to both nodes' collection
 			m_pConnections.Add(pConnection);
-			pConnection.getOrigin().addConnection(pConnection);
+			pConnection.Origin.addConnection(pConnection);
 		}
 	}
 }

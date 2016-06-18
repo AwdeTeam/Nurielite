@@ -15,7 +15,7 @@ namespace Nurielite
 
         public InterNode(Block core, InterGraph master)
         {
-            if (!master.contains(core.getID()))
+            if (!master.contains(core.ID))
             {
                 m_inNodes = new LinkedList<InterNode>();
                 m_outNodes = new LinkedList<InterNode>();
@@ -34,15 +34,15 @@ namespace Nurielite
 
             foreach(Block r in lrep)
             {
-                if (m_master.contains(r.getID()))
+                if (m_master.contains(r.ID))
                 {
-                    Master.log("InterNode with rep id " + m_core.getID() + " is connecting to already extant InterNode " + r.getID());
+                    Master.log("InterNode with rep id " + m_core.ID + " is connecting to already extant InterNode " + r.ID);
                     connectTo(m_master.get(r));
                 }
                 else
                 {
                     InterNode inode = new InterNode(r, m_master);
-                    Master.log("InterNode with rep id " + m_core.getID() + " is connecting to new InterNode " + r.getID());
+                    Master.log("InterNode with rep id " + m_core.ID + " is connecting to new InterNode " + r.ID);
                     connectTo(inode);
                 }
             }

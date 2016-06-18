@@ -27,12 +27,12 @@ namespace Nurielite
 		{
 			Master.log("Connection initialized");
 			m_pOrigin = pStart;
-			if (pStart.isInput()) 
+			if (pStart.IsInput) 
             {
                 m_pInNodule = pStart;
-                if(pStart.getNumConnections() > 0)
+                if(pStart.Connections.Count > 0)
                 {
-                    Connection x = pStart.getConnection(0);
+                    Connection x = pStart.Connections[0];
                     x.removeConnection();
                 }
             }
@@ -41,7 +41,6 @@ namespace Nurielite
 		}
 
 		// properties
-		// TODO: find references for previous properties and update
 		public Nodule Origin { get { return m_pOrigin; } set { m_pOrigin = value; } }
 		public Nodule End { get { return m_pEnd; } set { m_pEnd = value; } }
 		public Nodule InputNodule { get { return m_pInNodule; } set { m_pInNodule = value; } }
@@ -49,17 +48,6 @@ namespace Nurielite
 		public bool IsComplete { get { return m_bCompleted; } set { m_bCompleted = value; } }
 		public ConnectionGraphic Graphic { get { return m_pGraphic; } set { m_pGraphic = value; } }
 		
-
-		public Nodule getOrigin() { return m_pOrigin; }
-		public Nodule getEnd() { return m_pEnd; }
-
-		public bool isComplete() { return m_bCompleted; }
-
-		public Nodule getInputNode() { return m_pInNodule; }
-		public Nodule getOutputNode() { return m_pOutNodule; }
-
-		public ConnectionGraphic getGraphic() { return m_pGraphic; }
-
 		// -- FUNCTIONS --
 
 		// finishes creating connection/adds connection to both involved nodes

@@ -13,67 +13,66 @@ namespace Nurielite
 {
 	public class NoduleGraphic
 	{
-		private Ellipse m_body = new Ellipse();
+		private Ellipse m_pBody = new Ellipse();
 		
-		private Nodule m_parent;
+		private Nodule m_pParent;
 
 		private SolidColorBrush m_brushFill = new SolidColorBrush(Colors.White);
 		private SolidColorBrush m_brushBorder = new SolidColorBrush(Colors.Black);
 
-		private int m_offsetX = 0;
-		private int m_offsetY = 0;
+		private int m_iOffsetX = 0;
+		private int m_iOffsetY = 0;
 
 		// construction
-		public NoduleGraphic(Nodule parent)
+		public NoduleGraphic(Nodule pParent)
 		{
-			m_parent = parent;
-			m_offsetX = parent.getParent().getGraphic().getNodeOffsetX(parent.isInput(), parent.getGroupNum());
-			m_offsetY = parent.getParent().getGraphic().getNodeOffsetY(parent.isInput());
+			m_pParent = pParent;
+			m_iOffsetX = pParent.Parent.Graphic.getNodeOffsetX(pParent.IsInput, pParent.GroupNum);
+			m_iOffsetY = pParent.Parent.Graphic.getNodeOffsetY(pParent.IsInput);
 
 			createDrawing();
 		}
 
 		// properties
-		public double getCurrentX() { return Canvas.GetLeft(m_body); }
-		public double getCurrentY() { return Canvas.GetTop(m_body); }
-
+		public double CurrentX { get { return Canvas.GetLeft(m_pBody); } }
+		public double CurrentY { get { return Canvas.GetTop(m_pBody); } }
 
 		// -- FUNCTIONS --
 		private void createDrawing()
 		{
 			// create body
-			m_body.Fill = m_brushFill;
-			m_body.Stroke = m_brushBorder;
-			m_body.StrokeThickness = 2;
-			m_body.Height = GraphicContainer.NODE_SIZE;
-			m_body.Width = GraphicContainer.NODE_SIZE;
-			Canvas.SetZIndex(m_body, GraphicContainer.NODE_Z_LEVEL);
+			m_pBody.Fill = m_brushFill;
+			m_pBody.Stroke = m_brushBorder;
+			m_pBody.StrokeThickness = 2;
+			m_pBody.Height = GraphicContainer.NODE_SIZE;
+			m_pBody.Width = GraphicContainer.NODE_SIZE;
+			Canvas.SetZIndex(m_pBody, GraphicContainer.NODE_Z_LEVEL);
 
 			// inital position
-			move(m_parent.getParent().getGraphic().CurrentX, m_parent.getParent().getGraphic().CurrentY);
+			move(m_pParent.Parent.Graphic.CurrentX, m_pParent.Parent.Graphic.CurrentY);
 
 			// add to canvas
-			Master.getCanvas().Children.Add(m_body);
+			Master.getCanvas().Children.Add(m_pBody);
 
 			// event handlers
-			m_body.MouseDown += new MouseButtonEventHandler(evt_MouseDown);
-			m_body.MouseUp += new MouseButtonEventHandler(evt_MouseUp);
+			m_pBody.MouseDown += new MouseButtonEventHandler(evt_MouseDown);
+			m_pBody.MouseUp += new MouseButtonEventHandler(evt_MouseUp);
 		}
 
 		public void move(double x, double y)
 		{
-			Canvas.SetLeft(m_body, x + m_offsetX);
-			Canvas.SetTop(m_body, y + m_offsetY);
+			Canvas.SetLeft(m_pBody, x + m_iOffsetX);
+			Canvas.SetTop(m_pBody, y + m_iOffsetY);
 			
 			// update all connections
-			foreach (Connection c in m_parent.getConnections()) { c.getGraphic().adjustRelatedPoint(m_parent); }
+			foreach (Connection c in m_pParent.Connections) { c.Graphic.adjustRelatedPoint(m_pParent); }
 		}
 
 		// -- EVENT HANDLERS --
 
 		private void evt_MouseDown(object sender, MouseEventArgs e)
 		{
-			Connection con = new Connection(m_parent);
+			Connection con = new Connection(m_pParent);
 			Master.log("Hey, creating a connection");
 		}
 
@@ -83,7 +82,7 @@ namespace Nurielite
 			{
 				Master.log("Released on node");
 			
-				m_parent.connect(Master.getDraggingConnection().getParent());
+				m_pParent.connect(Master.getDraggingConnection().Parent);
 				Master.setDraggingConnection(false, null);
 			}
 		}

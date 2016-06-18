@@ -80,13 +80,13 @@ namespace Nurielite
         public Boolean contains(InterNode n) { return m_inodes.Contains(n); }
         public void append(InterNode n) { 
             m_inodes.Add(n);
-            Master.log("Appending InterNode with ID " + n.getCore().getID() + " to graph");
+            Master.log("Appending InterNode with ID " + n.getCore().ID + " to graph");
         }
 
         internal bool contains(Block r)
         {
             foreach (InterNode i in m_inodes)
-                if (i.getCore().getID() == r.getID())
+                if (i.getCore().ID == r.ID)
                     return true;
 
             return false;
@@ -95,7 +95,7 @@ namespace Nurielite
         internal bool contains(int id)
         {
             foreach (InterNode i in m_inodes)
-                if (i.getCore().getID() == id)
+                if (i.getCore().ID == id)
                     return true;
 
             return false;

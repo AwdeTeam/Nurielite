@@ -169,7 +169,7 @@ namespace Nurielite
 			{
 				Dictionary<string, dynamic> dic = alg.getOptions();
 				Block rep = (Block)dic["thing"];
-				log(rep.getID().ToString());
+				log(rep.ID.ToString());
 			}
 
             (new PythonGenerator()).generatePythonCode(algs, "../../AlgTest", "./COMPILED");
@@ -221,7 +221,7 @@ namespace Nurielite
 
         public void appendBlock(Block block)
         {
-            m_blocks.Add(block.getID(), block);
+            m_blocks.Add(block.ID, block);
         }
 
 		// create representation (eventually this should be based SOLELY on an imported algorithm, not created manually)
@@ -354,13 +354,13 @@ namespace Nurielite
 					Block r = m_blocks[id];
 
 					if (attr == "lbl") 
-					{ 
-						r.setName(val);
+					{
+						r.Name = val;
 						log("Updated block label to '" + val + "'");
 					}
 					else if (attr == "color") 
 					{
-                        r.getGraphic().BaseColor = ((SolidColorBrush)(new BrushConverter().ConvertFrom("#" + val))).Color; 
+                        r.Graphic.BaseColor = ((SolidColorBrush)(new BrushConverter().ConvertFrom("#" + val))).Color; 
 						log("Updated block color to #" + val);
 					}
 				}
@@ -397,9 +397,9 @@ namespace Nurielite
             string r = "";
             for(int i = 0; i < m_blocks.Count; i++)
             {
-                r += "\t" + m_blocks[i].getID() + ")";
-                r += m_blocks[i].getName() + ", ";
-                r += m_blocks[i].getFamily() + ": " + m_blocks[i].getAlgorithm() + "\n";
+                r += "\t" + m_blocks[i].ID + ")";
+                r += m_blocks[i].Name + ", ";
+                r += m_blocks[i].Family + ": " + m_blocks[i].AlgorithmName + "\n";
             }
             return r;
         }

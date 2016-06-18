@@ -59,10 +59,10 @@ namespace Nurielite
 		{
 			m_pBlkParent = parent;
 
-			m_iID = parent.getID();
-			m_sName = parent.getName();
-			m_sVersion = parent.getVersion();
-			m_eAlgorithm = parent.getFamily();
+			m_iID = parent.ID;
+			m_sName = parent.Name;
+			m_sVersion = parent.Version;
+			m_eAlgorithm = parent.Family
             m_pColorBase = color;
 
 			createDrawing(100, 100, numIn, numOut, m_pColorBase);
@@ -98,17 +98,17 @@ namespace Nurielite
 			else { return (int)m_pRecBody.Height; }
 		}
 
-		private void createDrawing(int x, int y, int numIn, int numOut, Color initialColor)
+		private void createDrawing(int iX, int iY, int iNumberInputs, int iNumberOutputs, Color pInitialColor)
 		{
-			int width = calcOptimalWidth(numIn, numOut);
+			int iWidth = calcOptimalWidth(iNumberInputs, iNumberOutputs);
 
-			m_pColorBase = initialColor;
+			m_pColorBase = pInitialColor;
 			setBrushes();
 			applyBrushes();
 
 			// create body
 			m_pRecBody.Height = GraphicContainer.REP_MINIMUM_HEIGHT;
-			m_pRecBody.Width = width;
+			m_pRecBody.Width = iWidth;
 			m_pRecBody.RadiusX = 5;
 			m_pRecBody.RadiusY = 5;
 			m_pRecBody.Stroke = m_pBrushBorderStandard;
@@ -117,7 +117,7 @@ namespace Nurielite
 
 			// board (inner part of body)
 			m_pRecBoard.Height = GraphicContainer.REP_MINIMUM_HEIGHT - 30;
-			m_pRecBoard.Width = width - 12;
+			m_pRecBoard.Width = iWidth - 12;
 			m_pRecBoard.RadiusX = 3;
 			m_pRecBoard.RadiusY = 3;
 			m_pRecBoard.IsHitTestVisible = false;
@@ -144,9 +144,7 @@ namespace Nurielite
 			m_pLblContent.Width = m_pRecBoard.Width;
 			Canvas.SetZIndex(m_pLblContent, GraphicContainer.REP_Z_LEVEL);
 
-			move(x, y);
-
-			// TODO: mousedown events will be handled in here?
+			move(iX, iY);
 
 			// ADD ALL THE THINGS!!
 			Canvas cnvs = Master.getCanvas();
@@ -156,43 +154,43 @@ namespace Nurielite
 			cnvs.Children.Add(m_pLblContent);
 			cnvs.Children.Add(m_pLblName);
 
-			m_pRecBody.MouseDown += new MouseButtonEventHandler(evt_MouseDown);
-			m_pLblName.MouseDown += new MouseButtonEventHandler(name_MouseDown);
+			m_pRecBody.MouseDown += new MouseButtonEventHandler(evt_MouseDownBody);
+			m_pLblName.MouseDown += new MouseButtonEventHandler(evt_MouseDownLabel);
 		}
 
 		// moves entire block to passed x and y (based on upper left corner)
-		public void move(double x, double y) 
+		public void move(double dX, double dY) 
 		{
-			Canvas.SetLeft(m_pRecBody, x);
-			Canvas.SetTop(m_pRecBody, y);
+			Canvas.SetLeft(m_pRecBody, dX);
+			Canvas.SetTop(m_pRecBody, dY);
 
-			Canvas.SetLeft(m_pRecBoard, x + GraphicContainer.REP_BOARD_PADDING_LEFT);
-			Canvas.SetTop(m_pRecBoard, y + GraphicContainer.REP_BOARD_PADDING_TOP);
+			Canvas.SetLeft(m_pRecBoard, dX + GraphicContainer.REP_BOARD_PADDING_LEFT);
+			Canvas.SetTop(m_pRecBoard, dY + GraphicContainer.REP_BOARD_PADDING_TOP);
 
-			Canvas.SetLeft(m_pLblID, x);
-			Canvas.SetTop(m_pLblID, y);
+			Canvas.SetLeft(m_pLblID, dX);
+			Canvas.SetTop(m_pLblID, dY);
 
-			Canvas.SetLeft(m_pLblName, x + m_pRecBody.Width + 2);
-			Canvas.SetTop(m_pLblName, y + (m_pRecBody.Height / 2) - (m_pLblName.Height / 2));
+			Canvas.SetLeft(m_pLblName, dX + m_pRecBody.Width + 2);
+			Canvas.SetTop(m_pLblName, dY + (m_pRecBody.Height / 2) - (m_pLblName.Height / 2));
 
-			Canvas.SetLeft(m_pLblContent, x + GraphicContainer.REP_BOARD_PADDING_LEFT);
-			Canvas.SetTop(m_pLblContent, y + GraphicContainer.REP_BOARD_PADDING_TOP);
+			Canvas.SetLeft(m_pLblContent, dX + GraphicContainer.REP_BOARD_PADDING_LEFT);
+			Canvas.SetTop(m_pLblContent, dY + GraphicContainer.REP_BOARD_PADDING_TOP);
 
 			// move nodes
-			foreach (Nodule n in m_pBlkParent.getNodes()) { n.getGraphic().move(x, y); }
+			foreach (Nodule n in m_pBlkParent.Nodules) { n.Graphic.move(dX, dY); }
 		}
 
 		// find least amount of space to fit all nodes
-		private int calcOptimalWidth(int numIn, int numOut)
+		private int calcOptimalWidth(int iNumberInputs, int iNumberOutputs)
 		{
-			int totalXIn = numIn * GraphicContainer.NODE_SIZE;
-			int totalXOut = numOut * GraphicContainer.NODE_SIZE;
+			int iInputsTotalPixelWidth = iNumberInputs * GraphicContainer.NODE_SIZE;
+			int iOutputsTotalPixelWidth = iNumberOutputs * GraphicContainer.NODE_SIZE;
 
-			int widest = totalXIn;
-			if (totalXOut > widest) { widest = totalXOut; }
+			int iWidest = iInputsTotalPixelWidth;
+			if (iOutputsTotalPixelWidth > iWidest) { iWidest = iOutputsTotalPixelWidth; }
 
-			if (widest < GraphicContainer.REP_MINIMUM_WIDTH) { widest = GraphicContainer.REP_MINIMUM_WIDTH; } // make it at least 25 pixels wide
-			return widest;
+			if (iWidest < GraphicContainer.REP_MINIMUM_WIDTH) { iWidest = GraphicContainer.REP_MINIMUM_WIDTH; } // make it at least 25 pixels wide
+			return iWidest;
 		}
 
 		// assumes m_baseColor has been assigned appropriately
@@ -209,17 +207,17 @@ namespace Nurielite
 			m_pRecBoard.Fill = m_pBrushBackgroundLight;
 		}
 
-		private Color lightenColor(Color color, float p)
+		private Color lightenColor(Color pColor, float fFactor)
 		{
-			float red = (255 - color.R) * p + color.R;
-			float green = (255 - color.G) * p + color.G;
-			float blue = (255 - color.B) * p + color.B;
-			return Color.FromArgb(color.A, (byte)red, (byte)green, (byte)blue);
+			float red = (255 - pColor.R) * fFactor + pColor.R;
+			float green = (255 - pColor.G) * fFactor + pColor.G;
+			float blue = (255 - pColor.B) * fFactor + pColor.B;
+			return Color.FromArgb(pColor.A, (byte)red, (byte)green, (byte)blue);
 		}
 
 		// -- EVENT HANDLERS --
 
-		public void evt_MouseDown(object sender, MouseButtonEventArgs e)
+		public void evt_MouseDownBody(object sender, MouseButtonEventArgs e)
 		{
 			if (e.LeftButton == MouseButtonState.Pressed)
 			{
@@ -264,7 +262,7 @@ namespace Nurielite
 			}
 		}
 
-		public void name_MouseDown(object sender, MouseButtonEventArgs e)
+		public void evt_MouseDownLabel(object sender, MouseButtonEventArgs e)
 		{
 			Master.setCommandPrompt("edit rep -" + m_iID + " -lbl -\"");
 		}
