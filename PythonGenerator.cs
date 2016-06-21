@@ -53,7 +53,7 @@ namespace Nurielite
 		// functions
 		public void clearRuntimeOutput() { m_pOutputStream.SetLength(0); }
 
-        public static List<string> getAllOfType(AlgorithmType type)
+        /*public static List<string> getAllOfType(AlgorithmType type)
         {
             switch(type)
             {
@@ -86,9 +86,9 @@ namespace Nurielite
                 default:
                     return null;
             }
-        }
+        }*/
 
-        public static List<string> listLocalAlgorithms(string sPath)
+        /*public static List<string> listLocalAlgorithms(string sPath)
         {
             List<string> pAlgorithmFiles = Directory.EnumerateDirectories(ALGORITHM_DIRECTORY + sPath).ToList();
 
@@ -98,16 +98,17 @@ namespace Nurielite
             }
 
 			return pAlgorithmFiles;
-        }
+        }*/
 
-        public static string getAlgorithmPath(AlgorithmType type, int index)
+        /*public static string getAlgorithmPath(AlgorithmType type, int index)
         {
             List<string> pAlgorithmFiles = Directory.EnumerateDirectories(ALGORITHM_DIRECTORY + Master.getAlgorithmTypeNameLowerCase(type)).ToList();
             return pAlgorithmFiles[index];
-        }
+        }*/
 
 		// returns index of dynamic instance (other classes can get that particular instance)
 		// TODO: don't forget to check that it contains necessary methods
+		// TODO: static?
 		public PyAlgorithm loadPythonAlgorithm(string sPath, string sName)
 		{
 			dynamic pAlgorithm = m_pRuntime.UseFile(sPath + "\\" + sName);

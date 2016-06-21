@@ -165,12 +165,12 @@ namespace Nurielite
 			
             List<PyAlgorithm> algs = graph.topoSort();
             log("Count: " + algs.Count);
-			foreach (PyAlgorithm alg in algs)
+			/*foreach (PyAlgorithm alg in algs)
 			{
 				Dictionary<string, dynamic> dic = alg.getOptions();
-				Block rep = (Block)dic["thing"];
-				log(rep.ID.ToString());
-			}
+				//Block rep = (Block)dic["thing"];
+				//log(rep.ID.ToString());
+			}*/
 
             (new PythonGenerator()).generatePythonCode(algs, Master.PATH_TO_THETHING, "../../COMPILED");
         }
@@ -399,7 +399,7 @@ namespace Nurielite
             {
                 r += "\t" + m_blocks[i].ID + ")";
                 r += m_blocks[i].Name + ", ";
-                r += m_blocks[i].Family + ": " + m_blocks[i].AlgorithmName + "\n";
+                //r += m_blocks[i].Family + ": " + m_blocks[i].AlgorithmName + "\n";
             }
             return r;
         }

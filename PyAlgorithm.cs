@@ -13,7 +13,7 @@ using Microsoft.Scripting.Hosting;
 
 namespace Nurielite
 {
-	class PyAlgorithm
+	public class PyAlgorithm
 	{
 		// member variables
 		private dynamic m_pyFile;

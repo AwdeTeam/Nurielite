@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
 
 using System.Xml.Linq;
 
@@ -33,10 +34,8 @@ namespace Nurielite
 
 		private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
 		{
-			Block newrep = AlgorithmLoader.generateBlock(txtNameInput.Text, 
-                PythonGenerator.getAlgorithmPath((AlgorithmType)cmbAlgorithmType.SelectedIndex, cmbAlgorithmSpecific.SelectedIndex), cmbAlgorithmType.SelectedIndex,
-					ray(lstInputs.SelectedItems), ray(lstOutputs.SelectedItems));
-            m_parent.appendBlock(newrep);
+			Block pBlock = AlgorithmLoader.loadAlgorithmBlock(cmbAlgorithmSpecific.SelectedItem.ToString(), (AlgorithmType)cmbAlgorithmType.SelectedItem, ray(lstInputs.SelectedItems), ray(lstOutputs.SelectedItems));
+            m_parent.appendBlock(pBlock);
 			Close();
 		}
 
@@ -51,65 +50,41 @@ namespace Nurielite
 
 		private void cmbAlgorithmType_Loaded(object sender, RoutedEventArgs e)
 		{
-			cmbAlgorithmType.ItemsSource = new string[] { "operation", "classifier", "clustering", "dimension_reduction", "input", "output"}; //TODO, is there a way to make this work with the enum?
+			List<AlgorithmType> pTypes = Enum.GetValues(typeof(AlgorithmType)).Cast<AlgorithmType>().ToList();
+			cmbAlgorithmType.ItemsSource = pTypes.ToList();
 			cmbAlgorithmType.SelectedIndex = 0;
 		}
 
 		private void cmbAlgorithmType_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (cmbAlgorithmType.SelectedItem.Equals("input"))
+			if (cmbAlgorithmType.SelectedItem.Equals(AlgorithmType.Input))
 			{
 				lstInputs.IsEnabled = false;
+				lstOutputs.IsEnabled = true;	
 				lstInputs.SelectedIndex = -1;
-				lstOutputs.IsEnabled = true;
 			}
-
-			if (cmbAlgorithmType.SelectedItem.Equals("output"))
+			else if (cmbAlgorithmType.SelectedItem.Equals(AlgorithmType.Output))
 			{
+				lstInputs.IsEnabled = true;
 				lstOutputs.IsEnabled = false;
-				lstOutputs.SelectedIndex = -1;
-				lstInputs.IsEnabled = true;
+				lstInputs.SelectedIndex = -1;
 			}
-
-			if (!((cmbAlgorithmType.SelectedItem.Equals("input")) || (cmbAlgorithmType.SelectedItem.Equals("output"))))
+			else 
 			{
 				lstOutputs.IsEnabled = true;
 				lstInputs.IsEnabled = true;
 			}
 
-			switch (cmbAlgorithmType.SelectedItem.ToString())
-			{
-				case "operation":
-					lblType.Content = "operation:";
-					cmbAlgorithmSpecific.IsEnabled = true;
-					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType(AlgorithmType.Operation);
-					break;
-				case "classifier":
-					lblType.Content = "classifier:";
-					cmbAlgorithmSpecific.IsEnabled = true;
-					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType(AlgorithmType.Classifier);
-					break;
-				case "clustering":
-					lblType.Content = "clustering:";
-					cmbAlgorithmSpecific.IsEnabled = true;
-					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType(AlgorithmType.Clustering);
-					break;
-				case "input":
-					lblType.Content = "input";
-					cmbAlgorithmSpecific.IsEnabled = true;
-					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType(AlgorithmType.Input);
-					break;
-				case "output":
-					lblType.Content = "output";
-					cmbAlgorithmSpecific.IsEnabled = true;
-					cmbAlgorithmSpecific.ItemsSource = PythonGenerator.getAllOfType(AlgorithmType.Output);
-					break;
-				default:
-					lblType.Content = "";
-					cmbAlgorithmSpecific.IsEnabled = false;
-					break;
-			}
+			// get all algorithm names from folder structure
+			
+			List<DirectoryInfo> pAlgorithmDirs = new DirectoryInfo(Master.PATH_TO_THETHING + "/" + cmbAlgorithmType.SelectedItem.ToString()).EnumerateDirectories().ToList();
+			List<string> pAlgorithms = new List<string>();
+			foreach (DirectoryInfo pDI in pAlgorithmDirs) { pAlgorithms.Add(pDI.Name); }
 
+			// populate combo box
+			cmbAlgorithmSpecific.IsEnabled = true;
+			cmbAlgorithmSpecific.ItemsSource = pAlgorithms;
+			lblType.Content = cmbAlgorithmType.SelectedItem.ToString();
 
 		}
 
