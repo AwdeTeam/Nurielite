@@ -62,7 +62,7 @@ namespace Nurielite
 			m_iID = parent.ID;
 			m_sName = parent.Name;
 			m_sVersion = parent.Version;
-			m_eAlgorithm = parent.Family
+            m_eAlgorithm = parent.Family;
             m_pColorBase = color;
 
 			createDrawing(100, 100, numIn, numOut, m_pColorBase);
