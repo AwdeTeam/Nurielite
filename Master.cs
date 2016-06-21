@@ -20,6 +20,7 @@ namespace Nurielite
 		private static int RepID = -1; // incrementing counter for assigning block ids
 		
 		// public:
+        public const string PATH_TO_THETHING = "../../Algorithms/algorithm_correct";
 
 		// NOTE: this should only be called once in main window constructor
 		public static void assignWindow(MainWindow window) { win = window; }

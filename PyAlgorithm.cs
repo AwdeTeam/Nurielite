@@ -18,6 +18,8 @@ namespace Nurielite
 		// member variables
 		private dynamic m_pyFile;
 		private dynamic m_pyClass;
+        private string m_sAlgName;
+        private string m_sAlgPath;
 			
 		// construction
 		public PyAlgorithm(dynamic pyFile)
@@ -33,6 +35,11 @@ namespace Nurielite
 			// TODO: manually set meta data to something that's obviously unloaded so visible to user aside from an error message
 		}
 
+        //properties
+        public string AlgorithmName { get { return m_sAlgName; } set { m_sAlgName = value; } }
+        public string AlgorithmPath { get { return m_sAlgPath; } set { m_sAlgPath = value; } }
+
+        //functions
 		public Dictionary<string, dynamic> getOptions()
 		{
 			Dictionary<string, dynamic> pOptions = new Dictionary<string, dynamic>();

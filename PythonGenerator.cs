@@ -108,13 +108,15 @@ namespace Nurielite
 
 		// returns index of dynamic instance (other classes can get that particular instance)
 		// TODO: don't forget to check that it contains necessary methods
-		public PyAlgorithm loadPythonAlgorithm(string sFileName)
+		public PyAlgorithm loadPythonAlgorithm(string sPath, string sName)
 		{
-			dynamic pAlgorithm = m_pRuntime.UseFile(sFileName);
+			dynamic pAlgorithm = m_pRuntime.UseFile(sPath + "\\" + sName);
 
 			try
 			{
 				PyAlgorithm pAlg = new PyAlgorithm(pAlgorithm);
+                pAlg.AlgorithmPath = sPath;
+                pAlg.AlgorithmName = sName;
 				return pAlg;
 			}
 			catch (RuntimeBinderException e)
@@ -149,6 +151,7 @@ namespace Nurielite
 			foreach (PyAlgorithm pAlg in pAlgorithms)
 			{
 				// handle libraries first
+                Directory.SetCurrentDirectory(pAlg.AlgorithmPath);
 				Dictionary<string, string> pLibraries = pAlg.generateCodeLibraries();
 
 				foreach (string sLibName in pLibraries.Keys)

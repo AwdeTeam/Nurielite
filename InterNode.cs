@@ -74,7 +74,7 @@ namespace Nurielite
         public PyAlgorithm getAlgorithm()
         {
 			PythonGenerator pgen = new PythonGenerator();
-			PyAlgorithm py = pgen.loadPythonAlgorithm(m_core.AlgorithmPath + "\\" + m_core.AlgorithmName + ".py");
+			PyAlgorithm py = pgen.loadPythonAlgorithm(m_core.AlgorithmPath, m_core.AlgorithmName + ".py");
 			Dictionary<string, dynamic> options = new Dictionary<string, dynamic>();
 			options.Add("thing", m_core);
 			py.setOptions(options);
