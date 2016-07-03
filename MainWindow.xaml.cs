@@ -30,9 +30,6 @@ namespace Nurielite
 		private List<string> m_commandHistory = new List<string>();
 		private int m_commandIndex = 0; // keeps track of where in command history you are
 
-		// hashmap is probably unnecessary, but I actually understand how they work now, so yeah ^_^
-		private Dictionary<int, Block> m_blocks = new Dictionary<int, Block>();
-
 		private GraphicContainer m_gc = new GraphicContainer();
 
 		// construction
@@ -46,91 +43,11 @@ namespace Nurielite
             Datatype.genericTypes();
             log("Datatypes Loaded!");
 
-            /*Representation r = new AlgorithmRepresentation(2, 3);
-            m_representations.Add(r.getID(), r);
-			parseCommand("edit rep -1 -color -ff0000");*/
-			
 			// canvas initially wasn't handling events properly, so adding them to window instead
 			this.MouseMove += world_MouseMove;
 
-
 			// set path 
 			Directory.SetCurrentDirectory(Master.PATH_TO_THETHING);
-
-			/*START STUFF
-
-			// python generator testing
-			log("----PYTHON----");
-			PythonGenerator gen = new PythonGenerator();
-
-			PyAlgorithm testAlg = gen.loadPythonAlgorithm("../../OperationTest.py");
-			Dictionary<string, dynamic> stuffs = testAlg.getOptions();
-			foreach (string key in stuffs.Keys)
-			{
-				log("PYTHON ALG OPTION: {" + key + ":" + stuffs[key] + "}");
-			}
-
-			// unsure if not enforcing metadata types is a good idea....
-			Dictionary<string, string> metaData = testAlg.getMetaData();
-			log("Algorithm name: " + metaData["Name"]);
-			log("Algorithm creator: " + metaData["Creator"]);
-			log("Algorithm version: " + metaData["Version"]);
-			log("Algorithm accuracy: " + metaData["Accuracy"]);
-
-			log("\nChanging option1 to 4...");
-			stuffs["option1"] = 4;
-			testAlg.setOptions(stuffs);
-
-			Dictionary<string, dynamic> stuffs2 = testAlg.getOptions();
-			foreach (string key in stuffs2.Keys)
-			{
-				log("New python alg option: {" + key + ":" + stuffs2[key] + "}");
-			}
-
-			log("code:\n" + testAlg.generateRunnableCode());
-
-			// ----- python generation test -------
-
-			List<PyAlgorithm> algs = new List<PyAlgorithm>();
-
-			PyAlgorithm inputAlg = gen.loadPythonAlgorithm("../../AlgTest/FileInput.py");
-			Dictionary<string, dynamic> inputAlgOptions = inputAlg.getOptions();
-			inputAlgOptions["File Path"] = "TestData.dat"; // theoretically, depending on what the goal is, this is something that the meta compiler doesn't even need, just generates python code USER can use (manually supplying input makes more sense)
-			inputAlg.setOptions(inputAlgOptions);
-			algs.Add(inputAlg);
-
-			PyAlgorithm sumAlg = gen.loadPythonAlgorithm("../../AlgTest/SumOperation.py");
-			Dictionary<string, dynamic> sumAlgOptions = sumAlg.getOptions();
-			sumAlgOptions["Sum Amount"] = 5;
-			sumAlg.setOptions(sumAlgOptions);
-			algs.Add(sumAlg);
-			
-			PyAlgorithm sumAlg2 = gen.loadPythonAlgorithm("../../AlgTest/SumOperation.py");
-			Dictionary<string, dynamic> sumAlg2Options = sumAlg2.getOptions();
-			sumAlg2Options["Sum Amount"] = 1;
-			sumAlg2.setOptions(sumAlg2Options);
-			algs.Add(sumAlg2);
-
-			PyAlgorithm outAlg = gen.loadPythonAlgorithm("../../AlgTest/FileOutput.py");
-			Dictionary<string, dynamic> outAlgOptions = outAlg.getOptions();
-			outAlgOptions["File Path"] = "OUTPUT.dat";
-			outAlg.setOptions(outAlgOptions);
-			algs.Add(outAlg);
-
-			gen.generatePythonCode(algs, "../../AlgTest", "./COMPILED");
-            */
-
-
-			//Representation inputRep = new Representation()
-			/*
-			Block inprep = AlgorithmLoader.generateBlock("inputthingy", AlgorithmType.Input, new Datatype[0], new Datatype[] { Datatype.findType("Scalar Integer") });
-			Block oprep = AlgorithmLoader.generateBlock("sumthingy", AlgorithmType.Operation, new Datatype[] { Datatype.findType("Scalar Integer") }, new Datatype[] { Datatype.findType("Scalar Integer") });
-			Block outrep = AlgorithmLoader.generateBlock("output", AlgorithmType.Output,  new Datatype[] { Datatype.findType("Scalar Integer") },new Datatype[0]);
-
-			m_blocks.Add(0, inprep);
-			m_blocks.Add(1, oprep);
-			m_blocks.Add(2, outrep);
-			*/
 
 			testOpBlock();
 			testInputBlock();
@@ -155,11 +72,9 @@ namespace Nurielite
         //END STUFF
 
 		// properties
-		public Canvas getMainCanvas() { return world; }
+		public Canvas MainCanvas { get { return world; } }
 		public GraphicContainer getGraphicContainer() { return m_gc; }
-		//public Dictionary<int, Representation> getRepresentations() { return m_representations; } 
 		
-
 		// ------------------------------------
 		//  EVENT HANDLERS
 		// ------------------------------------
@@ -180,12 +95,6 @@ namespace Nurielite
         {
             InterGraph graph = new InterGraph();
 
-			/*foreach(KeyValuePair<int, Representation> kvp in m_representations)
-            {
-                graph.append( new InterNode(kvp.Value, graph) );
-            }*/
-
-
 			//find first input node
 			Block pFirstBlock = null;
 			foreach (Block pBlock in Master.Blocks)
@@ -194,19 +103,11 @@ namespace Nurielite
 			}
 			if (pFirstBlock == null) { throw new Exception("THERE'S NO INPUT NODES."); }
 
-			//new InterNode(m_blocks[0], graph);
 			new InterNode(pFirstBlock, graph);
 			
             List<PyAlgorithm> algs = graph.topoSort();
             log("Count: " + algs.Count);
-			/*foreach (PyAlgorithm alg in algs)
-			{
-				Dictionary<string, dynamic> dic = alg.getOptions();
-				//Block rep = (Block)dic["thing"];
-				//log(rep.ID.ToString());
-			}*/
-
-            //(new PythonGenerator()).generatePythonCode(algs, Master.PATH_TO_THETHING, "../../COMPILED");
+			
             (new PythonGenerator()).generatePythonCode(algs, Master.PATH_TO_THETHING, "COMPILED");
         }
 
@@ -253,23 +154,6 @@ namespace Nurielite
 		// ------------------------------------
 
 		public void setCommandPrompt(string prompt) { txtConsoleCommand.Text = prompt; txtConsoleCommand.CaretIndex = txtConsoleCommand.Text.Length; }
-
-        public void appendBlock(Block block)
-        {
-            m_blocks.Add(block.ID, block);
-        }
-
-		// create representation (eventually this should be based SOLELY on an imported algorithm, not created manually)
-		/*private void addRep(int inputs, int outputs)
-		{
-			Representation r = new Representation(inputs, outputs);
-			m_representations.Add(r.getID(), r);
-		}*/
-
-		private void loadData(string fileName)
-		{
-			// load me
-		}
 
 		public void log(string message) { log(message, Colors.DarkCyan); }
 		public void log(string message, Color color) 
@@ -386,7 +270,7 @@ namespace Nurielite
 					string attr = vals[1];
 					string val = vals[2];
 
-					Block r = m_blocks[id];
+					Block r = Master.Blocks[id];
 
 					if (attr == "lbl") 
 					{
@@ -430,11 +314,11 @@ namespace Nurielite
         private string listBlocks()
         {
             string r = "";
-            for(int i = 0; i < m_blocks.Count; i++)
+            for(int i = 0; i < Master.Blocks.Count; i++)
             {
-                r += "\t" + m_blocks[i].ID + ")";
-                r += m_blocks[i].Name + ", ";
-                //r += m_blocks[i].Family + ": " + m_blocks[i].AlgorithmName + "\n";
+                r += "\t" + Master.Blocks[i].ID + ")";
+                r += Master.Blocks[i].Name + ", ";
+                //r += Master.Blocks[i].Family + ": " + Master.Blocks[i].AlgorithmName + "\n";
             }
             return r;
         }
@@ -442,10 +326,10 @@ namespace Nurielite
         private string listDatatypes()
         {
             string r = "";
-            for(int i = 0; i < Datatype.numberOfTypes(); i++)
+			/*for(int i = 0; i < Datatype.numberOfTypes(); i++)
             {
-                r += "\t" + i + ")" + Datatype.getType(i).stringRep() + "\n";
-            }
+                //r += "\t" + i + ")" + Datatype.getType(i).stringRep() + "\n";
+            }*/
             return r;
         }
 

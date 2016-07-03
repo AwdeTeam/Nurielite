@@ -19,7 +19,7 @@
             <Label Grid.ColumnSpan="2" Content="Outputs" HorizontalAlignment="Left" Margin="315,42,0,0" VerticalAlignment="Top"/>
 
 
-            <ComboBox Name="cmbAlgorithmSpecific" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="466,16,0,0" VerticalAlignment="Top" Width="118"/>
+            <ComboBox Name="cmbAlgorithmSpecific" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="466,16,0,0" VerticalAlignment="Top" Width="118" SelectionChanged="cmbAlgorithmSpecific_SelectionChanged"/>
 			<Label Name="lblType" Grid.ColumnSpan="2" Content="Operation:" HorizontalAlignment="Left" Margin="395,14,0,0" VerticalAlignment="Top" Height="24"/>
 			<DataGrid Name="MultiplicityGrid" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="185,67,0,0" VerticalAlignment="Top" Height="127" Width="58"/>
 

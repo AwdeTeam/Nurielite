@@ -22,7 +22,7 @@ namespace Nurielite
 		
 		// public:
         public const string PATH_TO_THETHING = "../../Algorithms/algorithm_correct";
-		public static Datatype TEST_DATATYPE = Datatype.defineDatatype("Scalar Integer", 0, 1, new Datalabel(new string[] { }, new string[] { "Scalar Integer" }, new int[] { }, new int[] { 1 }));
+		public static Datatype TEST_DATATYPE = Datatype.defineDatatype("Scalar Integer", 1, null);
 
 		// properties
 		public static List<Block> Blocks { get { return m_pBlocks; } set { m_pBlocks = value; } }
@@ -34,7 +34,7 @@ namespace Nurielite
 		public static void log(string message, Color color) { win.log(message, color); }
 
 		public static GraphicContainer getGraphicContainer() { return win.getGraphicContainer(); }
-		public static Canvas getCanvas() { return win.getMainCanvas(); } // I know the name for this now!! Delegation!
+		public static Canvas getCanvas() { return win.MainCanvas; } // I know the name for this now!! Delegation!
 		public static void setDraggingBlock(bool dragging, BlockGraphic dragBlk) { win.getGraphicContainer().setDraggingBlock(dragging, dragBlk); }
 		public static void setDraggingConnection(bool dragging, ConnectionGraphic con) { win.getGraphicContainer().setDraggingConnection(dragging, con); }
 		public static ConnectionGraphic getDraggingConnection() { return win.getGraphicContainer().getDraggingConnection(); }

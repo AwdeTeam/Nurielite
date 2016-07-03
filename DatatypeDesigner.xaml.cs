@@ -26,7 +26,7 @@ namespace Nurielite
 
         private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
         {
-            Datatype.defineDatatype(txtNameInput.Text, Int32.Parse(txtNumInts.Text), Int32.Parse(txtNumReals.Text), null);
+            Datatype.defineDatatype(txtNameInput.Text, Int32.Parse(txtNumReals.Text), null);
             Close();
         }
     }

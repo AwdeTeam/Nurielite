@@ -53,59 +53,6 @@ namespace Nurielite
 		// functions
 		public void clearRuntimeOutput() { m_pOutputStream.SetLength(0); }
 
-        /*public static List<string> getAllOfType(AlgorithmType type)
-        {
-            switch(type)
-            {
-                case AlgorithmType.Operation:
-                    {
-                        return listLocalAlgorithms("operation");
-                    }
-
-                case AlgorithmType.Clustering:
-                    {
-                        return listLocalAlgorithms("clustering");
-                    }
-
-                case AlgorithmType.DimensionReduction:
-                    {
-                        return listLocalAlgorithms("dimension_reduction");
-                    }
-
-                case AlgorithmType.Input:
-                    {
-                        return listLocalAlgorithms("input");
-                    }
-
-                case AlgorithmType.Output:
-                    {
-                        return listLocalAlgorithms("output");
-                    }
-
-                case AlgorithmType.Undefined:
-                default:
-                    return null;
-            }
-        }*/
-
-        /*public static List<string> listLocalAlgorithms(string sPath)
-        {
-            List<string> pAlgorithmFiles = Directory.EnumerateDirectories(ALGORITHM_DIRECTORY + sPath).ToList();
-
-            for (int i = 0; i < pAlgorithmFiles.Count; i++)
-            {
-                pAlgorithmFiles[i] = pAlgorithmFiles[i].Substring(pAlgorithmFiles[i].IndexOf("alg_") + "alg_".Length);
-            }
-
-			return pAlgorithmFiles;
-        }*/
-
-        /*public static string getAlgorithmPath(AlgorithmType type, int index)
-        {
-            List<string> pAlgorithmFiles = Directory.EnumerateDirectories(ALGORITHM_DIRECTORY + Master.getAlgorithmTypeNameLowerCase(type)).ToList();
-            return pAlgorithmFiles[index];
-        }*/
-
 		// returns index of dynamic instance (other classes can get that particular instance)
 		// TODO: don't forget to check that it contains necessary methods
 		// TODO: static?

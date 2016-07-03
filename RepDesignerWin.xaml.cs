@@ -90,12 +90,12 @@ namespace Nurielite
 
 		private void lstOutputs_Loaded(object sender, RoutedEventArgs e)
 		{
-			lstOutputs.ItemsSource = Datatype.Directory;
+			lstOutputs.ItemsSource = Datatype.Directory.Values;
 		}
 
 		private void lstInputs_Loaded(object sender, RoutedEventArgs e)
 		{
-			lstInputs.ItemsSource = Datatype.Directory;
+			lstInputs.ItemsSource = Datatype.Directory.Values;
 		}
 
 		private void lstInputs_SelectionChanged(object sender, RoutedEventArgs e)
@@ -114,17 +114,17 @@ namespace Nurielite
 		private void loadAlgorithmOptions(PyAlgorithm algorithm)
 		{
 			StackPanel guiStkPnl = spnlAlgOptions;
-			
-			//if (algorithm.getOptions()["XML"] == null) { /*ERROR, ERROR, ERROR*/ }
 
-			//string xml = algorithm.getOptions()["XML"];
-			string xml = " <options> <option pythonkey='ColIndices' guitype='txtbox' label='Column Indices' description='Comma separated list of column indices to ignore' default='' /> <option pythonkey='NumOutputs' guitype='txtbox' label='# Outputs' description='Number of outputs…' default='1' /> </options> ";
+			if (!algorithm.getOptions().ContainsKey("XML")) { return; /*ERROR, ERROR, ERROR*/ }
+
+			string xml = algorithm.getOptions()["XML"];
 			XElement parsedXML = XElement.Parse(xml);
-			//XElement optionsRoot = parsedXML.Element("options");
+			XElement optionsRoot = parsedXML.Element("options");
+			//string xml = " <options> <option pythonkey='ColIndices' guitype='txtbox' label='Column Indices' description='Comma separated list of column indices to ignore' default='' /> <option pythonkey='NumOutputs' guitype='txtbox' label='# Outputs' description='Number of outputs…' default='1' /> </options> ";
 
 			// iterate through each option and construct gui element for each
-			//IEnumerable<XElement> options = optionsRoot.Elements();
-			IEnumerable<XElement> options = parsedXML.Elements();
+			IEnumerable<XElement> options = optionsRoot.Elements();
+			//IEnumerable<XElement> options = parsedXML.Elements();
 			foreach(XElement option in options)
 			{
 				string pythonKey = option.Attribute("pythonkey").Value;
@@ -151,6 +151,11 @@ namespace Nurielite
 
 				guiStkPnl.Children.Add(optionContainer);
 			}
+		}
+
+		private void cmbAlgorithmSpecific_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
 		}
 	}
 }

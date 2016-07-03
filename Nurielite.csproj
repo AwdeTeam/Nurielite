@@ -84,7 +84,6 @@
     </ApplicationDefinition>
     <Compile Include="AlgorithmLoader.cs" />
     <Compile Include="ConnectionGraphic.cs" />
-    <Compile Include="Datalabel.cs" />
     <Compile Include="Datatype.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="DatatypeDesigner.xaml.cs">
