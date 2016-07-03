@@ -18,9 +18,14 @@ namespace Nurielite
 		// private:
 		private static MainWindow win;
 		private static int RepID = -1; // incrementing counter for assigning block ids
+		private static List<Block> m_pBlocks = new List<Block>();
 		
 		// public:
         public const string PATH_TO_THETHING = "../../Algorithms/algorithm_correct";
+		public static Datatype TEST_DATATYPE = Datatype.defineDatatype("Scalar Integer", 0, 1, new Datalabel(new string[] { }, new string[] { "Scalar Integer" }, new int[] { }, new int[] { 1 }));
+
+		// properties
+		public static List<Block> Blocks { get { return m_pBlocks; } set { m_pBlocks = value; } }
 
 		// NOTE: this should only be called once in main window constructor
 		public static void assignWindow(MainWindow window) { win = window; }

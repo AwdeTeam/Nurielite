@@ -135,7 +135,7 @@ namespace Nurielite
 		// OUTPUT PATH SHOULD NOT INCLUDE TRAILING SLASH, input path is so local files can be found (also note that output path is in relation to input path
 		public void generatePythonCode(List<PyAlgorithm> pAlgorithms, string sInputPath, string sOutputPath)
 		{
-			Directory.SetCurrentDirectory(sInputPath);
+			//Directory.SetCurrentDirectory(sInputPath);
 			Master.log("Generating python...");
 			// take care of classes and imports, obviously ignore duplicates 
 
@@ -152,9 +152,12 @@ namespace Nurielite
 			foreach (PyAlgorithm pAlg in pAlgorithms)
 			{
 				// handle libraries first
+				string sPrevLoc = Directory.GetCurrentDirectory();
+				
                 Directory.SetCurrentDirectory(pAlg.AlgorithmPath);
 				Dictionary<string, string> pLibraries = pAlg.generateCodeLibraries();
 
+				Directory.SetCurrentDirectory(sPrevLoc);
 				foreach (string sLibName in pLibraries.Keys)
 				{
 					if (pImports.Contains(sLibName)) { continue; } // don't do anything if we've already done something with the libraries needed for this algorithm 
@@ -168,7 +171,8 @@ namespace Nurielite
 						File.WriteAllText(sOutputPath + "\\" + sLibName + ".py", pLibraries[sLibName]); 
 					}
 				}
-
+                Directory.SetCurrentDirectory(pAlg.AlgorithmPath);
+				
 				// parse template code for data connections
 				// TODO: this will eventually have to be based on representation connections 
 				string sVerbatimCode = pAlg.generateRunnableCode();
@@ -190,6 +194,7 @@ namespace Nurielite
 				}
 
 				sRunnableCode += "\n" + sVerbatimCode;
+				Directory.SetCurrentDirectory(sPrevLoc);
 			}
 
 			// write runnable code to output

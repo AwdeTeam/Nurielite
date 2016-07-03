@@ -59,7 +59,7 @@ namespace Nurielite
             }
         }
 
-        internal static Datalabel join(Datatype first, Datatype second)
+        public static Datalabel join(Datatype first, Datatype second)
         {
             return first.getDatalabel().append(second.getDatalabel());
         }

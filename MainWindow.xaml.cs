@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,7 +53,11 @@ namespace Nurielite
 			// canvas initially wasn't handling events properly, so adding them to window instead
 			this.MouseMove += world_MouseMove;
 
-            /*START STUFF
+
+			// set path 
+			Directory.SetCurrentDirectory(Master.PATH_TO_THETHING);
+
+			/*START STUFF
 
 			// python generator testing
 			log("----PYTHON----");
@@ -116,8 +121,8 @@ namespace Nurielite
             */
 
 
-            //Representation inputRep = new Representation()
-            /*
+			//Representation inputRep = new Representation()
+			/*
 			Block inprep = AlgorithmLoader.generateBlock("inputthingy", AlgorithmType.Input, new Datatype[0], new Datatype[] { Datatype.findType("Scalar Integer") });
 			Block oprep = AlgorithmLoader.generateBlock("sumthingy", AlgorithmType.Operation, new Datatype[] { Datatype.findType("Scalar Integer") }, new Datatype[] { Datatype.findType("Scalar Integer") });
 			Block outrep = AlgorithmLoader.generateBlock("output", AlgorithmType.Output,  new Datatype[] { Datatype.findType("Scalar Integer") },new Datatype[0]);
@@ -126,8 +131,27 @@ namespace Nurielite
 			m_blocks.Add(1, oprep);
 			m_blocks.Add(2, outrep);
 			*/
+
+			testOpBlock();
+			testInputBlock();
+			testOutputBlock();
 		}
 
+		public void testInputBlock()
+		{
+			AlgorithmLoader.loadAlgorithmBlock("FileInput", AlgorithmType.Input, new Datatype[] { }, new Datatype[] { Master.TEST_DATATYPE });
+		}
+
+		public void testOutputBlock()
+		{
+			AlgorithmLoader.loadAlgorithmBlock("FileOutput", AlgorithmType.Output, new Datatype[] { Master.TEST_DATATYPE }, new Datatype[] { });
+		}
+
+		public void testOpBlock()
+		{
+			AlgorithmLoader.loadAlgorithmBlock("ScalarAdd", AlgorithmType.Operation, new Datatype[] { Master.TEST_DATATYPE }, new Datatype[] { Master.TEST_DATATYPE });
+		}
+		
         //END STUFF
 
 		// properties
@@ -155,13 +179,23 @@ namespace Nurielite
         private void Button_Click_generatePython(object sender, RoutedEventArgs e)
         {
             InterGraph graph = new InterGraph();
-            
-            /*foreach(KeyValuePair<int, Representation> kvp in m_representations)
+
+			/*foreach(KeyValuePair<int, Representation> kvp in m_representations)
             {
                 graph.append( new InterNode(kvp.Value, graph) );
             }*/
 
-			new InterNode(m_blocks[0], graph);
+
+			//find first input node
+			Block pFirstBlock = null;
+			foreach (Block pBlock in Master.Blocks)
+			{
+				if (pBlock.Family == AlgorithmType.Input) { pFirstBlock = pBlock; break; }
+			}
+			if (pFirstBlock == null) { throw new Exception("THERE'S NO INPUT NODES."); }
+
+			//new InterNode(m_blocks[0], graph);
+			new InterNode(pFirstBlock, graph);
 			
             List<PyAlgorithm> algs = graph.topoSort();
             log("Count: " + algs.Count);
@@ -172,7 +206,8 @@ namespace Nurielite
 				//log(rep.ID.ToString());
 			}*/
 
-            (new PythonGenerator()).generatePythonCode(algs, Master.PATH_TO_THETHING, "../../COMPILED");
+            //(new PythonGenerator()).generatePythonCode(algs, Master.PATH_TO_THETHING, "../../COMPILED");
+            (new PythonGenerator()).generatePythonCode(algs, Master.PATH_TO_THETHING, "COMPILED");
         }
 
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar

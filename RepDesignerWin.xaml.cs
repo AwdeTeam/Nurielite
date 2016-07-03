@@ -34,8 +34,8 @@ namespace Nurielite
 
 		private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
 		{
-			Block pBlock = AlgorithmLoader.loadAlgorithmBlock(cmbAlgorithmSpecific.SelectedItem.ToString(), (AlgorithmType)cmbAlgorithmType.SelectedItem, ray(lstInputs.SelectedItems), ray(lstOutputs.SelectedItems));
-            m_parent.appendBlock(pBlock);
+			AlgorithmLoader.loadAlgorithmBlock(cmbAlgorithmSpecific.SelectedItem.ToString(), (AlgorithmType)cmbAlgorithmType.SelectedItem, ray(lstInputs.SelectedItems), ray(lstOutputs.SelectedItems));
+            //m_parent.appendBlock(pBlock);
 			Close();
 		}
 
@@ -77,7 +77,7 @@ namespace Nurielite
 
 			// get all algorithm names from folder structure
 			
-			List<DirectoryInfo> pAlgorithmDirs = new DirectoryInfo(Master.PATH_TO_THETHING + "/" + cmbAlgorithmType.SelectedItem.ToString()).EnumerateDirectories().ToList();
+			List<DirectoryInfo> pAlgorithmDirs = new DirectoryInfo("./" + cmbAlgorithmType.SelectedItem.ToString()).EnumerateDirectories().ToList();
 			List<string> pAlgorithms = new List<string>();
 			foreach (DirectoryInfo pDI in pAlgorithmDirs) { pAlgorithms.Add(pDI.Name); }
 
