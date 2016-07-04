@@ -23,7 +23,7 @@ class PyAlgorithmInterface():
 	def generateRunnableCode(self):
 		code = """
 exporter = FileOutputOutput.FileOutput()
-exporter.write(OUT_DATA, {VALUE})
+exporter.write(IN_DATA, {VALUE})
 		"""
 		return code.format(VALUE=self.algOptions["path"])
 

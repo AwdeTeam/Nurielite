@@ -50,6 +50,8 @@ namespace Nurielite
 			Directory.SetCurrentDirectory(Master.PATH_TO_THETHING);
 
 			testOpBlock();
+            testOpBlock();
+            testJoinBlock();
 			testInputBlock();
 			testOutputBlock();
 		}
@@ -68,6 +70,11 @@ namespace Nurielite
 		{
 			AlgorithmLoader.loadAlgorithmBlock("ScalarAdd", AlgorithmType.Operation, new Datatype[] { Master.TEST_DATATYPE }, new Datatype[] { Master.TEST_DATATYPE });
 		}
+
+        public void testJoinBlock()
+        {
+            AlgorithmLoader.loadAlgorithmBlock("Join", AlgorithmType.Operation, new Datatype[] { Master.TEST_DATATYPE, Master.TEST_DATATYPE }, new Datatype[] { Master.TEST_DATATYPE });
+        }
 		
         //END STUFF
 

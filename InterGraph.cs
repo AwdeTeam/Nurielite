@@ -64,9 +64,21 @@ namespace Nurielite
             
 
             foreach (InterNode n in L)
-                algs.Add(n.getAlgorithm());
+                algs.Add(n.getAlgorithm().setDependancies(getSortedDependancies(n, L)));
 
             return algs;
+        }
+
+        private List<int> getSortedDependancies(InterNode n, List<InterNode> L)
+        {
+            List<int> sorted = new List<int>();
+            foreach(int x in n.Dependancies)
+            {
+                for (int i = 0; i < L.Count; i++)
+                    if (L[i].getCore().ID == x)
+                        sorted.Add(i);
+            }
+            return sorted;
         }
 
         public InterNode get(Block r) 
