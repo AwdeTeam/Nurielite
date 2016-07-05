@@ -7,6 +7,7 @@
         <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="28"/>
         <TextBox Name="txtbxName" HorizontalAlignment="Left" Height="23" Margin="60,15,0,0" TextWrapping="Wrap" Text="nil" VerticalAlignment="Top" Width="120"/>
         <Button Content="Change Datatypes" HorizontalAlignment="Left" Margin="504,10,0,0" VerticalAlignment="Top" Width="143" Height="28"/>
+        <Button Click="deleteBlock" Content="Delete Block" HorizontalAlignment="Left" Margin="356,10,0,0" VerticalAlignment="Top" Width="143" Height="28"/>
         
         <ScrollViewer HorizontalAlignment="Left" Height="287" Margin="10,43,0,0" VerticalAlignment="Top" Width="637">
             <StackPanel Name="spnlAlgOptions">

@@ -140,7 +140,7 @@ namespace Nurielite
             Dictionary<string, dynamic> finished = new Dictionary<string, dynamic>();
             PyAlgorithm algorithm = m_pBlkTarget.PyAlgorithm;
 
-            if (!algorithm.getOptions().ContainsKey("XML")) { return; /*No options, not necessarily an error*/ }
+            if (!algorithm.getOptions().ContainsKey("XML")) { return; /*ERROR*/ }
 
             string xml = algorithm.getOptions()["XML"];
             XElement optionsRoot = XElement.Parse(xml);
@@ -172,7 +172,7 @@ namespace Nurielite
 
                     case "file_chooser":
                         {
-                            finished.Add(pythonKey, (((TextBox)getByName(((Canvas)getByName(guiStkPnl.Children, pythonKey)).Children, "txtfile")).Text));
+                            finished.Add(pythonKey, "\"" + (((TextBox)getByName(((Canvas)getByName(guiStkPnl.Children, pythonKey)).Children, "txtfile")).Text) + "\"");
                             break;
                         }
 
@@ -193,6 +193,12 @@ namespace Nurielite
                     return element;
             }
             return null;
+        }
+
+        private void deleteBlock(object sender, RoutedEventArgs e)
+        {
+            //TODO Implement
+            Close();
         }
     }
 }
