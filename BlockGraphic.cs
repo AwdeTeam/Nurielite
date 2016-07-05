@@ -215,6 +215,12 @@ namespace Nurielite
 			return Color.FromArgb(pColor.A, (byte)red, (byte)green, (byte)blue);
 		}
 
+        private void editBlock(Block pBlock)
+        {
+            BlockEditorWin popup = new BlockEditorWin(pBlock);
+            popup.Show();
+        }
+
 		// -- EVENT HANDLERS --
 
 		public void evt_MouseDownBody(object sender, MouseButtonEventArgs e)
@@ -234,7 +240,7 @@ namespace Nurielite
 			}
 			else if (e.RightButton == MouseButtonState.Pressed)
 			{
-				Master.setCommandPrompt("edit rep -" + m_iID + " -");
+                editBlock(m_pBlkParent);
 			}
 		}
 

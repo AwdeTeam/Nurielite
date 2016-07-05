@@ -2,7 +2,7 @@ class PyAlgorithmInterface():
 
 	algOptions = {
 		"path" : "C\\",
-		"XML" : "<options><option pythonkey='path' guitype='txtbox' label='Path to File' description='The path to the file' default='C\\' /></options>"
+		"XML" : "<options><option pythonkey='path' guitype='file_chooser' label='Path to File' description='The path to the file' default='C\\' /></options>"
 		}
 
 	metaData = {

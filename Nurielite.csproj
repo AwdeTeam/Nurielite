@@ -83,6 +83,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AlgorithmLoader.cs" />
+    <Compile Include="BlockEditorWin.xaml.cs">
+      <DependentUpon>BlockEditorWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ConnectionGraphic.cs" />
     <Compile Include="Datatype.cs" />
     <Compile Include="Connection.cs" />
@@ -104,6 +107,10 @@
     <Compile Include="RepDesignerControl.xaml.cs">
       <DependentUpon>RepDesignerControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="BlockEditorWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DatatypeDesigner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

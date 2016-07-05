@@ -29,7 +29,7 @@ namespace Nurielite
 			m_parent = parent;
 			InitializeComponent();
 
-			loadAlgorithmOptions(PyAlgorithm.getUnloadedAlgorithm()); // DEBUG
+			//loadAlgorithmOptions(PyAlgorithm.getUnloadedAlgorithm()); // DEBUG
 		}
 
 		private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
@@ -107,50 +107,6 @@ namespace Nurielite
 		{
 			//List dexes = box.SelectedIndices;
 			return null;
-		}
-
-		// TODO: figure out how to integrate/wire this up (will probably eventually be public)
-		// TODO: Make it look a little nicer
-		private void loadAlgorithmOptions(PyAlgorithm algorithm)
-		{
-			StackPanel guiStkPnl = spnlAlgOptions;
-
-			if (!algorithm.getOptions().ContainsKey("XML")) { return; /*ERROR, ERROR, ERROR*/ }
-
-			string xml = algorithm.getOptions()["XML"];
-			XElement parsedXML = XElement.Parse(xml);
-			XElement optionsRoot = parsedXML.Element("options");
-			//string xml = " <options> <option pythonkey='ColIndices' guitype='txtbox' label='Column Indices' description='Comma separated list of column indices to ignore' default='' /> <option pythonkey='NumOutputs' guitype='txtbox' label='# Outputs' description='Number of outputs…' default='1' /> </options> ";
-
-			// iterate through each option and construct gui element for each
-			IEnumerable<XElement> options = optionsRoot.Elements();
-			//IEnumerable<XElement> options = parsedXML.Elements();
-			foreach(XElement option in options)
-			{
-				string pythonKey = option.Attribute("pythonkey").Value;
-				string guiType = option.Attribute("guitype").Value;
-				string label = option.Attribute("label").Value;
-				string description = option.Attribute("description").Value;
-				string defaultValue = "";
-				if (option.Attribute("default") != null) { defaultValue = option.Attribute("default").Value; }
-
-				StackPanel optionContainer = new StackPanel();
-				optionContainer.Orientation = Orientation.Horizontal;
-				optionContainer.ToolTip = description;
-
-				Label optionLbl = new Label();
-				optionLbl.Content = label;
-				optionContainer.Children.Add(optionLbl);
-
-				if (guiType == "txtbox")
-				{
-					TextBox tb = new TextBox();
-					tb.Text = defaultValue;
-					optionContainer.Children.Add(tb);
-				}
-
-				guiStkPnl.Children.Add(optionContainer);
-			}
 		}
 
 		private void cmbAlgorithmSpecific_SelectionChanged(object sender, SelectionChangedEventArgs e)

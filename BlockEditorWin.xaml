@@ -1,0 +1,20 @@
+﻿<Window x:Class="Nurielite.BlockEditorWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BlockEditorWin" Height="400" Width="663.265"
+        ResizeMode="CanMinimize">
+    <Grid>
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="28"/>
+        <TextBox Name="txtbxName" HorizontalAlignment="Left" Height="23" Margin="60,15,0,0" TextWrapping="Wrap" Text="nil" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Change Datatypes" HorizontalAlignment="Left" Margin="504,10,0,0" VerticalAlignment="Top" Width="143" Height="28"/>
+        
+        <ScrollViewer HorizontalAlignment="Left" Height="287" Margin="10,43,0,0" VerticalAlignment="Top" Width="637">
+            <StackPanel Name="spnlAlgOptions">
+                <!--(filled by code)-->
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button Click="ConfirmEdits" Content="&#x2713;" FontSize="14" Background="WhiteSmoke" Foreground="Green" HorizontalAlignment="Left" Margin="622,335,0,0" VerticalAlignment="Top" Width="25" Height="25"/>
+
+    </Grid>
+</Window>

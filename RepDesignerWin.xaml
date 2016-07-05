@@ -1,7 +1,8 @@
 ﻿<Window x:Class="Nurielite.RepDesignerWin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="RepDesignerWin" Height="258.064" Width="601.076">
+        Title="RepDesignerWin" Height="258.064" Width="601.076"
+        ResizeMode="CanMinimize">
     <Grid>
         <Grid HorizontalAlignment="Left" Height="229" VerticalAlignment="Top" Width="594" Margin="0,0,0,-0.2">
             <Grid.ColumnDefinitions>
