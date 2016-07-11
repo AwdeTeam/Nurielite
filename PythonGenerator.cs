@@ -123,38 +123,47 @@ namespace Nurielite
 				// parse template code for data connections
 				// TODO: this will eventually have to be based on representation connections 
 				string sVerbatimCode = pAlg.generateRunnableCode();
-                List<int> pDep = pAlg.getDependancies();
+                bool bValidCodeFlag = true;
+                if(sVerbatimCode == null)
+                {
+                    bValidCodeFlag = false;
+                }
 
-				if (sVerbatimCode.Contains("IN_DATA"))
-				{
-                    iInStage++;
-                    string sDepComp = "";
-                    if (pDep.Count < 2)
-                        sDepComp = "stage" + (pDep[0]) + "OutputData";
-                    else
+                if (bValidCodeFlag)
+                {
+                    List<int> pDep = pAlg.getDependancies();
+
+                    if (sVerbatimCode.Contains("IN_DATA"))
                     {
-                        sDepComp = "[";
-                        foreach (int i in pDep)
-                            sDepComp += "stage" + (i) + "OutputData,";
-                        sDepComp.Substring(0, sDepComp.Length - 2);
-                        sDepComp += "]";
+                        iInStage++;
+                        string sDepComp = "";
+                        if (pDep.Count < 2)
+                            sDepComp = "stage" + (pDep[0]) + "OutputData";
+                        else
+                        {
+                            sDepComp = "[";
+                            foreach (int i in pDep)
+                                sDepComp += "stage" + (i) + "OutputData,";
+                            sDepComp.Substring(0, sDepComp.Length - 2);
+                            sDepComp += "]";
+                        }
+
+                        // connect input of this algorithm to output of last algorithm
+                        sVerbatimCode = "\nstage" + iInStage + "InputData = " + sDepComp + sVerbatimCode;
+                        sVerbatimCode = sVerbatimCode.Replace("IN_DATA", "stage" + iInStage + "InputData");
+
+                    }
+                    if (sVerbatimCode.Contains("OUT_DATA"))
+                    {
+                        sVerbatimCode = sVerbatimCode.Replace("OUT_DATA", "stage" + iOutStage + "OutputData");
+
+                        sVerbatimCode += "\nprint('\\nStage " + iOutStage + " out:' + str(stage" + iOutStage + "OutputData))\n";
+                        iOutStage++;
                     }
 
-					// connect input of this algorithm to output of last algorithm
-					sVerbatimCode = "\nstage" + iInStage + "InputData = " + sDepComp + sVerbatimCode;
-					sVerbatimCode = sVerbatimCode.Replace("IN_DATA", "stage" + iInStage + "InputData");
-                   
-				}
-				if (sVerbatimCode.Contains("OUT_DATA"))
-				{
-					sVerbatimCode = sVerbatimCode.Replace("OUT_DATA", "stage" + iOutStage + "OutputData");
-
-					sVerbatimCode += "\nprint('\\nStage " + iOutStage + " out:' + str(stage" + iOutStage + "OutputData))\n";
-                    iOutStage++;
-				}
-
-				sRunnableCode += "\n" + sVerbatimCode;
-				Directory.SetCurrentDirectory(sPrevLoc);
+                    sRunnableCode += "\n" + sVerbatimCode;
+                    Directory.SetCurrentDirectory(sPrevLoc);
+                }
 			}
 
 			// write runnable code to output

@@ -20,6 +20,7 @@ namespace Nurielite
 		private dynamic m_pyClass;
         private string m_sAlgName;
         private string m_sAlgPath;
+        private PythonDictionary m_pHeldOptions;
         private List<int> m_pDependancies;
 			
 		// construction
@@ -68,6 +69,22 @@ namespace Nurielite
 			m_pyClass.setOptions(pPyOptions);
 		}
 
+        public void setPreOptions(Dictionary<string, dynamic> pOptions)
+        {
+            if (m_pyClass == null) { return; }
+
+            PythonDictionary pPyOptions = new PythonDictionary();
+
+            foreach (string sKey in pOptions.Keys) { pPyOptions.Add(sKey, pOptions[sKey]); }
+            m_pHeldOptions = pPyOptions;
+        }
+
+        public PyAlgorithm flushOptions()
+        {
+            m_pyClass.setOptions(m_pHeldOptions);
+            return this;
+        }
+
 		public Dictionary<string, string> getMetaData()
 		{
 			Dictionary<string, string> pMetaData = new Dictionary<string, string>();
@@ -88,7 +105,9 @@ namespace Nurielite
 			// in generated python incoming data should be labeled as IN_DATA, and the PythonGenerator will take care of changing it as needed
 			// returned data should be labeled as a variable OUT_DATA
 			if (m_pyClass == null) { return "NULL ALGORITHM"; }
-			dynamic pCode = m_pyClass.generateRunnableCode();
+            dynamic pCode = null;
+            try { pCode = m_pyClass.generateRunnableCode(); }
+            catch (IronPython.Runtime.Exceptions.TypeErrorException e) { }
 			return (string)pCode;
 		}
 

@@ -64,7 +64,7 @@ namespace Nurielite
             
 
             foreach (InterNode n in L)
-                algs.Add(n.getAlgorithm().setDependancies(getSortedDependancies(n, L)));
+                algs.Add(n.getAlgorithm().setDependancies(getSortedDependancies(n, L)).flushOptions());
 
             return algs;
         }

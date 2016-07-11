@@ -136,52 +136,55 @@ namespace Nurielite
 
         private void ConfirmEdits(object sender, RoutedEventArgs e)
         {
-            StackPanel guiStkPnl = (StackPanel)spnlAlgOptions.Children[0];
-            Dictionary<string, dynamic> finished = new Dictionary<string, dynamic>();
-            PyAlgorithm algorithm = m_pBlkTarget.PyAlgorithm;
-
-            if (!algorithm.getOptions().ContainsKey("XML")) { return; /*ERROR*/ }
-
-            string xml = algorithm.getOptions()["XML"];
-            XElement optionsRoot = XElement.Parse(xml);
-            IEnumerable<XElement> options = optionsRoot.Elements();
-            //IEnumerable<XElement> options = parsedXML.Elements();
-            foreach (XElement option in options)
+            if (spnlAlgOptions.Children.Count > 0)
             {
-                string pythonKey = option.Attribute("pythonkey").Value;
-                string guiType = option.Attribute("guitype").Value;
-                string label = option.Attribute("label").Value;
-                string description = option.Attribute("description") == null ? "" : option.Attribute("description").Value;
-                string defaultValue = "";
-                if (option.Attribute("default") != null) { defaultValue = option.Attribute("default").Value; }
+                StackPanel guiStkPnl = (StackPanel)spnlAlgOptions.Children[0];
+                Dictionary<string, dynamic> finished = new Dictionary<string, dynamic>();
+                PyAlgorithm algorithm = m_pBlkTarget.PyAlgorithm;
 
-                switch (guiType)
+                if (!algorithm.getOptions().ContainsKey("XML")) { return; /*ERROR*/ }
+
+                string xml = algorithm.getOptions()["XML"];
+                XElement optionsRoot = XElement.Parse(xml);
+                IEnumerable<XElement> options = optionsRoot.Elements();
+                //IEnumerable<XElement> options = parsedXML.Elements();
+                foreach (XElement option in options)
                 {
-                    case "txtbox":
-                    case "text_box":
-                        {
-                            finished.Add(pythonKey, ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text);
-                            break;
-                        }
+                    string pythonKey = option.Attribute("pythonkey").Value;
+                    string guiType = option.Attribute("guitype").Value;
+                    string label = option.Attribute("label").Value;
+                    string description = option.Attribute("description") == null ? "" : option.Attribute("description").Value;
+                    string defaultValue = "";
+                    if (option.Attribute("default") != null) { defaultValue = option.Attribute("default").Value; }
 
-                    case "check_box":
-                        {
-                            finished.Add(pythonKey, ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked);
-                            break;
-                        }
+                    switch (guiType)
+                    {
+                        case "txtbox":
+                        case "text_box":
+                            {
+                                finished.Add(pythonKey, ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text);
+                                break;
+                            }
 
-                    case "file_chooser":
-                        {
-                            finished.Add(pythonKey, "\"" + (((TextBox)getByName(((Canvas)getByName(guiStkPnl.Children, pythonKey)).Children, "txtfile")).Text) + "\"");
-                            break;
-                        }
+                        case "check_box":
+                            {
+                                finished.Add(pythonKey, ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked);
+                                break;
+                            }
 
-                    default: { break; }
+                        case "file_chooser":
+                            {
+                                finished.Add(pythonKey, "\"" + (((TextBox)getByName(((Canvas)getByName(guiStkPnl.Children, pythonKey)).Children, "txtfile")).Text) + "\"");
+                                break;
+                            }
+
+                        default: { break; }
+                    }
                 }
-            }
 
-            m_pBlkTarget.Graphic.Name = txtbxName.Text;
-            m_pBlkTarget.PyAlgorithm.setOptions(finished);
+                m_pBlkTarget.Graphic.Name = txtbxName.Text;
+                m_pBlkTarget.PyAlgorithm.setPreOptions(finished);
+            }
             Close();
         }
 
