@@ -69,22 +69,6 @@ namespace Nurielite
 			m_pyClass.setOptions(pPyOptions);
 		}
 
-        public void setPreOptions(Dictionary<string, dynamic> pOptions)
-        {
-            if (m_pyClass == null) { return; }
-
-            PythonDictionary pPyOptions = new PythonDictionary();
-
-            foreach (string sKey in pOptions.Keys) { pPyOptions.Add(sKey, pOptions[sKey]); }
-            m_pHeldOptions = pPyOptions;
-        }
-
-        public PyAlgorithm flushOptions()
-        {
-            m_pyClass.setOptions(m_pHeldOptions);
-            return this;
-        }
-
 		public Dictionary<string, string> getMetaData()
 		{
 			Dictionary<string, string> pMetaData = new Dictionary<string, string>();

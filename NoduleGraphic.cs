@@ -59,6 +59,8 @@ namespace Nurielite
 			m_pBody.MouseUp += new MouseButtonEventHandler(evt_MouseUp);
 		}
 
+		public void deleteGraphic() { Master.getCanvas().Children.Remove(m_pBody); }
+
 		public void move(double x, double y)
 		{
 			Canvas.SetLeft(m_pBody, x + m_iOffsetX);

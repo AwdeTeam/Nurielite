@@ -140,11 +140,13 @@ namespace Nurielite
             {
                 StackPanel guiStkPnl = (StackPanel)spnlAlgOptions.Children[0];
                 Dictionary<string, dynamic> finished = new Dictionary<string, dynamic>();
-                PyAlgorithm algorithm = m_pBlkTarget.PyAlgorithm;
+				
+                PyAlgorithm pAlgorithm = m_pBlkTarget.PyAlgorithm;
+				Dictionary<string, dynamic> pAlgOptions = pAlgorithm.getOptions();
 
-                if (!algorithm.getOptions().ContainsKey("XML")) { return; /*ERROR*/ }
+                if (!pAlgOptions.ContainsKey("XML")) { return; /*ERROR*/ }
 
-                string xml = algorithm.getOptions()["XML"];
+                string xml = pAlgorithm.getOptions()["XML"];
                 XElement optionsRoot = XElement.Parse(xml);
                 IEnumerable<XElement> options = optionsRoot.Elements();
                 //IEnumerable<XElement> options = parsedXML.Elements();
@@ -162,19 +164,22 @@ namespace Nurielite
                         case "txtbox":
                         case "text_box":
                             {
-                                finished.Add(pythonKey, ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text);
+                                //finished.Add(pythonKey, ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text);
+								pAlgOptions[pythonKey] = ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text;
                                 break;
                             }
 
                         case "check_box":
                             {
-                                finished.Add(pythonKey, ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked);
+                                //finished.Add(pythonKey, ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked);
+								pAlgOptions[pythonKey] = ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked;
                                 break;
                             }
 
                         case "file_chooser":
                             {
-                                finished.Add(pythonKey, "\"" + (((TextBox)getByName(((Canvas)getByName(guiStkPnl.Children, pythonKey)).Children, "txtfile")).Text) + "\"");
+                                //finished.Add(pythonKey, "\"" + (((TextBox)getByName(((Canvas)getByName(guiStkPnl.Children, pythonKey)).Children, "txtfile")).Text) + "\"");
+								pAlgOptions[pythonKey] = "\"" + (((TextBox)getByName(((Canvas)getByName(guiStkPnl.Children, pythonKey)).Children, "txtfile")).Text) + "\"";
                                 break;
                             }
 
@@ -183,7 +188,9 @@ namespace Nurielite
                 }
 
                 m_pBlkTarget.Graphic.Name = txtbxName.Text;
-                m_pBlkTarget.PyAlgorithm.setPreOptions(finished);
+				//m_pBlkTarget.PyAlgorithm.setPreOptions(finished);
+				m_pBlkTarget.PyAlgorithm.setOptions(pAlgOptions);
+				
             }
             Close();
         }
@@ -200,7 +207,8 @@ namespace Nurielite
 
         private void deleteBlock(object sender, RoutedEventArgs e)
         {
-            //TODO Implement
+			//TODO Implement
+			Master.removeBlock(m_pBlkTarget.ID);
             Close();
         }
     }

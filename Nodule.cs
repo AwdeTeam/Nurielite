@@ -64,5 +64,11 @@ namespace Nurielite
 			m_pConnections.Add(pConnection);
 			pConnection.Origin.addConnection(pConnection);
 		}
+
+		public void deleteNodule()
+		{
+			for (int i = m_pConnections.Count - 1; i >= 0; i--) { m_pConnections[i].removeConnection(); }
+			m_pConnections = null;
+		}
 	}
 }

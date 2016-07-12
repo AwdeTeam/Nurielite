@@ -18,10 +18,12 @@ namespace Nurielite
     {
 
 		//NOTE: python file path can be reconstructed by eFamily/sName/sName.py
+		//NOTE: THIS IS ENTRYPOINT FOR NEW BLOCK
 		public static void loadAlgorithmBlock(string sName, AlgorithmType eFamily, Datatype[] aInputs, Datatype[] aOutputs)
 		{
 			PythonGenerator pPyGen = new PythonGenerator();
-			PyAlgorithm pPyAlgorithm = pPyGen.loadPythonAlgorithm(Master.PATH_TO_THETHING + "/" + eFamily.ToString() + "/" + sName, sName + ".py");
+			//PyAlgorithm pPyAlgorithm = pPyGen.loadPythonAlgorithm(Master.PATH_TO_THETHING + "/" + eFamily.ToString() + "/" + sName, sName + ".py");
+			PyAlgorithm pPyAlgorithm = pPyGen.loadPythonAlgorithm(eFamily.ToString() + "/" + sName, sName + ".py");
 			Block pBlock = AlgorithmLoader.generateBlock(sName, eFamily, aInputs, aOutputs);
 			pBlock.PyAlgorithm = pPyAlgorithm;
 			Master.Blocks.Add(pBlock);

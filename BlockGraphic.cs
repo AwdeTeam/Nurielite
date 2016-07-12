@@ -158,6 +158,11 @@ namespace Nurielite
 			m_pLblName.MouseDown += new MouseButtonEventHandler(evt_MouseDownLabel);
 		}
 
+		public void deleteGraphic()
+		{
+			Canvas pCanvas = Master.getCanvas();
+		}
+
 		// moves entire block to passed x and y (based on upper left corner)
 		public void move(double dX, double dY) 
 		{

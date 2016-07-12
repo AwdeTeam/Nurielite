@@ -42,6 +42,21 @@ namespace Nurielite
 
 		public static int getNextRepID() { RepID++; return RepID; }
 
+		public static void removeBlock(int iID) 
+		{
+			//m_pBlocks.RemoveAll(block => block.ID == iID); 
+
+			int iIndexToRemove = -1;
+			for (int i = 0; i < m_pBlocks.Count; i++)
+			{
+				if (m_pBlocks[i].ID == iID) { iIndexToRemove = i; break; }
+			}
+
+			if (iIndexToRemove == -1) { throw new Exception("Could not find block with ID " + iID); }
+			m_pBlocks[iIndexToRemove].deleteBlock();
+			m_pBlocks.RemoveAt(iIndexToRemove);
+		}
+
         public static string getAlgorithmTypeName(AlgorithmType eType)
         {
             switch (eType)

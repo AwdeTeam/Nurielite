@@ -35,6 +35,8 @@ namespace Nurielite
 		// construction
 		public MainWindow()
 		{
+
+		
 			InitializeComponent();
 			cmd_clearConsole();
 			Master.assignWindow(this);
@@ -50,8 +52,8 @@ namespace Nurielite
 			Directory.SetCurrentDirectory(Master.PATH_TO_THETHING);
             
 			testOpBlock();
-            testOpBlock();
-            testJoinBlock();
+            //testOpBlock();
+            //testJoinBlock();
 			testInputBlock();
 			testOutputBlock();
             

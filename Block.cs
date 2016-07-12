@@ -69,8 +69,14 @@ namespace Nurielite
 		public BlockGraphic Graphic { get { return m_pGraphic; } set { m_pGraphic = value; } }
 		public List<Nodule> Nodules { get { return m_pNodules; } set { m_pNodules = value; } }
 		public PyAlgorithm PyAlgorithm { get { return m_pPyAlgorithm; } set { m_pPyAlgorithm = value; } }
-		
+
 		// -- FUNCTIONS --
+
+		public void deleteBlock()
+		{
+			for (int i = 0; i < m_pNodules.Count; i++) { m_pNodules[i].deleteNodule(); }
+			m_pNodules = null;
+		}
 
         public List<Block> getOutgoing()
         {
