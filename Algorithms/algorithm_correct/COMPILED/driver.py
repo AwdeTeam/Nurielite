@@ -1,5 +1,5 @@
-import FileOutputOutput
-import ScalarAddOperation
+import TrainerOutputOutput
+import NaiveBayesClassifier
 import FileInputInput
 
 
@@ -10,13 +10,13 @@ print('\nStage 0 out:' + str(stage0OutputData))
 
 
 stage1InputData = stage0OutputData
-adder = ScalarAddOperation.ScalarAdder()
-stage1OutputData = adder.add(stage1InputData, 0)
-		
+gaussnb = NaiveBayesClassifier.NaiveBayes()
+stage1OutputData = gaussnb.passToTrain(stage1InputData)
+			
 print('\nStage 1 out:' + str(stage1OutputData))
 
 
-stage2InputData = stage1OutputData
-exporter = FileOutputOutput.FileOutput()
-exporter.write(stage2InputData, C\)
+stage2InputData = [stage1OutputData,stage0OutputData]
+trainer = TrainerOutputOutput.TrainerOutput()
+trainer.loadAndDump(stage2InputData[0][0], stage2InputData[0][1], stage2InputData[1], "C\\", stage2InputData[0][2] )
 		

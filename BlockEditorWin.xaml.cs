@@ -88,7 +88,6 @@ namespace Nurielite
 
                         case "file_chooser":
                         {
-                            Canvas c = new Canvas();
                             TextBox txt = new TextBox();
                             txt.Text = Directory.GetCurrentDirectory();
                             txt.Width = 260;
@@ -96,8 +95,8 @@ namespace Nurielite
                             txt.Margin = new Thickness(0, 0, 0, 0);
                             txt.HorizontalAlignment = HorizontalAlignment.Left;
                             txt.FontSize = 12;
-                            txt.Uid = "txtfile";
-                            c.Children.Add(txt);
+                            txt.Uid = pythonKey;
+                            optionContainer.Children.Add(txt);
 
                             Button btn = new Button();
                             btn.Content = "Select a File";
@@ -115,9 +114,7 @@ namespace Nurielite
                                     txt.Text = dialog.FileName;
                                 }
                             };
-                            c.Children.Add(btn);
-                            c.Uid = pythonKey;
-                            optionContainer.Children.Add(c);
+                            optionContainer.Children.Add(btn);
                             break;
                         }
 
@@ -138,7 +135,7 @@ namespace Nurielite
         {
             if (spnlAlgOptions.Children.Count > 0)
             {
-                StackPanel guiStkPnl = (StackPanel)spnlAlgOptions.Children[0];
+                StackPanel guiStkPnl = spnlAlgOptions;
                 Dictionary<string, dynamic> finished = new Dictionary<string, dynamic>();
 				
                 PyAlgorithm pAlgorithm = m_pBlkTarget.PyAlgorithm;
@@ -172,14 +169,14 @@ namespace Nurielite
                         case "check_box":
                             {
                                 //finished.Add(pythonKey, ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked);
-								pAlgOptions[pythonKey] = ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked;
+								pAlgOptions[pythonKey] = ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked.ToString();
                                 break;
                             }
 
                         case "file_chooser":
                             {
                                 //finished.Add(pythonKey, "\"" + (((TextBox)getByName(((Canvas)getByName(guiStkPnl.Children, pythonKey)).Children, "txtfile")).Text) + "\"");
-								pAlgOptions[pythonKey] = "\"" + (((TextBox)getByName(((Canvas)getByName(guiStkPnl.Children, pythonKey)).Children, "txtfile")).Text) + "\"";
+                                pAlgOptions[pythonKey] = "\"" + ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text + "\"";
                                 break;
                             }
 
@@ -197,10 +194,13 @@ namespace Nurielite
 
         private dynamic getByName(UIElementCollection children, string pythonKey)
         {
-            foreach(UIElement element in children)
+            foreach(StackPanel stkpanel in children)
             {
-                if (element.Uid.Equals(pythonKey))
-                    return element;
+                foreach(UIElement element in stkpanel.Children)
+                {
+                    if (element.Uid.Equals(pythonKey))
+                        return element;
+                }
             }
             return null;
         }

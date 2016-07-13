@@ -51,11 +51,10 @@ namespace Nurielite
 			// set path 
 			Directory.SetCurrentDirectory(Master.PATH_TO_THETHING);
             
-			testOpBlock();
-            //testOpBlock();
-            //testJoinBlock();
+
 			testInputBlock();
-			testOutputBlock();
+            testBayesBlock();
+            testTrainerOutputBlock();
             
 		}
 
@@ -69,6 +68,11 @@ namespace Nurielite
 			AlgorithmLoader.loadAlgorithmBlock("FileOutput", AlgorithmType.Output, new Datatype[] { Master.TEST_DATATYPE }, new Datatype[] { });
 		}
 
+        public void testTrainerOutputBlock()
+        {
+            AlgorithmLoader.loadAlgorithmBlock("TrainerOutput", AlgorithmType.Output, new Datatype[] { Master.TEST_DATATYPE, Master.TEST_DATATYPE }, new Datatype[] { });
+        }
+
 		public void testOpBlock()
 		{
 			AlgorithmLoader.loadAlgorithmBlock("ScalarAdd", AlgorithmType.Operation, new Datatype[] { Master.TEST_DATATYPE }, new Datatype[] { Master.TEST_DATATYPE });
@@ -77,6 +81,11 @@ namespace Nurielite
         public void testJoinBlock()
         {
             AlgorithmLoader.loadAlgorithmBlock("SimpleJoin", AlgorithmType.Operation, new Datatype[] { Master.TEST_DATATYPE, Master.TEST_DATATYPE }, new Datatype[] { Master.TEST_DATATYPE });
+        }
+
+        public void testBayesBlock()
+        {
+            AlgorithmLoader.loadAlgorithmBlock("NaiveBayes", AlgorithmType.Classifier, new Datatype[] { Master.TEST_DATATYPE }, new Datatype[] { Master.TEST_DATATYPE });
         }
 		
         //END STUFF

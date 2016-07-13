@@ -141,7 +141,7 @@ namespace Nurielite
 							sDepComp = "[";
 							foreach (int i in pDep)
 								sDepComp += "stage" + (i) + "OutputData,";
-							sDepComp.Substring(0, sDepComp.Length - 2);
+                            sDepComp = sDepComp.Substring(0, sDepComp.Length - 1);
 							sDepComp += "]";
 						}
 
