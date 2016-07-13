@@ -2,7 +2,13 @@ class PyAlgorithmInterface():
 
 	algOptions = {
 		"path" : "C\\",
-		"XML" : "<options><option pythonkey='path' guitype='file_chooser' label='Path to File' description='The path to the file' default='C\\' /></options>"
+		"delim" : ",",
+		"titleLine" : "false",
+		"XML" : "<options>"+
+		"<option pythonkey='path' guitype='file_chooser' label='Path to File' description='The path to the file' default='C\\' />" +
+		"<option pythonkey='delim' guitype='text_box' label='String Delimeter' description='The string delimiter' default=',' />" +
+		"<option pythonkey='titleLine' guitype='check_box' label='First Row Titles?' description='Whether the first row is the title for the columns' default='false'>" +
+		"</options>"
 		}
 
 	metaData = {
@@ -23,9 +29,9 @@ class PyAlgorithmInterface():
 	def generateRunnableCode(self):
 		code = """
 importer = FileInputInput.FileInput()
-OUT_DATA = importer.loadCSV({VALUE})
+OUT_DATA = importer.loadCSV({VALUE}, {DELIM}, {TITLELN})
 		"""
-		return code.format(VALUE=self.algOptions["path"])
+		return code.format(VALUE=self.algOptions["path"], DELIM=self.algOptions["delim"], TITLELN=self.algOptions["titleLine"])
 
 	def generateCodeLibraries(self):
 		f = open("FileInput_class.py")

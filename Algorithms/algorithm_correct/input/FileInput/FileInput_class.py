@@ -2,7 +2,7 @@ import fileinput
 
 class FileInput():
 	
-	def loadCSV(self, path, delim=",", type="float"):
+	def loadCSV(self, path, delim, titleLine, type="float"):
 		file = fileinput.input(path)
 		
 		data = []
