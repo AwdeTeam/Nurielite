@@ -1,4 +1,4 @@
-from sklearn.naive_bayes import GaussianN
+from sklearn.naive_bayes import GaussianNB
 
 class NaiveBayes():
 
