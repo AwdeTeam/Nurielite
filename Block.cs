@@ -76,6 +76,7 @@ namespace Nurielite
 		{
 			for (int i = 0; i < m_pNodules.Count; i++) { m_pNodules[i].deleteNodule(); }
 			m_pNodules = null;
+			m_pGraphic.deleteGraphic();
 		}
 
         public List<Block> getOutgoing()

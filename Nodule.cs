@@ -69,6 +69,7 @@ namespace Nurielite
 		{
 			for (int i = m_pConnections.Count - 1; i >= 0; i--) { m_pConnections[i].removeConnection(); }
 			m_pConnections = null;
+			m_pGraphic.deleteGraphic();
 		}
 	}
 }
