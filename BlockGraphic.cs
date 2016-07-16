@@ -149,7 +149,7 @@ namespace Nurielite
 			Canvas.SetTop(m_pLblName, (m_pRecBody.Height / 2) - (m_pLblName.Height / 2));
 
 			m_pLblContent.Foreground = m_pBrushForeground;
-			m_pLblContent.Content = Master.getAlgorithmTypeName(m_eAlgorithm) + "\n" + "Accuracy";  //Oops
+			m_pLblContent.Content = Name + "\n" + "Accuracy";  //Oops
 			m_pLblContent.IsHitTestVisible = false;
 			m_pLblContent.Width = m_pRecBoard.Width;
 			Canvas.SetZIndex(m_pLblContent, GraphicContainer.REP_Z_LEVEL);
@@ -252,7 +252,7 @@ namespace Nurielite
 		{
 			if (e.LeftButton == MouseButtonState.Pressed)
 			{
-				Master.log("Block ID " + m_iID + " clicked", Colors.Salmon);
+				//Master.log("Block ID " + m_iID + " clicked", Colors.Salmon); Probably don't need this anymore
 				m_bIsDragging = true;
 				m_pRecBody.Stroke = m_pBrushBorderSelected;
 

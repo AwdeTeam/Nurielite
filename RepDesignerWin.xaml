@@ -43,8 +43,10 @@
 					<ListBox Name="lstInputs" SelectionMode="Multiple" Width="150" Height="100" Loaded="lstInputs_Loaded" SelectionChanged="lstInputs_SelectionChanged"/>
 				</StackPanel>
 				
-				<DataGrid Name="MultiplicityGrid" VerticalAlignment="Top" Margin="5,35,5,0" Height="100" Width="58"/>
-
+				<!-- <DataGrid Name="MultiplicityGrid" VerticalAlignment="Top" Margin="5,35,5,0" Height="100" Width="58"/> -->
+                <ScrollViewer VerticalAlignment="Top" Margin="5,35,5,0" Height="100" Width="58">
+                    <StackPanel Name="pnlMult"/>
+                </ScrollViewer>
 				<!-- outputs list -->
 				<StackPanel>
 					<Label Content="Outputs" HorizontalAlignment="Center" Margin="10" Padding="0"/>

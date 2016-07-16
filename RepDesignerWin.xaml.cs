@@ -96,6 +96,14 @@ namespace Nurielite
 		private void lstInputs_Loaded(object sender, RoutedEventArgs e)
 		{
 			lstInputs.ItemsSource = Datatype.Directory.Values;
+            foreach(Datatype d in Datatype.Directory.Values)
+            {
+                TextBox textbox = new TextBox();
+                textbox.Height = 18;
+                textbox.Uid = d.Name;
+                textbox.Text = "0";
+                pnlMult.Children.Add(textbox);
+            }
 		}
 
 		private void lstInputs_SelectionChanged(object sender, RoutedEventArgs e)

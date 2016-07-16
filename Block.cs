@@ -72,6 +72,30 @@ namespace Nurielite
 
 		// -- FUNCTIONS --
 
+        public void connectTo(Block pTarget)
+        {
+            if (m_aOutputs.Count() == 0 || pTarget.m_aInputs.Count() == 0)
+                return;
+
+            foreach(Nodule n in m_pNodules)
+            {
+                if(!n.IsInput)
+                {
+                    foreach(Nodule m in pTarget.m_pNodules)
+                    {
+                        if(m.IsInput && m.NumConnections == 0)
+                        {
+                            Connection c = new Connection(n);
+                            n.addConnection(c);
+                            m.addConnection(c);
+                            c.InputNodule = m;
+                            c.OutputNodule = n;
+                        }
+                    }
+                }
+            }
+        }
+
 		public void deleteBlock()
 		{
 			for (int i = 0; i < m_pNodules.Count; i++) { m_pNodules[i].deleteNodule(); }
