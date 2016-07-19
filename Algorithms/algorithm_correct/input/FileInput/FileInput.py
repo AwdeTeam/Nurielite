@@ -29,9 +29,9 @@ class PyAlgorithmInterface():
 	def generateRunnableCode(self):
 		code = """
 importer = FileInputInput.FileInput()
-OUT_DATA = importer.loadCSV({VALUE}, {DELIM}, {TITLELN})
+OUT_DATA = importer.loadCSV({PATH}, {DELIM}, {TITLELN})
 		"""
-		return code.format(VALUE=self.algOptions["path"], DELIM=self.algOptions["delim"], TITLELN=self.algOptions["titleLine"])
+		return code.format(PATH=self.algOptions["path"], DELIM=self.algOptions["delim"], TITLELN=self.algOptions["titleLine"])
 
 	def generateCodeLibraries(self):
 		f = open("FileInput_class.py")
