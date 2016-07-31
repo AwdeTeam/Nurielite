@@ -1,11 +1,11 @@
-from sklearn.naive_bayes import GaussianN
+from sklearn.naive_bayes import GaussianNB
 
 class NaiveBayes():
 
-	model = null
+	model = None
 	
-	def predict(self, trained-path, input):
-		model = joblib.load(trained-path)
+	def predict(self, trained_path, input):
+		model = joblib.load(trained_path)
 		return model.predict(input)
 	
 	def train(self, input, training, *args):
@@ -13,4 +13,4 @@ class NaiveBayes():
 		model.fit(input, training)
 	
 	def passToTrain(self, input, *args):
-		return [ self, input, *args ]
+		return [ self, input, args ]

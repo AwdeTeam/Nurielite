@@ -67,6 +67,18 @@ namespace Nurielite
                 {
                         case "txtbox":
                         case "text_box":
+                        case "literal_box":
+                        {
+                            TextBox tb = new TextBox();
+                            tb.Text = defaultValue;
+                            tb.Width = 180;
+                            tb.ToolTip = description;
+                            tb.Uid = pythonKey;
+                            optionContainer.Children.Add(tb);
+                            break;
+                        }
+
+                        case "string_box":
                         {
                             TextBox tb = new TextBox();
                             tb.Text = defaultValue;
@@ -160,22 +172,26 @@ namespace Nurielite
                     {
                         case "txtbox":
                         case "text_box":
+                        case "literal_box":
                             {
-                                //finished.Add(pythonKey, ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text);
 								pAlgOptions[pythonKey] = ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text;
+                                break;
+                            }
+
+                        case "string_box":
+                            {
+                                pAlgOptions[pythonKey] = "\"" + ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text + "\"";
                                 break;
                             }
 
                         case "check_box":
                             {
-                                //finished.Add(pythonKey, ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked);
 								pAlgOptions[pythonKey] = ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked.ToString();
                                 break;
                             }
 
                         case "file_chooser":
                             {
-                                //finished.Add(pythonKey, "\"" + (((TextBox)getByName(((Canvas)getByName(guiStkPnl.Children, pythonKey)).Children, "txtfile")).Text) + "\"");
                                 pAlgOptions[pythonKey] = "\"" + ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text + "\"";
                                 break;
                             }

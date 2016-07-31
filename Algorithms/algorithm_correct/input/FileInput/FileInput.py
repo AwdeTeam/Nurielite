@@ -3,7 +3,7 @@ class PyAlgorithmInterface():
 	algOptions = {
 		"fname" : "'C:\\\\'",
 		"dtype" : "float",
-		"comments" : "#",
+		"comments" : "'#'",
 		"delimiter" : "','",
 		"skip_header" : "0",
 		"skip_footer" : "0",
@@ -14,7 +14,7 @@ class PyAlgorithmInterface():
 		"names" : "None",
 		"excludelist" : "None",
 		"deletechars" : "None",
-		"replace_space" : "_",
+		"replace_space" : "'_'",
 		"autostrip" : "False",
 		"case_sensitive" : "False",
 		"defaultfmt" : "'f%i'",
@@ -26,8 +26,8 @@ class PyAlgorithmInterface():
 		"XML" : "<options>"+
 		"<option pythonkey='fname' guitype='file_chooser' label='Path to File' description='File or filename to read. If the filename extension is gz or bz2, the file is first decompressed' default='\"C:\\\\\"' />" +
 		"<option pythonkey='dtype' guitype='text_box' label='Type' description='Data type of the resulting array. If None, the dtypes will be determined by the contents of each column, individually.' default='None' />" +
-		"<option pythonkey='comments' guitype='text_box' label='Comment Identifier' description='The character used to indicate the start of a comment. All the characters occurring on a line after a comment are discarded.' default='#' />" +
-		"<option pythonkey='delimiter' guitype='text_box' label='String Delimeter' description='The string used to separate values. An integer or sequence of integers can also be provided as width(s) of each field.' default=',' />" +
+		"<option pythonkey='comments' guitype='string_box' label='Comment Identifier' description='The character used to indicate the start of a comment. All the characters occurring on a line after a comment are discarded.' default='\"#\"' />" +
+		"<option pythonkey='delimiter' guitype='string_box' label='String Delimeter' description='The string used to separate values. An integer or sequence of integers can also be provided as width(s) of each field.' default='\",\"' />" +
 		"<option pythonkey='skip_header' guitype='text_box' label='Skip Header Rows' description='The number of lines to skip at the beginning of the file.' default='0' />" +
 		"<option pythonkey='skip_footer' guitype='text_box' label='Skip Footer Rows' description='The number of lines to skip at the end of the file.' default='0' />" +
 		"<option pythonkey='converters' guitype='text_box' label='Converter Functions' description='The set of functions that convert the data of a column to a value.' default='None' />" +
@@ -37,7 +37,7 @@ class PyAlgorithmInterface():
 		"<option pythonkey='names' guitype='text_box' label='Names' description='If names is True, the field names are read from the first valid line after the first skip_header lines. If names is a sequence or a single-string of comma-separated names, the names will be used to define the field names in a structured dtype. If names is None, the names of the dtype fields will be used, if any.' default='None' />" +
 		"<option pythonkey='excludelist' guitype='text_box' label='Excluded Names' description='A list of names to exclude. Excluded names are appended an underscore' default='None' />" +
 		"<option pythonkey='deletechars' guitype='text_box' label='Delete Characters' description='A string combining invalid characters that must be deleted from the names.' default='None' />" +
-		"<option pythonkey='replace_space' guitype='text_box' label='Replace Space' description='Character(s) used in replacement of white spaces in the variables names. ' default='\"_\"' />" +
+		"<option pythonkey='replace_space' guitype='string_box' label='Replace Space' description='Character(s) used in replacement of white spaces in the variables names. ' default='\"_\"' />" +
 		"<option pythonkey='autostrip' guitype='check_box' label='Auto-Strip' description='Whether to automatically strip white spaces from the variables.' default='False' />" +
 		"<option pythonkey='case_sensitive' guitype='check_box' label='Case Sensitive' description='If True, field names are case sensitive. If False, field names are converted to upper case. ' default='False' />" +
 		"<option pythonkey='defaultfmt' guitype='text_box' label='Default Field Names' description='A format used to define default field names.' default='None' />" +
@@ -69,10 +69,10 @@ class PyAlgorithmInterface():
 #importer = FileInputInput.FileInput()
 OUT_DATA = numpy.genfromtxt({FNAME}, {DTYPE}, {COMMENTS}, {DELIMITER}, {SKIP_HEADER}, {SKIP_FOOTER}, {CONVERTERS}, {MISSING_VALUES}, {FILLING_VALUES}, {USECOLS}, {NAMES}, {EXCLUDELIST}, {DELETECHARS}, {REPLACE_SPACE}, {AUTOSTRIP}, {CASE_SENSITIVE}, {DEFAULTFMT}, {UNPACK}, {USEMASK}, {LOOSE}, {INVALID_RAISE}, {MAX_ROWS})
 		"""
-		return code.format(FNAME=self.algOptions["fname"], DTYPE=self.algOptions["dtype"], DELIMITER=self.algOptions["delimiter"], SKIP_HEADER=self.algOptions["skip_header"], SKIP_FOOTER=self.algOptions["skip_footer"], CONVERTERS=self.algOptions["converters"], MISSING_VALUES=self.algOptions["missing_values"], FILLING_VALUES=self.algOptions["filling_values"], EXCLUDELIST=self.algOptions["excludelist"], DELETECHARS=self.algOptions["deletechars"], REPLACE_SPACE=self.algOptions["replace_space"], AUTOSTRIP=self.algOptions["autostrip"], CASE_SENSITIVE=self.algOptions["case_sensitive"], DEFAULTFMT=self.algOptions["defaultfmt"], UNPACK=self.algOptions["unpack"], USEMASK=self.algOptions["usemask"], LOOSE=self.algOptions["loose"], NVALID_RAISE=self.algOptions["invalid_raise"], MAX_ROWS=self.algOptions["max_rows"])
+		return code.format(FNAME=self.algOptions["fname"], DTYPE=self.algOptions["dtype"], COMMENTS=self.algOptions["comments"], DELIMITER=self.algOptions["delimiter"], SKIP_HEADER=self.algOptions["skip_header"], SKIP_FOOTER=self.algOptions["skip_footer"], CONVERTERS=self.algOptions["converters"], MISSING_VALUES=self.algOptions["missing_values"], FILLING_VALUES=self.algOptions["filling_values"], USECOLS=self.algOptions["usecols"], NAMES=["names"], EXCLUDELIST=self.algOptions["excludelist"], DELETECHARS=self.algOptions["deletechars"], REPLACE_SPACE=self.algOptions["replace_space"], AUTOSTRIP=self.algOptions["autostrip"], CASE_SENSITIVE=self.algOptions["case_sensitive"], DEFAULTFMT=self.algOptions["defaultfmt"], UNPACK=self.algOptions["unpack"], USEMASK=self.algOptions["usemask"], LOOSE=self.algOptions["loose"], INVALID_RAISE=self.algOptions["invalid_raise"], MAX_ROWS=self.algOptions["max_rows"])
 
 	def generateCodeLibraries(self):
 		f = open("FileInput_class.py")
 		FileInputLibrary = f.read()
-		libraries = { "FileInputInput":FileInputLibrary };
+		libraries = { "FileInputInput":FileInputLibrary, "numpy":"" };
 		return libraries
