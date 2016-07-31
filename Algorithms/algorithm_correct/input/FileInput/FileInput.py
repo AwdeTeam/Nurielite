@@ -45,7 +45,7 @@ class PyAlgorithmInterface():
 		"<option pythonkey='usemask' guitype='check_box' label='Use Mask' description='If True, return a masked array. If False, return a regular array.' default='False' />" +
 		"<option pythonkey='loose' guitype='check_box' label='Loose' description='If True, do not raise errors for invalid values.' default='True' />" +
 		"<option pythonkey='invalid_raise' guitype='check_box' label='Invalid Raise' description='If True, an exception is raised if an inconsistency is detected in the number of columns. If False, a warning is emitted and the offending lines are skipped.' default='False' />" +
-		"<option pythonkey='max_rows' guitype='text_box' label='Maximum Rows' description='The maximum number of rows to read. Must not be used with skip_footer at the same time. If given, the value must be at least 1. Default is to read the entire file.' default='False' />" +
+		"<option pythonkey='max_rows' guitype='text_box' label='Maximum Rows' description='The maximum number of rows to read. Must not be used with skip_footer at the same time. If given, the value must be at least 1. Default is to read the entire file.' default='None' />" +
 		"</options>"
 		}
 
@@ -67,7 +67,7 @@ class PyAlgorithmInterface():
 	def generateRunnableCode(self):
 		code = """
 #importer = FileInputInput.FileInput()
-OUT_DATA = numpy.genfromtxt({FNAME}, {DTYPE}, {COMMENTS}, {DELIMITER}, {SKIP_HEADER}, {SKIP_FOOTER}, {CONVERTERS}, {MISSING_VALUES}, {FILLING_VALUES}, {USECOLS}, {NAMES}, {EXCLUDELIST}, {DELETECHARS}, {REPLACE_SPACE}, {AUTOSTRIP}, {CASE_SENSITIVE}, {DEFAULTFMT}, {UNPACK}, {USEMASK}, {LOOSE}, {INVALID_RAISE}, {MAX_ROWS})
+OUT_DATA = numpy.genfromtxt(fname={FNAME}, dtype={DTYPE}, comments={COMMENTS}, delimiter={DELIMITER}, skip_header={SKIP_HEADER}, skip_footer={SKIP_FOOTER}, converters={CONVERTERS}, missing_values={MISSING_VALUES}, filling_values={FILLING_VALUES}, usecols={USECOLS}, names={NAMES}, excludelist={EXCLUDELIST}, deletechars={DELETECHARS}, replace_space={REPLACE_SPACE}, autostrip={AUTOSTRIP}, case_sensitive={CASE_SENSITIVE}, defaultfmt={DEFAULTFMT}, unpack={UNPACK}, usemask={USEMASK}, loose={LOOSE}, invalid_raise={INVALID_RAISE}, max_rows={MAX_ROWS})
 		"""
 		return code.format(FNAME=self.algOptions["fname"], DTYPE=self.algOptions["dtype"], COMMENTS=self.algOptions["comments"], DELIMITER=self.algOptions["delimiter"], SKIP_HEADER=self.algOptions["skip_header"], SKIP_FOOTER=self.algOptions["skip_footer"], CONVERTERS=self.algOptions["converters"], MISSING_VALUES=self.algOptions["missing_values"], FILLING_VALUES=self.algOptions["filling_values"], USECOLS=self.algOptions["usecols"], NAMES=["names"], EXCLUDELIST=self.algOptions["excludelist"], DELETECHARS=self.algOptions["deletechars"], REPLACE_SPACE=self.algOptions["replace_space"], AUTOSTRIP=self.algOptions["autostrip"], CASE_SENSITIVE=self.algOptions["case_sensitive"], DEFAULTFMT=self.algOptions["defaultfmt"], UNPACK=self.algOptions["unpack"], USEMASK=self.algOptions["usemask"], LOOSE=self.algOptions["loose"], INVALID_RAISE=self.algOptions["invalid_raise"], MAX_ROWS=self.algOptions["max_rows"])
 

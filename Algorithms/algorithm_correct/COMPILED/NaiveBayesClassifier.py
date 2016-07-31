@@ -8,9 +8,9 @@ class NaiveBayes():
 		model = joblib.load(trained_path)
 		return model.predict(input)
 	
-	def train(self, input, training, *args):
+	def train(self, training, *args):
 		model = GaussianNB()
-		model.fit(input, training)
+		model.fit(training, args[0])
 	
-	def passToTrain(self, input, *args):
-		return [ self, input, args ]
+	def passToTrain(self, training, *args):
+		return [ self, training, args ]
