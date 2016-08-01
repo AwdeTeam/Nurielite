@@ -33,115 +33,106 @@ namespace Nurielite
 
         // TODO: figure out how to integrate/wire this up.  Maybe not necessary.
         // TODO: Make it look a little nicer
-        private void loadAlgorithmOptions(PyAlgorithm algorithm)
+        private void loadAlgorithmOptions(PyAlgorithm pAlgorithm)
         {
             StackPanel guiStkPnl = spnlAlgOptions;
 
-            if (!algorithm.getOptions().ContainsKey("XML")) { return; /*No options, not necessarily an error*/ }
+            if (!pAlgorithm.getOptions().ContainsKey("XML")) { return; /*No options, not necessarily an error*/ }
 
-            string xml = algorithm.getOptions()["XML"];
-            XElement optionsRoot = XElement.Parse(xml);
+            string sOptionsXml = pAlgorithm.getOptions()["XML"];
+            XElement pRootOptionsElement = XElement.Parse(sOptionsXml);
             //string xml = " <options> <option pythonkey='ColIndices' guitype='txtbox' label='Column Indices' description='Comma separated list of column indices to ignore' default='' /> <option pythonkey='NumOutputs' guitype='txtbox' label='# Outputs' description='Number of outputs…' default='1' /> </options> ";
 
             // iterate through each option and construct gui element for each
-            IEnumerable<XElement> options = optionsRoot.Elements();
+            IEnumerable<XElement> pOptions = pRootOptionsElement.Elements();
             //IEnumerable<XElement> options = parsedXML.Elements();
-            foreach (XElement option in options)
+            foreach (XElement pOption in pOptions)
             {
-                string pythonKey = option.Attribute("pythonkey").Value;
-                string guiType = option.Attribute("guitype").Value;
-                string label = option.Attribute("label").Value;
-                string description = option.Attribute("description") == null ? "" : option.Attribute("description").Value;
-                string defaultValue = "";
-                if (option.Attribute("default") != null) { defaultValue = option.Attribute("default").Value; }
+                string sPythonKey = pOption.Attribute("pythonkey").Value;
+                string sGuiType = pOption.Attribute("guitype").Value;
+                string sLabel = pOption.Attribute("label").Value;
+                string sDescription = pOption.Attribute("description") == null ? "" : pOption.Attribute("description").Value;
+                string sDefaultValue = "";
+                if (pOption.Attribute("default") != null) { sDefaultValue = pOption.Attribute("default").Value; }
 
-                StackPanel optionContainer = new StackPanel();
-                optionContainer.Orientation = Orientation.Horizontal;
-                optionContainer.ToolTip = description;
+                StackPanel pOptionRow = new StackPanel();
+                pOptionRow.Orientation = Orientation.Horizontal;
+                pOptionRow.ToolTip = sDescription;
 
                 Label optionLbl = new Label();
-                optionLbl.Content = label;
-                optionContainer.Children.Add(optionLbl);
+                optionLbl.Content = sLabel;
+                pOptionRow.Children.Add(optionLbl);
 
-                switch(guiType)
+                switch(sGuiType)
                 {
-                        case "txtbox":
-                        case "text_box":
-                        case "literal_box":
-                        {
-                            TextBox tb = new TextBox();
-                            tb.Text = defaultValue;
-                            tb.Width = 180;
-                            tb.ToolTip = description;
-                            tb.Uid = pythonKey;
-                            optionContainer.Children.Add(tb);
-                            break;
-                        }
+					case "txtbox":
+					case "text_box":
+					case "literal_box":
+					case "string_box":
+					case "array_box":
+						{
+							TextBox tb = new TextBox();
+							tb.Text = sDefaultValue;
+							tb.Width = 180;
+							tb.ToolTip = sDescription;
+							tb.Uid = sPythonKey;
+							pOptionRow.Children.Add(tb);
+							break;
+						}
 
-                        case "string_box":
-                        {
-                            TextBox tb = new TextBox();
-                            tb.Text = defaultValue;
-                            tb.Width = 180;
-                            tb.ToolTip = description;
-                            tb.Uid = pythonKey;
-                            optionContainer.Children.Add(tb);
-                            break;
-                        }
+					case "check_box":
+						{
+							CheckBox cb = new CheckBox();
+							cb.ToolTip = sDescription;
+							cb.Uid = sPythonKey;
+							pOptionRow.Children.Add(cb);
+							break;
+						}
 
-                        case "check_box":
-                        {
-                            CheckBox cb = new CheckBox();
-                            cb.ToolTip = description;
-                            cb.Uid = pythonKey;
-                            optionContainer.Children.Add(cb);
-                            break;
-                        }
+					case "file_chooser":
+						{
+							TextBox txt = new TextBox();
+							txt.Text = Directory.GetCurrentDirectory();
+							txt.Width = 260;
+							txt.Height = 20;
+							txt.Margin = new Thickness(0, 0, 0, 0);
+							txt.HorizontalAlignment = HorizontalAlignment.Left;
+							txt.FontSize = 12;
+							txt.Uid = sPythonKey;
+							pOptionRow.Children.Add(txt);
 
-                        case "file_chooser":
-                        {
-                            TextBox txt = new TextBox();
-                            txt.Text = Directory.GetCurrentDirectory();
-                            txt.Width = 260;
-                            txt.Height = 20;
-                            txt.Margin = new Thickness(0, 0, 0, 0);
-                            txt.HorizontalAlignment = HorizontalAlignment.Left;
-                            txt.FontSize = 12;
-                            txt.Uid = pythonKey;
-                            optionContainer.Children.Add(txt);
+							Button btn = new Button();
+							btn.Content = "Select a File";
+							btn.HorizontalAlignment = HorizontalAlignment.Left;
+							btn.Width = 75;
+							btn.Height = 20;
+							btn.Margin = new Thickness(265, 0, 0, 0);
+							btn.Click += (s, e) =>
+							{
+								System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
+								dialog.InitialDirectory = Directory.GetCurrentDirectory();
+								System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+								if (result == System.Windows.Forms.DialogResult.OK)
+								{
+									txt.Text = dialog.FileName;
+								}
+							};
+							pOptionRow.Children.Add(btn);
+							break;
+						}
 
-                            Button btn = new Button();
-                            btn.Content = "Select a File";
-                            btn.HorizontalAlignment = HorizontalAlignment.Left;
-                            btn.Width = 75;
-                            btn.Height = 20;
-                            btn.Margin = new Thickness(265, 0, 0, 0);
-                            btn.Click += (s, e) => 
-                            {
-                                System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
-                                dialog.InitialDirectory = Directory.GetCurrentDirectory();
-                                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-                                if(result == System.Windows.Forms.DialogResult.OK)
-                                {
-                                    txt.Text = dialog.FileName;
-                                }
-                            };
-                            optionContainer.Children.Add(btn);
-                            break;
-                        }
+					default:
+						{
+							Label error = new Label();
+							error.Content = "Invalid GUI Option!";
+							pOptionRow.Children.Add(error);
+							break;
+						}
+				}
 
-                        default:
-                        {
-                            Label error = new Label();
-                            error.Content = "Invalid GUI Option!";
-                            optionContainer.Children.Add(error);
-                            break;
-                        }
-                }
-
-                guiStkPnl.Children.Add(optionContainer);
-            }
-        }
+				guiStkPnl.Children.Add(pOptionRow);
+			}
+		}
 
         private void ConfirmEdits(object sender, RoutedEventArgs e)
         {
@@ -183,6 +174,36 @@ namespace Nurielite
                                 pAlgOptions[pythonKey] = "\"" + ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text + "\"";
                                 break;
                             }
+							
+						case "array_box":
+							{
+								string sArrayString = ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text;
+								List<string> pArrayParts = sArrayString.Split(',').ToList();
+								List<int> pArrayInts = new List<int>();
+
+								// find any parts with a dash (indicating range) and replace with the inbetween numbers
+								for (int i = 0; i < pArrayParts.Count; i++)
+								{
+									string sPart = pArrayParts[i];
+									if (sPart.Contains("-"))
+									{
+										// find range boundary numbers 
+										int iStart = Convert.ToInt32(sPart.Substring(0, sPart.IndexOf("-")));
+										int iEnd = Convert.ToInt32(sPart.Substring(sPart.IndexOf("-") + 1));
+										if (iEnd < iStart) { throw new Exception("End of range cannot be lower than start"); }
+
+										// add boundaries and numbers in between
+										pArrayInts.Add(iStart);
+										for (int j = iStart + 1; j < iEnd; j++) { pArrayInts.Add(j); }
+										pArrayInts.Add(iEnd);
+									}
+									else { pArrayInts.Add(Convert.ToInt32(sPart)); }
+								}
+
+								// assign option
+								pAlgOptions[pythonKey] = pArrayInts;
+								break;	
+							}
 
                         case "check_box":
                             {

@@ -3,7 +3,7 @@ class PyAlgorithmInterface():
 
 	algOptions = {
 		"ColIndicies" : [],
-		"XML" : "<options><option pythonkey='ColIndicies' guitype='txtbox' label='Masked Cols' description='List indicies of columns (comma delimited) you want masked (not included) in the output' /></options>"
+		"XML" : "<options><option pythonkey='ColIndicies' guitype='array_box' label='Masked Cols' description='List indicies of columns (comma delimited) you want masked (not included) in the output' /></options>"
 		}
 
 		
