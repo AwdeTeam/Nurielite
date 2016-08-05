@@ -36,6 +36,7 @@ namespace Nurielite
         private void loadAlgorithmOptions(PyAlgorithm pAlgorithm)
         {
             StackPanel guiStkPnl = spnlAlgOptions;
+			guiStkPnl.HorizontalAlignment = HorizontalAlignment.Stretch;
 
             if (!pAlgorithm.getOptions().ContainsKey("XML")) { return; /*No options, not necessarily an error*/ }
 
@@ -61,6 +62,8 @@ namespace Nurielite
 
                 Label optionLbl = new Label();
                 optionLbl.Content = sLabel;
+				optionLbl.Margin = new Thickness(5);
+				optionLbl.Padding = new Thickness(2);
                 pOptionRow.Children.Add(optionLbl);
 
                 switch(sGuiType)
@@ -76,6 +79,8 @@ namespace Nurielite
 							tb.Width = 180;
 							tb.ToolTip = sDescription;
 							tb.Uid = sPythonKey;
+							tb.Margin = new Thickness(5);
+							tb.Padding = new Thickness(2);
 							pOptionRow.Children.Add(tb);
 							break;
 						}
@@ -85,6 +90,8 @@ namespace Nurielite
 							CheckBox cb = new CheckBox();
 							cb.ToolTip = sDescription;
 							cb.Uid = sPythonKey;
+							cb.Padding = new Thickness(2);
+							cb.Margin = new Thickness(0,8,5,0);
 							pOptionRow.Children.Add(cb);
 							break;
 						}
@@ -95,7 +102,8 @@ namespace Nurielite
 							txt.Text = Directory.GetCurrentDirectory();
 							txt.Width = 260;
 							txt.Height = 20;
-							txt.Margin = new Thickness(0, 0, 0, 0);
+							txt.Margin = new Thickness(5);
+							txt.Padding = new Thickness(2);
 							txt.HorizontalAlignment = HorizontalAlignment.Left;
 							txt.FontSize = 12;
 							txt.Uid = sPythonKey;
@@ -103,10 +111,10 @@ namespace Nurielite
 
 							Button btn = new Button();
 							btn.Content = "Select a File";
-							btn.HorizontalAlignment = HorizontalAlignment.Left;
+							btn.HorizontalAlignment = HorizontalAlignment.Right;
 							btn.Width = 75;
 							btn.Height = 20;
-							btn.Margin = new Thickness(265, 0, 0, 0);
+							//btn.Margin = new Thickness(265, 0, 0, 0);
 							btn.Click += (s, e) =>
 							{
 								System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
@@ -130,6 +138,7 @@ namespace Nurielite
 						}
 				}
 
+				pOptionRow.HorizontalAlignment = HorizontalAlignment.Stretch;
 				guiStkPnl.Children.Add(pOptionRow);
 			}
 		}
