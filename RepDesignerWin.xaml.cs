@@ -34,16 +34,15 @@ namespace Nurielite
 
 		private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
 		{
-			AlgorithmLoader.loadAlgorithmBlock(cmbAlgorithmSpecific.SelectedItem.ToString(), (AlgorithmType)cmbAlgorithmType.SelectedItem, ray(lstInputs.SelectedItems), ray(lstOutputs.SelectedItems));
+            AlgorithmLoader.loadAlgorithmBlock(cmbAlgorithmSpecific.SelectedItem.ToString(), (AlgorithmType)cmbAlgorithmType.SelectedItem, createDummyArray(numInputs.Text), createDummyArray(numOutputs.Text));
             //m_parent.appendBlock(pBlock);
 			Close();
 		}
 
-		private Datatype[] ray(System.Collections.IList list)
+		private Datatype[] createDummyArray(string s)
 		{
-			Datatype[] ray = new Datatype[list.Count];
-			for (int i = 0; i < list.Count; i++)
-				ray[i] = (Datatype)list[i];
+            int k = Int32.Parse(s);
+			Datatype[] ray = new Datatype[k];
 
 			return ray;
 		}
@@ -59,20 +58,28 @@ namespace Nurielite
 		{
 			if (cmbAlgorithmType.SelectedItem.Equals(AlgorithmType.Input))
 			{
-				lstInputs.IsEnabled = false;
-				lstOutputs.IsEnabled = true;	
-				lstInputs.SelectedIndex = -1;
+				numInputs.IsEnabled = false;
+                numInputs.Text = "0";
+				numOutputs.IsEnabled = true;
+                if(numOutputs.Text == "0")
+                    numOutputs.Text = "1";
 			}
 			else if (cmbAlgorithmType.SelectedItem.Equals(AlgorithmType.Output))
 			{
-				lstInputs.IsEnabled = true;
-				lstOutputs.IsEnabled = false;
-				lstInputs.SelectedIndex = -1;
+                numOutputs.IsEnabled = false;
+                numOutputs.Text = "0";
+                numInputs.IsEnabled = true;
+                if (numInputs.Text == "0")
+                    numInputs.Text = "1";
 			}
 			else 
 			{
-				lstOutputs.IsEnabled = true;
-				lstInputs.IsEnabled = true;
+                numInputs.IsEnabled = true;
+                if (numInputs.Text == "0")
+                    numInputs.Text = "1";
+                numOutputs.IsEnabled = true;
+                if (numOutputs.Text == "0")
+                    numOutputs.Text = "1";
 			}
 
 			// get all algorithm names from folder structure
@@ -85,40 +92,6 @@ namespace Nurielite
 			cmbAlgorithmSpecific.IsEnabled = true;
 			cmbAlgorithmSpecific.ItemsSource = pAlgorithms;
 			lblType.Content = cmbAlgorithmType.SelectedItem.ToString();
-
-		}
-
-		private void lstOutputs_Loaded(object sender, RoutedEventArgs e)
-		{
-			lstOutputs.ItemsSource = Datatype.Directory.Values;
-		}
-
-		private void lstInputs_Loaded(object sender, RoutedEventArgs e)
-		{
-			lstInputs.ItemsSource = Datatype.Directory.Values;
-            foreach(Datatype d in Datatype.Directory.Values)
-            {
-                TextBox textbox = new TextBox();
-                textbox.Height = 18;
-                textbox.Uid = d.Name;
-                textbox.Text = "0";
-                pnlMult.Children.Add(textbox);
-            }
-		}
-
-		private void lstInputs_SelectionChanged(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private static Datatype[] getSelectedTypes(ListBox box)
-		{
-			//List dexes = box.SelectedIndices;
-			return null;
-		}
-
-		private void cmbAlgorithmSpecific_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
 
 		}
 	}

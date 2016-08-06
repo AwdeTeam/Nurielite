@@ -28,7 +28,7 @@
 			<StackPanel Grid.Column="1">
 				<TextBox Name="txtNameInput" Text="unnamed" Width="120" Margin="10" Padding="0" />
 				<ComboBox Name="cmbAlgorithmType" Margin="8" Padding="2" Loaded="cmbAlgorithmType_Loaded" SelectionChanged="cmbAlgorithmType_SelectionChanged"/>
-				<ComboBox Name="cmbAlgorithmSpecific" Margin="8" Padding="2" SelectionChanged="cmbAlgorithmSpecific_SelectionChanged"/>
+				<ComboBox Name="cmbAlgorithmSpecific" Margin="8" Padding="2"/>
 			</StackPanel>
 
             <Button Grid.ColumnSpan="2" Content="Create Block" Margin="10" VerticalAlignment="Bottom" Click="Button_Click_ConfirmNew" />
@@ -39,21 +39,18 @@
 			<StackPanel Orientation="Horizontal">
 				<!-- inputs list -->
 				<StackPanel>
-					<Label Content="Inputs" HorizontalAlignment="Center" Margin="10" Padding="0"/>
-					<ListBox Name="lstInputs" SelectionMode="Multiple" Width="150" Height="100" Loaded="lstInputs_Loaded" SelectionChanged="lstInputs_SelectionChanged"/>
-				</StackPanel>
+                    <Label Content="Inputs" HorizontalAlignment="Center" Margin="10" Padding="0"/>
+                    <TextBox Name="numInputs" Height="18" TextWrapping="Wrap" Text="1" Width="32"/>
+                </StackPanel>
 				
 				<!-- <DataGrid Name="MultiplicityGrid" VerticalAlignment="Top" Margin="5,35,5,0" Height="100" Width="58"/> -->
-                <ScrollViewer VerticalAlignment="Top" Margin="5,35,5,0" Height="100" Width="58">
-                    <StackPanel Name="pnlMult"/>
-                </ScrollViewer>
-				<!-- outputs list -->
+                <!-- outputs list -->
 				<StackPanel>
 					<Label Content="Outputs" HorizontalAlignment="Center" Margin="10" Padding="0"/>
-					<ListBox Name="lstOutputs" SelectionMode="Single" Height="100" Width="150" Loaded="lstOutputs_Loaded"/>
-				</StackPanel>
-				
-			</StackPanel>
+                    <TextBox Name="numOutputs" Height="18" TextWrapping="Wrap" Text="1" Width="32"/>
+                </StackPanel>
+
+            </StackPanel>
 			
 		</Grid>
 	</Grid>
