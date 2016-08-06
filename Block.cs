@@ -72,7 +72,7 @@ namespace Nurielite
 
 		// -- FUNCTIONS --
 
-        public void connectTo(Block pTarget)
+        public void connectTo(Block pTarget, int iNoduleNum)
         {
             if (m_aOutputs.Count() == 0 || pTarget.m_aInputs.Count() == 0)
                 return;
@@ -81,17 +81,17 @@ namespace Nurielite
             {
                 if(!n.IsInput)
                 {
-                    foreach(Nodule m in pTarget.m_pNodules)
-                    {
-                        if(m.IsInput && m.NumConnections == 0)
-                        {
-                            Connection c = new Connection(n);
-                            n.addConnection(c);
-                            m.addConnection(c);
-                            c.InputNodule = m;
-                            c.OutputNodule = n;
-                        }
-                    }
+					Nodule pNoduleTarget = pTarget.m_pNodules[iNoduleNum];
+					if (pNoduleTarget.IsInput && pNoduleTarget.NumConnections == 0)
+					{
+						Connection c = new Connection(n);
+						n.addConnection(c);
+						pNoduleTarget.addConnection(c);
+						c.InputNodule = pNoduleTarget;
+						c.OutputNodule = n;
+						c.completeConnection(pNoduleTarget);
+						Master.getGraphicContainer().setDraggingConnection(false, null);
+					}
                 }
             }
         }

@@ -55,7 +55,14 @@ namespace Nurielite
 			testInputBlock();
             testBayesBlock();
             testTrainerOutputBlock();
-            
+
+			Master.Blocks[0].Graphic.move(300, 10);
+			Master.Blocks[1].Graphic.move(100, 120);
+			Master.Blocks[2].Graphic.move(250, 250);
+
+			Master.Blocks[0].connectTo(Master.Blocks[1], 0);
+			Master.Blocks[1].connectTo(Master.Blocks[2], 0);
+			Master.Blocks[0].connectTo(Master.Blocks[2], 1);
 		}
 
 		public void testInputBlock()
