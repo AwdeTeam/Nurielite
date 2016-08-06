@@ -23,6 +23,7 @@ namespace Nurielite
 	public partial class RepDesignerWin : Window
 	{
 		private MainWindow m_parent;
+        private int m_iNumOut = 1;
 
 		public RepDesignerWin(MainWindow parent)
 		{
@@ -34,7 +35,7 @@ namespace Nurielite
 
 		private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
 		{
-            AlgorithmLoader.loadAlgorithmBlock(cmbAlgorithmSpecific.SelectedItem.ToString(), (AlgorithmType)cmbAlgorithmType.SelectedItem, createDummyArray(numInputs.Text), createDummyArray(numOutputs.Text));
+            AlgorithmLoader.loadAlgorithmBlock(cmbAlgorithmSpecific.SelectedItem.ToString(), (AlgorithmType)cmbAlgorithmType.SelectedItem, createDummyArray(numInputs.Text), createDummyArray(m_iNumOut));
             //m_parent.appendBlock(pBlock);
 			Close();
 		}
@@ -42,10 +43,17 @@ namespace Nurielite
 		private Datatype[] createDummyArray(string s)
 		{
             int k = Int32.Parse(s);
-			Datatype[] ray = new Datatype[k];
-
-			return ray;
+            return createDummyArray(k);
 		}
+
+        private Datatype[] createDummyArray(int k)
+        {
+            Datatype[] ray = new Datatype[k];
+            for (int i = 0; i < ray.Count(); i++)
+                ray[i] = Datatype.Directory.Values.ElementAt(0);
+
+            return ray;
+        }
 
 		private void cmbAlgorithmType_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -58,28 +66,23 @@ namespace Nurielite
 		{
 			if (cmbAlgorithmType.SelectedItem.Equals(AlgorithmType.Input))
 			{
-				numInputs.IsEnabled = false;
+                numInputs.IsEnabled = false;
                 numInputs.Text = "0";
-				numOutputs.IsEnabled = true;
-                if(numOutputs.Text == "0")
-                    numOutputs.Text = "1";
+                m_iNumOut = 1;
 			}
 			else if (cmbAlgorithmType.SelectedItem.Equals(AlgorithmType.Output))
 			{
-                numOutputs.IsEnabled = false;
-                numOutputs.Text = "0";
+                m_iNumOut = 0;
                 numInputs.IsEnabled = true;
                 if (numInputs.Text == "0")
                     numInputs.Text = "1";
 			}
 			else 
 			{
+                m_iNumOut = 1;
                 numInputs.IsEnabled = true;
                 if (numInputs.Text == "0")
                     numInputs.Text = "1";
-                numOutputs.IsEnabled = true;
-                if (numOutputs.Text == "0")
-                    numOutputs.Text = "1";
 			}
 
 			// get all algorithm names from folder structure
