@@ -61,17 +61,11 @@ namespace Nurielite
 			// make sure the nodes aren't the same and are not both inputs or outputs
 			if (m_pOrigin.Equals(m_pEnd) || 
 				m_pOrigin.IsInput == m_pEnd.IsInput || 
-                m_pOrigin.Parent == m_pEnd.Parent || 
-                !m_pOrigin.Datatype.fits(m_pEnd.Datatype))
+                m_pOrigin.Parent == m_pEnd.Parent)
 			{
 				m_pGraphic.removeGraphic();
 				return false;
 			}
-
-            if(!m_pOrigin.Datatype.equals(m_pEnd.Datatype))
-            {
-				m_pGraphic.setStrokeColor(Colors.Red);
-            }
 
 			// set end point to end node center
 			m_pGraphic.finishVisualConnection(m_pEnd);

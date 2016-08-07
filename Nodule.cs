@@ -25,16 +25,15 @@ namespace Nurielite
 
 		private bool m_bIsInput = true; // false means this is output node
 		private int m_iGroupNum = 0; // semi-id system, which node of input/output is it? (ex: 2nd input node etc) NOTE: 0-based
-
-        private Datatype m_pDataType = null;
+        private string m_sName = "unnamed datatype";
         
 		// construction
-		public Nodule(Block pParent, bool bIsInput, int iGroupNum, Datatype pDatatype) // PASS IN X AND Y OF BLOCK
+		public Nodule(Block pParent, bool bIsInput, int iGroupNum, string name) // PASS IN X AND Y OF BLOCK
 		{
 			m_pParent = pParent;
 			m_bIsInput = bIsInput;
 			m_iGroupNum = iGroupNum;
-			m_pDataType = pDatatype;
+            m_sName = name;
 
 			m_pGraphic = new NoduleGraphic(this);
 		}
@@ -47,7 +46,7 @@ namespace Nurielite
 		public int GroupNum { get { return m_iGroupNum; } set { m_iGroupNum = value; } }
 		public List<Connection> Connections { get { return m_pConnections; } set { m_pConnections = value; } }
 		public int NumConnections { get { return m_pConnections.Count; } }
-		public Datatype Datatype { get { return m_pDataType; } set { m_pDataType = value; } }
+        public string Name { get { return m_sName; } set { m_sName = value; } }
 		
 		
 		// -- FUNCTIONS --

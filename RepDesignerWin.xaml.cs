@@ -35,25 +35,10 @@ namespace Nurielite
 
 		private void Button_Click_ConfirmNew(object sender, RoutedEventArgs e)
 		{
-            AlgorithmLoader.loadAlgorithmBlock(cmbAlgorithmSpecific.SelectedItem.ToString(), (AlgorithmType)cmbAlgorithmType.SelectedItem, createDummyArray(numInputs.Text), createDummyArray(m_iNumOut));
+            AlgorithmLoader.loadAlgorithmBlock(cmbAlgorithmSpecific.SelectedItem.ToString(), (AlgorithmType)cmbAlgorithmType.SelectedItem, Int32.Parse(numInputs.Text), m_iNumOut);
             //m_parent.appendBlock(pBlock);
 			Close();
 		}
-
-		private Datatype[] createDummyArray(string s)
-		{
-            int k = Int32.Parse(s);
-            return createDummyArray(k);
-		}
-
-        private Datatype[] createDummyArray(int k)
-        {
-            Datatype[] ray = new Datatype[k];
-            for (int i = 0; i < ray.Count(); i++)
-                ray[i] = Datatype.Directory.Values.ElementAt(0);
-
-            return ray;
-        }
 
 		private void cmbAlgorithmType_Loaded(object sender, RoutedEventArgs e)
 		{

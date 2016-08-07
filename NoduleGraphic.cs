@@ -46,6 +46,7 @@ namespace Nurielite
 			m_pBody.StrokeThickness = 2;
 			m_pBody.Height = GraphicContainer.NODE_SIZE;
 			m_pBody.Width = GraphicContainer.NODE_SIZE;
+            m_pBody.ToolTip = m_pParent.Name;
 			Canvas.SetZIndex(m_pBody, GraphicContainer.NODE_Z_LEVEL);
 
 			// inital position
@@ -70,12 +71,18 @@ namespace Nurielite
 			foreach (Connection c in m_pParent.Connections) { c.Graphic.adjustRelatedPoint(m_pParent); }
 		}
 
+        public void setTooltip(string p) //Not working, fix later
+        {
+            m_pBody.ToolTip = p;
+        }
+
 		// -- EVENT HANDLERS --
 
 		private void evt_MouseDown(object sender, MouseEventArgs e)
 		{
-			Connection con = new Connection(m_pParent);
-			Master.log("Hey, creating a connection");
+			if(e.LeftButton == MouseButtonState.Pressed) { Connection con = new Connection(m_pParent); }
+            else if (e.RightButton == MouseButtonState.Pressed) { new NameNoduleWin(m_pParent).Show(); }
+
 		}
 
 		private void evt_MouseUp(object sender, MouseEventArgs e)
@@ -88,5 +95,5 @@ namespace Nurielite
 				Master.setDraggingConnection(false, null);
 			}
 		}
-	}
+    }
 }

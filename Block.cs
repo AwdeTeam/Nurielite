@@ -23,8 +23,9 @@ namespace Nurielite
 		private int m_iID = 0;
         private List<Nodule> m_pNodules = new List<Nodule>();
 
-        private Datatype[] m_aInputs;
-        private Datatype[] m_aOutputs;
+        private List<string> m_pInputNames;
+        private string m_sOutputName;
+        private int m_iOutputNum;
 
         private string m_sName = "unnamed algorithm";
         private string m_sVersion = "##.## XXX";
@@ -37,7 +38,7 @@ namespace Nurielite
 		private PyAlgorithm m_pPyAlgorithm;
 
 		// construction
-        public Block(Datatype[] aInputs, Datatype[] aOutputs, string sName,/* string path,*/ AlgorithmType eFamily, Color pColor)
+        public Block(List<string> inputNames, string outputName, string sName,/* string path,*/ AlgorithmType eFamily, Color pColor)
         {
             Master.log("----Creating block----");
             m_iID = Master.getNextRepID();
@@ -45,18 +46,17 @@ namespace Nurielite
 
             m_sName = sName;
             m_eFamily = eFamily;
+            m_pInputNames = inputNames;
+            m_sOutputName = outputName;
             //m_sAlgorithmPath = path;
             //m_sAlgorithmName = path.Substring(path.IndexOf("alg_") + "alg_".Length);
-          
-            this.m_aInputs = aInputs;
-            this.m_aOutputs = aOutputs;
-
-			m_pGraphic = new BlockGraphic(this, aInputs.Length, aOutputs.Length, pColor);
+            m_iOutputNum = (m_sOutputName == "") ? 0 : 1;
+            m_pGraphic = new BlockGraphic(this, m_pInputNames.Count, m_iOutputNum, pColor);
 			Master.getGraphicContainer().addBlockGraphic(m_pGraphic);
 
 			// create nodes
-			for (int i = 0; i < m_aInputs.Length; i++) { m_pNodules.Add(new Nodule(this, true, i, m_aInputs[i])); }
-			for (int i = 0; i < m_aOutputs.Length; i++) { m_pNodules.Add(new Nodule(this, false, i, m_aOutputs[i])); }
+            for (int i = 0; i < m_pInputNames.Count; i++) { m_pNodules.Add(new Nodule(this, true, i, m_pInputNames[i])); }
+            for (int i = 0; i < m_iOutputNum; i++) { m_pNodules.Add(new Nodule(this, false, i, m_sOutputName)); }
         }
 
 		// properties 
@@ -74,7 +74,7 @@ namespace Nurielite
 
         public void connectTo(Block pTarget, int iNoduleNum)
         {
-            if (m_aOutputs.Count() == 0 || pTarget.m_aInputs.Count() == 0)
+            if (m_iOutputNum == 0 || pTarget.m_pInputNames.Count() == 0)
                 return;
 
             foreach(Nodule n in m_pNodules)

@@ -52,7 +52,8 @@ class PyAlgorithmInterface():
 	metaData = {
 		"Name" : "File Input",
 		"Creator" : "Benjamin Croisdale",
-		"Version" : "1.0.2"
+		"Version" : "1.0.2",
+		"Default" : "<default><inputs></inputs><output>raw file input</output></default>"
 		}
 
 	def getMetaData(self):

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace Nurielite
 {
@@ -19,18 +20,48 @@ namespace Nurielite
 
 		//NOTE: python file path can be reconstructed by eFamily/sName/sName.py
 		//NOTE: THIS IS ENTRYPOINT FOR NEW BLOCK
-		public static void loadAlgorithmBlock(string sName, AlgorithmType eFamily, Datatype[] aInputs, Datatype[] aOutputs)
+		public static void loadAlgorithmBlock(string sName, AlgorithmType eFamily, int numInputs, int numOutputs)
 		{
 			PythonGenerator pPyGen = new PythonGenerator();
 			//PyAlgorithm pPyAlgorithm = pPyGen.loadPythonAlgorithm(Master.PATH_TO_THETHING + "/" + eFamily.ToString() + "/" + sName, sName + ".py");
 			PyAlgorithm pPyAlgorithm = pPyGen.loadPythonAlgorithm(eFamily.ToString() + "/" + sName, sName + ".py");
-			Block pBlock = AlgorithmLoader.generateBlock(sName, eFamily, aInputs, aOutputs);
+
+            Dictionary<string, string> d = pPyAlgorithm.getMetaData();
+            List<string> inputNames = new List<string>();
+            string outputName = "";
+            if(d.ContainsKey("Default")) //TODO add error handling
+            {
+                string rawXML = d["Default"];
+                XElement xml = XElement.Parse(rawXML);
+                XElement inputs = xml.Element("inputs");
+                foreach (XElement element in inputs.Elements("input"))
+                    inputNames.Add(element.Value);
+                outputName = xml.Element("output").Value;
+            }
+            else
+            {
+                outputName = (numOutputs == 1) ? "unnamed datatype" : "";
+                for (int i = 0; i < numInputs; i++)
+                    inputNames.Add("unnamed datatype");
+            }
+
+			Block pBlock = AlgorithmLoader.generateBlock(sName, eFamily, numInputs, numOutputs, inputNames, outputName);
 			pBlock.PyAlgorithm = pPyAlgorithm;
 			Master.Blocks.Add(pBlock);
 		}
 	
-        private static Block generateBlock(string sName, AlgorithmType eFamily, Datatype[] aInputs, Datatype[] aOutputs)
+        private static Block generateBlock(string sName, AlgorithmType eFamily, int numInputs, int numOutputs, List<string> inputNames, string outputName)
         {
+            if(numInputs > inputNames.Count)
+            {
+                for (int i = inputNames.Count; i < numInputs; i++)
+                    inputNames.Add("unnamed datatype");
+            }
+            else if(numInputs < inputNames.Count)
+            {
+                inputNames.RemoveRange(numInputs, inputNames.Count - numInputs);
+            }
+
             Color color = Colors.Gray;
             switch(eFamily)
             {
@@ -70,7 +101,7 @@ namespace Nurielite
                     break;
                 }
             }
-            return new Block(aInputs, aOutputs, sName, eFamily, color);
+            return new Block(inputNames, outputName, sName, eFamily, color);
         }
 
         /*public static Block generateBlock(string name, string path, int family, Datatype[] inputs, Datatype[] outputs)

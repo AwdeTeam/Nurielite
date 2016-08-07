@@ -1,0 +1,16 @@
+﻿<Window x:Class="Nurielite.NameNoduleWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="NameNoduleWin" Height="75" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" Height="auto" Grid.Row="0" HorizontalAlignment="Stretch">
+            <Label Content="Name this Nodule:" Margin="10" Padding="0"></Label>
+            <TextBox Name="txtNoduleName" Text="unnamed datatype" Margin="10" Padding="0" HorizontalAlignment="Stretch" KeyUp="txtNoduleName_KeyUp"></TextBox>
+        </StackPanel>
+    </Grid>
+</Window>

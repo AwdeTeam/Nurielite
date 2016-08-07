@@ -67,32 +67,32 @@ namespace Nurielite
 
 		public void testInputBlock()
 		{
-			AlgorithmLoader.loadAlgorithmBlock("FileInput", AlgorithmType.Input, new Datatype[] { }, new Datatype[] { Master.TEST_DATATYPE });
+			AlgorithmLoader.loadAlgorithmBlock("FileInput", AlgorithmType.Input, 0, 1);
 		}
 
 		public void testOutputBlock()
 		{
-			AlgorithmLoader.loadAlgorithmBlock("FileOutput", AlgorithmType.Output, new Datatype[] { Master.TEST_DATATYPE }, new Datatype[] { });
+			AlgorithmLoader.loadAlgorithmBlock("FileOutput", AlgorithmType.Output, 1, 0);
 		}
 
         public void testTrainerOutputBlock()
         {
-            AlgorithmLoader.loadAlgorithmBlock("TrainerOutput", AlgorithmType.Output, new Datatype[] { Master.TEST_DATATYPE, Master.TEST_DATATYPE }, new Datatype[] { });
+            AlgorithmLoader.loadAlgorithmBlock("TrainerOutput", AlgorithmType.Output, 2, 0);
         }
 
 		public void testOpBlock()
 		{
-			AlgorithmLoader.loadAlgorithmBlock("ScalarAdd", AlgorithmType.Operation, new Datatype[] { Master.TEST_DATATYPE }, new Datatype[] { Master.TEST_DATATYPE });
+			AlgorithmLoader.loadAlgorithmBlock("ScalarAdd", AlgorithmType.Operation, 1, 1);
 		}
 
         public void testJoinBlock()
         {
-            AlgorithmLoader.loadAlgorithmBlock("SimpleJoin", AlgorithmType.Operation, new Datatype[] { Master.TEST_DATATYPE, Master.TEST_DATATYPE }, new Datatype[] { Master.TEST_DATATYPE });
+            AlgorithmLoader.loadAlgorithmBlock("SimpleJoin", AlgorithmType.Operation, 2, 1);
         }
 
         public void testBayesBlock()
         {
-            AlgorithmLoader.loadAlgorithmBlock("NaiveBayes", AlgorithmType.Classifier, new Datatype[] { Master.TEST_DATATYPE }, new Datatype[] { Master.TEST_DATATYPE });
+            AlgorithmLoader.loadAlgorithmBlock("NaiveBayes", AlgorithmType.Classifier, 1, 1);
         }
 		
         //END STUFF

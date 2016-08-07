@@ -56,7 +56,7 @@ namespace Nurielite
 			Canvas.SetZIndex(m_lnBody, Z_LEVEL);
 
 			// TODO: null check necessary?
-			m_lblTypeName.Content = m_pParent.Origin.Datatype;
+			m_lblTypeName.Content = origin.Name;
 			Canvas.SetLeft(m_lblTypeName, m_lnBody.X2);
 			Canvas.SetTop(m_lblTypeName, m_lnBody.Y2);
 

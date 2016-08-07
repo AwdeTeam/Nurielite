@@ -8,7 +8,8 @@ class PyAlgorithmInterface():
 	metaData = {
 		"Name" : "Trainer Output",
 		"Creator" : "Benjamin Croisdale",
-		"Version" : "1.0.0"
+		"Version" : "1.0.1",
+		"Default" : "<default><inputs><input>untrained algorithm</input><input>training example data</input></inputs><output></output></default>"
 		}
 
 	def getMetaData(self):

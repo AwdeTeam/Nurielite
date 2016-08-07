@@ -8,7 +8,8 @@ class PyAlgorithmInterface():
 	metaData = {
 		"Name" : "File Output",
 		"Creator" : "Benjamin Croisdale",
-		"Version" : "1.0.0"
+		"Version" : "1.0.1",
+		"Default" : "<default><inputs><input>calculated data</input></inputs><output></output></default>"
 		}
 
 	def getMetaData(self):
