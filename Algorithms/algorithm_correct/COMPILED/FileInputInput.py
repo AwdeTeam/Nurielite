@@ -1,4 +1,4 @@
 import numpy
 
 class FileInput():
-	print("hello world")
+	x = None

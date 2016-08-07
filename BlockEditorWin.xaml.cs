@@ -222,7 +222,7 @@ namespace Nurielite
 
                         case "file_chooser":
                             {
-                                pAlgOptions[pythonKey] = "\"" + ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text + "\"";
+                                pAlgOptions[pythonKey] = "\"" + ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text.Replace("\\", "/") + "\"";
                                 break;
                             }
 

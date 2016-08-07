@@ -2,7 +2,7 @@ from sklearn.naive_bayes import GaussianNB
 
 class NaiveBayes():
 
-	model = null
+	model = None
 	
 	def predict(self, trained_path, input):
 		model = joblib.load(trained_path)
