@@ -25,7 +25,7 @@ namespace Nurielite
 		// construction
 		public Connection(Nodule pStart)
 		{
-			Master.log("Connection initialized");
+            if (Master.VerboseMode) Master.log("Connection initialized");
 			m_pOrigin = pStart;
 			if (pStart.IsInput) 
             {
@@ -76,7 +76,7 @@ namespace Nurielite
 			int iInputNodeID = m_pInNodule.GroupNum;
 			int iOutputBlockID = m_pOutNodule.Parent.ID;
 			int iOutputNodeID = m_pOutNodule.GroupNum;
-			Master.log("Connection created - OutputID: " + iOutputBlockID + " (out-node " + iOutputNodeID + ") InputID: " + iInputBlockID + " (in-node " + iInputNodeID + ")");
+			if(Master.VerboseMode) Master.log("Connection created - OutputID: " + iOutputBlockID + " (out-node " + iOutputNodeID + ") InputID: " + iInputBlockID + " (in-node " + iInputNodeID + ")");
 
 			return true;
 		}
@@ -89,7 +89,7 @@ namespace Nurielite
             m_pEnd.removeConnection(this);
 			m_pGraphic.removeGraphic();
 
-            Master.log("Connection destroyed");
+            if (Master.VerboseMode) Master.log("Connection destroyed");
         }
 	}
 }

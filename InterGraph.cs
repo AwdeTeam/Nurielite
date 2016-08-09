@@ -15,7 +15,7 @@ namespace Nurielite
             m_inodes = new List<InterNode>();
         }
 
-        /*  Thank you wikipedia!
+        /*  Thank you Wikipedia!
          * 
          *	L ← Empty list that will contain the sorted elements
          *	S ← Set of all nodes with no incoming edges
@@ -35,6 +35,8 @@ namespace Nurielite
         public List<PyAlgorithm> topoSort() //This might break if there are cycles, 
                                             //so we need to check for them further up the chain
         {
+            Master.log("Running topological sort...");
+
             if (m_inodes == null)
                 return new List<PyAlgorithm>();
 
@@ -92,7 +94,7 @@ namespace Nurielite
         public Boolean contains(InterNode n) { return m_inodes.Contains(n); }
         public void append(InterNode n) { 
             m_inodes.Add(n);
-            Master.log("Appending InterNode with ID " + n.getCore().ID + " to graph");
+            if (Master.VerboseMode) Master.log("Appending InterNode with ID " + n.getCore().ID + " to graph");
         }
 
         internal bool contains(Block r)

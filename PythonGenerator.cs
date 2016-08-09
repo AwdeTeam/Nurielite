@@ -154,7 +154,7 @@ namespace Nurielite
 					{
 						sVerbatimCode = sVerbatimCode.Replace("OUT_DATA", "stage" + iOutStage + "OutputData");
 
-						sVerbatimCode += "\nprint('\\nStage " + iOutStage + " out:' + str(stage" + iOutStage + "OutputData))\n";
+						if(Master.VerboseMode) sVerbatimCode += "\nprint('\\nStage " + iOutStage + " out:' + str(stage" + iOutStage + "OutputData))\n";
 						iOutStage++;
 					}
 
@@ -167,7 +167,7 @@ namespace Nurielite
 			// write runnable code to output
 			File.WriteAllText(sOutputPath + "\\driver.py", sRunnableCode);
 
-			Master.log("Python generated!");
+			Master.log("Python generated at " + Directory.GetCurrentDirectory() + "\\" + sOutputPath + "\\driver.py");
 		}
 		
 		// thanks to https://blogs.msdn.microsoft.com/seshadripv/2008/07/08/how-to-redirect-output-from-python-using-the-dlr-hosting-api/

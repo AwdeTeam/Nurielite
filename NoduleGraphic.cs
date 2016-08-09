@@ -89,7 +89,7 @@ namespace Nurielite
 		{
 			if (Master.getDraggingConnection() != null)
 			{
-				Master.log("Released on node");
+                if (Master.VerboseMode) Master.log("Released on node");
 			
 				m_pParent.connect(Master.getDraggingConnection().Parent);
 				Master.setDraggingConnection(false, null);

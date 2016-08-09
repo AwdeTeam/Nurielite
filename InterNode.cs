@@ -38,13 +38,13 @@ namespace Nurielite
             {
                 if (m_pMaster.contains(r.ID))
                 {
-                    Master.log("InterNode with rep id " + m_pCore.ID + " is connecting to already extant InterNode " + r.ID);
+                    if(Master.VerboseMode) Master.log("InterNode with rep id " + m_pCore.ID + " is connecting to already extant InterNode " + r.ID);
                     connectTo(m_pMaster.get(r));
                 }
                 else
                 {
                     InterNode inode = new InterNode(r, m_pMaster);
-                    Master.log("InterNode with rep id " + m_pCore.ID + " is connecting to new InterNode " + r.ID);
+                    if (Master.VerboseMode) Master.log("InterNode with rep id " + m_pCore.ID + " is connecting to new InterNode " + r.ID);
                     connectTo(inode);
                 }
             }
@@ -78,12 +78,6 @@ namespace Nurielite
 
         public PyAlgorithm getAlgorithm()
         {
-			/*PythonGenerator pgen = new PythonGenerator();
-			PyAlgorithm py = pgen.loadPythonAlgorithm(m_core.AlgorithmPath, m_core.AlgorithmName + ".py");
-			Dictionary<string, dynamic> options = new Dictionary<string, dynamic>();
-			options.Add("thing", m_core);
-			py.setOptions(options);*/
-
 			//return py;
 			return m_pCore.PyAlgorithm; //TODO: CHANGE!!@!!
         }

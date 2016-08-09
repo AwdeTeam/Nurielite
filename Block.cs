@@ -40,9 +40,9 @@ namespace Nurielite
 		// construction
         public Block(List<string> inputNames, string outputName, string sName,/* string path,*/ AlgorithmType eFamily, Color pColor)
         {
-            Master.log("----Creating block----");
+            if (Master.VerboseMode) Master.log("----Creating block----");
             m_iID = Master.getNextRepID();
-            Master.log("ID: " + m_iID, Colors.GreenYellow);
+            if (Master.VerboseMode) Master.log("ID: " + m_iID, Colors.GreenYellow);
 
             m_sName = sName;
             m_eFamily = eFamily;

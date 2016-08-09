@@ -38,19 +38,19 @@ namespace Nurielite
 
 		
 			InitializeComponent();
+            btnToggleVerbose.Content = "Verbose: " + ((Master.VerboseMode) ? "\u2713" : "\u274C");
 			cmd_clearConsole();
 			Master.assignWindow(this);
 
 			log("Program initialized!");
-            Datatype.genericTypes();
-            log("Datatypes Loaded!");
+            //Datatype.genericTypes();
+            //log("Datatypes Loaded!");
 
 			// canvas initially wasn't handling events properly, so adding them to window instead
 			this.MouseMove += world_MouseMove;
 
 			// set path 
 			Directory.SetCurrentDirectory(Master.PATH_TO_THETHING);
-            
 
 			testInputBlock();
             testBayesBlock();
@@ -63,6 +63,8 @@ namespace Nurielite
 			Master.Blocks[0].connectTo(Master.Blocks[1], 0);
 			Master.Blocks[1].connectTo(Master.Blocks[2], 0);
 			Master.Blocks[0].connectTo(Master.Blocks[2], 1);
+
+            log("Testing Blocks Loaded");
 		}
 
 		public void testInputBlock()
@@ -119,6 +121,7 @@ namespace Nurielite
 
         private void Button_Click_generatePython(object sender, RoutedEventArgs e)
         {
+            Master.log(" ");
             InterGraph graph = new InterGraph();
 
 			//find first input node
@@ -132,9 +135,15 @@ namespace Nurielite
 			new InterNode(pFirstBlock, graph);
 			
             List<PyAlgorithm> algs = graph.topoSort();
-            log("Count: " + algs.Count);
+            if (Master.VerboseMode) log("Count: " + algs.Count);
 			
             (new PythonGenerator()).generatePythonCode(algs, Master.PATH_TO_THETHING, "COMPILED");
+        }
+
+        private void CheckBox_VerboseToggle(object sender, RoutedEventArgs e)
+        {
+            Master.VerboseMode = !Master.VerboseMode;
+            btnToggleVerbose.Content = "Verbose: " + ((Master.VerboseMode) ? "\u2713" : "\u274C");
         }
 
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar
