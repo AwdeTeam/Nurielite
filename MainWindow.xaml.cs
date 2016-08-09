@@ -52,17 +52,28 @@ namespace Nurielite
 			// set path 
 			Directory.SetCurrentDirectory(Master.PATH_TO_THETHING);
 
-			testInputBlock();
-            testBayesBlock();
-            testTrainerOutputBlock();
+			testInputBlock();            //0
+            testMaskBlock();             //1
+            testMaskBlock();             //2
+            testBayesBlock();            //3
+            testTrainerOutputBlock();    //4
 
-			Master.Blocks[0].Graphic.move(300, 10);
-			Master.Blocks[1].Graphic.move(100, 120);
-			Master.Blocks[2].Graphic.move(250, 250);
+            int iy = 0;
+            int ix = 100;
+            int sy = 150;
+            int sx = 100;
+
+			Master.Blocks[0].Graphic.move(ix -  0, iy + 0*sy);
+			Master.Blocks[1].Graphic.move(ix - sx, iy + 1*sy);
+			Master.Blocks[2].Graphic.move(ix + sx, iy + 1*sy);
+            Master.Blocks[3].Graphic.move(ix - sx, iy + 2*sy);
+            Master.Blocks[4].Graphic.move(ix -  0, iy + 3*sy);
 
 			Master.Blocks[0].connectTo(Master.Blocks[1], 0);
-			Master.Blocks[1].connectTo(Master.Blocks[2], 0);
-			Master.Blocks[0].connectTo(Master.Blocks[2], 1);
+			Master.Blocks[0].connectTo(Master.Blocks[2], 0);
+			Master.Blocks[1].connectTo(Master.Blocks[3], 0);
+            Master.Blocks[3].connectTo(Master.Blocks[4], 0);
+            Master.Blocks[2].connectTo(Master.Blocks[4], 1);
 
             log("Testing Blocks Loaded");
 		}
@@ -90,6 +101,11 @@ namespace Nurielite
         public void testJoinBlock()
         {
             AlgorithmLoader.loadAlgorithmBlock("SimpleJoin", AlgorithmType.Operation, 2, 1);
+        }
+
+        public void testMaskBlock()
+        {
+            AlgorithmLoader.loadAlgorithmBlock("Mask", AlgorithmType.Operation, 1, 1);
         }
 
         public void testBayesBlock()

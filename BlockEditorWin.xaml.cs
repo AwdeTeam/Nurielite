@@ -190,7 +190,13 @@ namespace Nurielite
 								List<string> pArrayParts = sArrayString.Split(',').ToList();
 								List<int> pArrayInts = new List<int>();
 
-								// find any parts with a dash (indicating range) and replace with the inbetween numbers
+                                if(sArrayString == "")
+                                {
+                                    pAlgOptions[pythonKey] = "[]";
+                                    break;
+                                }
+
+								// find any parts with a dash (indicating range) and replace with the in-between numbers
 								for (int i = 0; i < pArrayParts.Count; i++)
 								{
 									string sPart = pArrayParts[i];
@@ -209,8 +215,22 @@ namespace Nurielite
 									else { pArrayInts.Add(Convert.ToInt32(sPart)); }
 								}
 
-								// assign option
-								pAlgOptions[pythonKey] = pArrayInts;
+                                string sArray = "";
+                                for (int i = 0; i < pArrayInts.Count; i++)
+                                {
+                                    if (i == 0)
+                                        sArray += "[";
+                                    else if (i < pArrayInts.Count)
+                                        sArray += ",";
+
+                                    sArray += pArrayInts[i];
+
+                                    if (i == pArrayInts.Count - 1)
+                                        sArray += "]";
+                                }
+
+                                // assign option
+                                pAlgOptions[pythonKey] = sArray;
 								break;	
 							}
 

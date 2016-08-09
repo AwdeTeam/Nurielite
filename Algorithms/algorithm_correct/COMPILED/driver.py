@@ -1,5 +1,6 @@
 import TrainerOutputOutput
 import NaiveBayesClassifier
+import MaskOperation
 import FileInputInput
 import numpy
 
@@ -9,11 +10,21 @@ stage0OutputData = numpy.genfromtxt(fname='C:\\', comments='#', delimiter=',', s
 		
 
 stage1InputData = stage0OutputData
+masker = MaskOperation.Masker()
+stage1OutputData = masker.mask(stage1InputData, [])
+		
+
+stage2InputData = stage0OutputData
+masker = MaskOperation.Masker()
+stage2OutputData = masker.mask(stage2InputData, [1])
+		
+
+stage3InputData = stage1OutputData
 gaussnb = NaiveBayesClassifier.NaiveBayes()
-stage1OutputData = gaussnb.passToTrain(stage1InputData)
+stage3OutputData = gaussnb.passToTrain(stage3InputData)
 			
 
-stage2InputData = [stage1OutputData,stage0OutputData]
+stage4InputData = [stage3OutputData,stage2OutputData]
 trainer = TrainerOutputOutput.TrainerOutput()
-trainer.trainAndDump(stage2InputData[0][0], stage2InputData[0][1], stage2InputData[1], "C\\", stage2InputData[0][2] )
+trainer.trainAndDump(stage4InputData[0][0], stage4InputData[0][1], stage4InputData[1], "C\\", stage4InputData[0][2] )
 		
