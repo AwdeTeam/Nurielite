@@ -24,7 +24,7 @@ class PyAlgorithmInterface():
 	def generateRunnableCode(self):
 		code = """
 trainer = TrainerOutputOutput.TrainerOutput()
-trainer.trainAndDump(IN_DATA[0][0], IN_DATA[0][1], IN_DATA[1], {VALUE}, IN_DATA[0][2] )
+trainer.trainAndDump(IN_DATA[0][0], IN_DATA[0][1], {VALUE}, IN_DATA[1], IN_DATA[0][2])
 		"""
 		return code.format(VALUE=self.algOptions["path"])
 
