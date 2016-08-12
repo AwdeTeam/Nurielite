@@ -87,11 +87,7 @@
       <DependentUpon>BlockEditorWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConnectionGraphic.cs" />
-    <Compile Include="Datatype.cs" />
     <Compile Include="Connection.cs" />
-    <Compile Include="DatatypeDesigner.xaml.cs">
-      <DependentUpon>DatatypeDesigner.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GraphicContainer.cs" />
     <Compile Include="InterGraph.cs" />
     <Compile Include="InterNode.cs" />
@@ -108,10 +104,6 @@
     <Compile Include="Block.cs" />
     <Compile Include="BlockGraphic.cs" />
     <Page Include="BlockEditorWin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DatatypeDesigner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -43,8 +43,6 @@ namespace Nurielite
 			Master.assignWindow(this);
 
 			log("Program initialized!");
-            //Datatype.genericTypes();
-            //log("Datatypes Loaded!");
 
 			// canvas initially wasn't handling events properly, so adding them to window instead
 			this.MouseMove += world_MouseMove;
@@ -126,12 +124,6 @@ namespace Nurielite
         private void Button_Click_addNode(object sender, RoutedEventArgs e)
         {
             RepDesignerWin popup = new RepDesignerWin(this);
-            popup.Show();
-        }
-
-        private void Button_Click_addType(object sender, RoutedEventArgs e)
-        {
-            DatatypeDesigner popup = new DatatypeDesigner();
             popup.Show();
         }
 
@@ -349,10 +341,6 @@ namespace Nurielite
                     case "blocks":
                         log(listBlocks());
                         break;
-                    case "dt":
-                    case "datatypes":
-                        log(listDatatypes());
-                        break;
                     case "":
                     default:
                         log("Please enter a type! (rep or dt)", Colors.Red);
@@ -374,15 +362,6 @@ namespace Nurielite
             return r;
         }
 
-        private string listDatatypes()
-        {
-            string r = "";
-			/*for(int i = 0; i < Datatype.numberOfTypes(); i++)
-            {
-                //r += "\t" + i + ")" + Datatype.getType(i).stringRep() + "\n";
-            }*/
-            return r;
-        }
 
 		// ------------------------------------
 		//  COMMAND FUNCTIONS

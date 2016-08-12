@@ -22,7 +22,6 @@ namespace Nurielite
 		
 		// public:
         public const string PATH_TO_THETHING = "../../Algorithms/algorithm_correct";
-		public static Datatype TEST_DATATYPE = Datatype.defineDatatype("Scalar Integer", 1, null);
         public static bool VerboseMode = false;
 
 		// properties
