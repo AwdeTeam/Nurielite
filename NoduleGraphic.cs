@@ -62,18 +62,18 @@ namespace Nurielite
 
 		public void deleteGraphic() { Master.getCanvas().Children.Remove(m_pBody); }
 
-		public void move(double x, double y)
+		public void move(double dX, double dY)
 		{
-			Canvas.SetLeft(m_pBody, x + m_iOffsetX);
-			Canvas.SetTop(m_pBody, y + m_iOffsetY);
+			Canvas.SetLeft(m_pBody, dX + m_iOffsetX);
+			Canvas.SetTop(m_pBody, dY + m_iOffsetY);
 			
 			// update all connections
-			foreach (Connection c in m_pParent.Connections) { c.Graphic.adjustRelatedPoint(m_pParent); }
+			foreach (Connection pConnection in m_pParent.Connections) { pConnection.Graphic.adjustRelatedPoint(m_pParent); }
 		}
 
-        public void setTooltip(string p) //Not working, fix later
+        public void setTooltip(string sTooltip) //Not working, fix later
         {
-            m_pBody.ToolTip = p;
+            m_pBody.ToolTip = sTooltip;
         }
 
 		// -- EVENT HANDLERS --
@@ -82,7 +82,6 @@ namespace Nurielite
 		{
 			if(e.LeftButton == MouseButtonState.Pressed) { Connection con = new Connection(m_pParent); }
             else if (e.RightButton == MouseButtonState.Pressed) { new NameNoduleWin(m_pParent).Show(); }
-
 		}
 
 		private void evt_MouseUp(object sender, MouseEventArgs e)

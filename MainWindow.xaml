@@ -57,16 +57,11 @@
             <!-- split console and code -->
             <ScrollViewer Grid.Column="2">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
-                    
-                    <Canvas Height="600">
-                        <Button Grid.Row="0" Canvas.Left="10" Canvas.Top="10" Click="Button_Click_addNode" Height="25" Width="70" Background="WhiteSmoke">Add Block</Button>
-                        <Button Grid.Row="0" Canvas.Left="10" Canvas.Top="70" Click="Button_Click_generatePython" Height="25" Width="70" Background="WhiteSmoke">Generate</Button>
-                        <Button Grid.Row="0" Canvas.Left="10" Canvas.Top="100" Click="CheckBox_VerboseToggle" Height="25" Width="70" Background="WhiteSmoke" Name="btnToggleVerbose">Verbose: </Button>
-                    </Canvas>
+					<StackPanel>
+                        <Button Grid.Row="0" HorizontalAlignment="Left" Margin="10,5" Click="Button_Click_addNode" Height="25" Width="70" Background="WhiteSmoke">Add Block</Button>
+                        <Button Grid.Row="0" HorizontalAlignment="Left" Margin="10,5" Click="Button_Click_generatePython" Height="25" Width="70" Background="WhiteSmoke">Generate</Button>
+                        <Button Grid.Row="0" HorizontalAlignment="Left" Margin="10,5" Click="CheckBox_VerboseToggle" Height="25" Width="70" Background="WhiteSmoke" Name="btnToggleVerbose">Verbose: </Button>
+					</StackPanel>
                 </Grid>
             </ScrollViewer>
         </Grid>

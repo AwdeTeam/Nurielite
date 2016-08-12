@@ -35,20 +35,19 @@ namespace Nurielite
         // TODO: Make it look a little nicer
         private void loadAlgorithmOptions(PyAlgorithm pAlgorithm)
         {
-            StackPanel guiStkPnl = spnlAlgOptions;
-			guiStkPnl.HorizontalAlignment = HorizontalAlignment.Stretch;
+            StackPanel pGuiStackPanel = spnlAlgOptions;
+			pGuiStackPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
 
             if (!pAlgorithm.getOptions().ContainsKey("XML")) { return; /*No options, not necessarily an error*/ }
 
             string sOptionsXml = pAlgorithm.getOptions()["XML"];
             XElement pRootOptionsElement = XElement.Parse(sOptionsXml);
-            //string xml = " <options> <option pythonkey='ColIndices' guitype='txtbox' label='Column Indices' description='Comma separated list of column indices to ignore' default='' /> <option pythonkey='NumOutputs' guitype='txtbox' label='# Outputs' description='Number of outputs…' default='1' /> </options> ";
 
             // iterate through each option and construct gui element for each
             IEnumerable<XElement> pOptions = pRootOptionsElement.Elements();
-            //IEnumerable<XElement> options = parsedXML.Elements();
             foreach (XElement pOption in pOptions)
             {
+				// get the important data from the xml element
                 string sPythonKey = pOption.Attribute("pythonkey").Value;
                 string sGuiType = pOption.Attribute("guitype").Value;
                 string sLabel = pOption.Attribute("label").Value;
@@ -56,150 +55,149 @@ namespace Nurielite
                 string sDefaultValue = "";
                 if (pOption.Attribute("default") != null) { sDefaultValue = pOption.Attribute("default").Value; }
 
+				// create a new stackpanel for this options "row"
                 StackPanel pOptionRow = new StackPanel();
                 pOptionRow.Orientation = Orientation.Horizontal;
                 pOptionRow.ToolTip = sDescription;
 
-                Label optionLbl = new Label();
-                optionLbl.Content = sLabel;
-				optionLbl.Margin = new Thickness(5);
-				optionLbl.Padding = new Thickness(2);
-                pOptionRow.Children.Add(optionLbl);
+				// create the label for this option
+                Label pOptionLabel = new Label();
+                pOptionLabel.Content = sLabel;
+				pOptionLabel.Margin = new Thickness(5);
+				pOptionLabel.Padding = new Thickness(2);
+                pOptionRow.Children.Add(pOptionLabel);
 
-                switch(sGuiType)
-                {
+				switch (sGuiType)
+				{
 					case "txtbox":
 					case "text_box":
 					case "literal_box":
 					case "string_box":
 					case "array_box":
 						{
-							TextBox tb = new TextBox();
-							tb.Text = sDefaultValue;
-							tb.Width = 180;
-							tb.ToolTip = sDescription;
-							tb.Uid = sPythonKey;
-							tb.Margin = new Thickness(5);
-							tb.Padding = new Thickness(2);
-							pOptionRow.Children.Add(tb);
+							TextBox pTextBox = new TextBox();
+							pTextBox.Text = sDefaultValue;
+							pTextBox.Width = 180;
+							pTextBox.ToolTip = sDescription;
+							pTextBox.Uid = sPythonKey;
+							pTextBox.Margin = new Thickness(5);
+							pTextBox.Padding = new Thickness(2);
+							pOptionRow.Children.Add(pTextBox);
 							break;
 						}
-
 					case "check_box":
 						{
-							CheckBox cb = new CheckBox();
-							cb.ToolTip = sDescription;
-							cb.Uid = sPythonKey;
-							cb.Padding = new Thickness(2);
-							cb.Margin = new Thickness(0,8,5,0);
-							pOptionRow.Children.Add(cb);
+							CheckBox pCheckBox = new CheckBox();
+							pCheckBox.ToolTip = sDescription;
+							pCheckBox.Uid = sPythonKey;
+							pCheckBox.Padding = new Thickness(2);
+							pCheckBox.Margin = new Thickness(0, 8, 5, 0);
+							pOptionRow.Children.Add(pCheckBox);
 							break;
 						}
-
 					case "file_chooser":
 						{
-							TextBox txt = new TextBox();
-							txt.Text = Directory.GetCurrentDirectory();
-							txt.Width = 260;
-							txt.Height = 20;
-							txt.Margin = new Thickness(5);
-							txt.Padding = new Thickness(2);
-							txt.HorizontalAlignment = HorizontalAlignment.Left;
-							txt.FontSize = 12;
-							txt.Uid = sPythonKey;
-							pOptionRow.Children.Add(txt);
+							TextBox pTextBox = new TextBox();
+							pTextBox.Text = Directory.GetCurrentDirectory();
+							pTextBox.Width = 260;
+							pTextBox.Height = 20;
+							pTextBox.Margin = new Thickness(5);
+							pTextBox.Padding = new Thickness(2);
+							pTextBox.HorizontalAlignment = HorizontalAlignment.Left;
+							pTextBox.FontSize = 12;
+							pTextBox.Uid = sPythonKey;
+							pOptionRow.Children.Add(pTextBox);
 
-							Button btn = new Button();
-							btn.Content = "Select a File";
-							btn.HorizontalAlignment = HorizontalAlignment.Right;
-							btn.Width = 75;
-							btn.Height = 20;
-							//btn.Margin = new Thickness(265, 0, 0, 0);
-							btn.Click += (s, e) =>
+							Button pButton = new Button();
+							pButton.Content = "Select a File";
+							pButton.HorizontalAlignment = HorizontalAlignment.Right;
+							pButton.Width = 75;
+							pButton.Height = 20;
+							pButton.Click += (s, e) =>
 							{
 								System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
 								dialog.InitialDirectory = Directory.GetCurrentDirectory();
 								System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 								if (result == System.Windows.Forms.DialogResult.OK)
 								{
-									txt.Text = dialog.FileName;
+									pTextBox.Text = dialog.FileName;
 								}
 							};
-							pOptionRow.Children.Add(btn);
+							pOptionRow.Children.Add(pButton);
 							break;
 						}
-
-					default:
+				default:
 						{
-							Label error = new Label();
-							error.Content = "Invalid GUI Option!";
-							pOptionRow.Children.Add(error);
+							Label pErrorLabel = new Label();
+							pErrorLabel.Content = "Invalid GUI Option!";
+							pOptionRow.Children.Add(pErrorLabel);
 							break;
 						}
 				}
 
+				// add this whole option row stackpanel to the stackpanel in the GUI 
 				pOptionRow.HorizontalAlignment = HorizontalAlignment.Stretch;
-				guiStkPnl.Children.Add(pOptionRow);
+				pGuiStackPanel.Children.Add(pOptionRow);
 			}
 		}
 
+		// TODO: CODE DUPLICATION. CODE DUPLICATION EVERYWHERE. I CAN HAZ FIX PLZ?
         private void ConfirmEdits(object sender, RoutedEventArgs e)
         {
             if (spnlAlgOptions.Children.Count > 0)
             {
-                StackPanel guiStkPnl = spnlAlgOptions;
-                Dictionary<string, dynamic> finished = new Dictionary<string, dynamic>();
+                StackPanel pGuiStackPanel = spnlAlgOptions;
 				
+				// get the options from the python algorithm interface
                 PyAlgorithm pAlgorithm = m_pBlkTarget.PyAlgorithm;
-				Dictionary<string, dynamic> pAlgOptions = pAlgorithm.getOptions();
+				Dictionary<string, dynamic> dAlgOptions = pAlgorithm.getOptions();
 
-                if (!pAlgOptions.ContainsKey("XML")) { return; /*ERROR*/ }
+                if (!dAlgOptions.ContainsKey("XML")) { return; /*ERROR*/ }
 
-                string xml = pAlgorithm.getOptions()["XML"];
-                XElement optionsRoot = XElement.Parse(xml);
-                IEnumerable<XElement> options = optionsRoot.Elements();
-                //IEnumerable<XElement> options = parsedXML.Elements();
-                foreach (XElement option in options)
+				// get the options xml so we know the keys to set in the dictionary
+                string sRawOptionsXml = pAlgorithm.getOptions()["XML"];
+                XElement pOptionsRoot = XElement.Parse(sRawOptionsXml);
+                IEnumerable<XElement> pOptions = pOptionsRoot.Elements();
+                foreach (XElement pOption in pOptions)
                 {
-                    string pythonKey = option.Attribute("pythonkey").Value;
-                    string guiType = option.Attribute("guitype").Value;
-                    string label = option.Attribute("label").Value;
-                    string description = option.Attribute("description") == null ? "" : option.Attribute("description").Value;
-                    string defaultValue = "";
-                    if (option.Attribute("default") != null) { defaultValue = option.Attribute("default").Value; }
+					// get important information
+                    string sPythonKey = pOption.Attribute("pythonkey").Value; // THIS IS THE KEY TO SET
+                    string sGuiType = pOption.Attribute("guitype").Value;
+                    string sLabel = pOption.Attribute("label").Value;
+                    string sDescription = pOption.Attribute("description") == null ? "" : pOption.Attribute("description").Value;
+                    string sDefaultValue = "";
+                    if (pOption.Attribute("default") != null) { sDefaultValue = pOption.Attribute("default").Value; }
 
-                    switch (guiType)
+                    switch (sGuiType)
                     {
                         case "txtbox":
                         case "text_box":
                         case "literal_box":
                             {
-								pAlgOptions[pythonKey] = ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text;
+								dAlgOptions[sPythonKey] = ((TextBox)getByName(pGuiStackPanel.Children, sPythonKey)).Text;
                                 break;
                             }
-
                         case "string_box":
                             {
-                                pAlgOptions[pythonKey] = "\"" + ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text + "\"";
+                                dAlgOptions[sPythonKey] = "\"" + ((TextBox)getByName(pGuiStackPanel.Children, sPythonKey)).Text + "\"";
                                 break;
                             }
-							
 						case "array_box":
 							{
-								string sArrayString = ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text;
-								List<string> pArrayParts = sArrayString.Split(',').ToList();
-								List<int> pArrayInts = new List<int>();
+								string sArrayString = ((TextBox)getByName(pGuiStackPanel.Children, sPythonKey)).Text;
+								List<string> lArrayParts = sArrayString.Split(',').ToList();
+								List<int> lArrayInts = new List<int>();
 
                                 if(sArrayString == "")
                                 {
-                                    pAlgOptions[pythonKey] = "[]";
+                                    dAlgOptions[sPythonKey] = "[]";
                                     break;
                                 }
 
 								// find any parts with a dash (indicating range) and replace with the in-between numbers
-								for (int i = 0; i < pArrayParts.Count; i++)
+								for (int i = 0; i < lArrayParts.Count; i++)
 								{
-									string sPart = pArrayParts[i];
+									string sPart = lArrayParts[i];
 									if (sPart.Contains("-"))
 									{
 										// find range boundary numbers 
@@ -208,64 +206,62 @@ namespace Nurielite
 										if (iEnd < iStart) { throw new Exception("End of range cannot be lower than start"); }
 
 										// add boundaries and numbers in between
-										pArrayInts.Add(iStart);
-										for (int j = iStart + 1; j < iEnd; j++) { pArrayInts.Add(j); }
-										pArrayInts.Add(iEnd);
+										lArrayInts.Add(iStart);
+										for (int j = iStart + 1; j < iEnd; j++) { lArrayInts.Add(j); }
+										lArrayInts.Add(iEnd);
 									}
-									else { pArrayInts.Add(Convert.ToInt32(sPart)); }
+									else { lArrayInts.Add(Convert.ToInt32(sPart)); }
 								}
 
+								// add in the array syntax stuff
                                 string sArray = "";
-                                for (int i = 0; i < pArrayInts.Count; i++)
+                                for (int i = 0; i < lArrayInts.Count; i++)
                                 {
                                     if (i == 0)
                                         sArray += "[";
-                                    else if (i < pArrayInts.Count)
+                                    else if (i < lArrayInts.Count)
                                         sArray += ",";
 
-                                    sArray += pArrayInts[i];
+                                    sArray += lArrayInts[i];
 
-                                    if (i == pArrayInts.Count - 1)
+                                    if (i == lArrayInts.Count - 1)
                                         sArray += "]";
                                 }
 
                                 // assign option
-                                pAlgOptions[pythonKey] = sArray;
+                                dAlgOptions[sPythonKey] = sArray;
 								break;	
 							}
-
                         case "check_box":
                             {
-								pAlgOptions[pythonKey] = ((CheckBox)getByName(guiStkPnl.Children, pythonKey)).IsChecked.ToString();
+								dAlgOptions[sPythonKey] = ((CheckBox)getByName(pGuiStackPanel.Children, sPythonKey)).IsChecked.ToString();
                                 break;
                             }
-
                         case "file_chooser":
                             {
-                                pAlgOptions[pythonKey] = "\"" + ((TextBox)getByName(guiStkPnl.Children, pythonKey)).Text.Replace("\\", "/") + "\"";
+                                dAlgOptions[sPythonKey] = "\"" + ((TextBox)getByName(pGuiStackPanel.Children, sPythonKey)).Text.Replace("\\", "/") + "\"";
                                 break;
                             }
-
                         default: { break; }
                     }
                 }
 
+				// finalize things
                 m_pBlkTarget.Graphic.Name = txtbxName.Text;
-				//m_pBlkTarget.PyAlgorithm.setPreOptions(finished);
-				m_pBlkTarget.PyAlgorithm.setOptions(pAlgOptions);
+				m_pBlkTarget.PyAlgorithm.setOptions(dAlgOptions);
 				
             }
             Close();
         }
 
-        private dynamic getByName(UIElementCollection children, string pythonKey)
+        private dynamic getByName(UIElementCollection pChildren, string sPythonKey)
         {
-            foreach(StackPanel stkpanel in children)
+            foreach(StackPanel pStackPanel in pChildren)
             {
-                foreach(UIElement element in stkpanel.Children)
+                foreach(UIElement pElement in pStackPanel.Children)
                 {
-                    if (element.Uid.Equals(pythonKey))
-                        return element;
+                    if (pElement.Uid.Equals(sPythonKey))
+                        return pElement;
                 }
             }
             return null;

@@ -41,13 +41,13 @@ namespace Nurielite
 		private BlockGraphic m_pDraggingBlock;
 		private ConnectionGraphic m_pDraggingConnection;
 
-		private Dictionary<int, BlockGraphic> m_pBlockGraphics = new Dictionary<int, BlockGraphic>();
+		private Dictionary<int, BlockGraphic> m_dBlockGraphics = new Dictionary<int, BlockGraphic>();
 
 		public GraphicContainer() { }
 
 		// PROPERTIES
-		public BlockGraphic getBlockGraphic(int id) { return m_pBlockGraphics[id]; }
-		public void addBlockGraphic(BlockGraphic rg) { m_pBlockGraphics.Add(rg.Parent.ID, rg); }
+		public BlockGraphic getBlockGraphic(int iID) { return m_dBlockGraphics[iID]; }
+		public void addBlockGraphic(BlockGraphic pBlockGraphic) { m_dBlockGraphics.Add(pBlockGraphic.Parent.ID, pBlockGraphic); }
 
 		public void setDraggingBlock(bool bDragging, BlockGraphic pBlockGraphic)
 		{
@@ -55,10 +55,10 @@ namespace Nurielite
 			m_pDraggingBlock = pBlockGraphic;
 		}
 
-		public void setDraggingConnection(bool dragging, ConnectionGraphic cg)
+		public void setDraggingConnection(bool bDragging, ConnectionGraphic pConnectionGraphic)
 		{
-			m_bIsDraggingConnection = dragging;
-			m_pDraggingConnection = cg;
+			m_bIsDraggingConnection = bDragging;
+			m_pDraggingConnection = pConnectionGraphic;
 		}
 		public ConnectionGraphic getDraggingConnection() { return m_pDraggingConnection; }
 
@@ -67,12 +67,12 @@ namespace Nurielite
 		{
 			if (m_bIsDraggingScreen)
 			{
-				foreach (BlockGraphic rg in m_pBlockGraphics.Values)
+				foreach (BlockGraphic pBlockGraphic in m_dBlockGraphics.Values)
 				{
-					Point p = e.GetPosition(Master.getCanvas());
-                    double x = p.X - rg.RelativeX;
-					double y = p.Y - rg.RelativeY;
-					rg.move(x, y);
+					Point pMousePoint = e.GetPosition(Master.getCanvas());
+                    double dX = pMousePoint.X - pBlockGraphic.RelativeX;
+					double dY = pMousePoint.Y - pBlockGraphic.RelativeY;
+					pBlockGraphic.move(dX, dY);
 				}
 			}
 			else if (m_bIsDraggingBlock) { m_pDraggingBlock.evt_MouseMove(sender, e); }
@@ -86,11 +86,11 @@ namespace Nurielite
 			if (e.MiddleButton == MouseButtonState.Pressed)
 			{
 				m_bIsDraggingScreen = true;
-				foreach (BlockGraphic rg in m_pBlockGraphics.Values)
+				foreach (BlockGraphic pBlockGraphic in m_dBlockGraphics.Values)
 				{
-					Point p = e.GetPosition(Master.getCanvas());
-					rg.RelativeX = p.X - rg.CurrentX;
-					rg.RelativeY = p.Y - rg.CurrentY;
+					Point pMousePoint = e.GetPosition(Master.getCanvas());
+					pBlockGraphic.RelativeX = pMousePoint.X - pBlockGraphic.CurrentX;
+					pBlockGraphic.RelativeY = pMousePoint.Y - pBlockGraphic.CurrentY;
 				}
 			}
 		}
@@ -100,10 +100,10 @@ namespace Nurielite
 			if (m_bIsDraggingScreen)
 			{
 				m_bIsDraggingScreen = false;
-				foreach (BlockGraphic rg in m_pBlockGraphics.Values)
+				foreach (BlockGraphic pBlockGraphic in m_dBlockGraphics.Values)
 				{
-                    rg.RelativeX = 0;
-                    rg.RelativeY = 0;
+                    pBlockGraphic.RelativeX = 0;
+                    pBlockGraphic.RelativeY = 0;
 				}
 			}
 			else if (m_bIsDraggingBlock) { m_pDraggingBlock.evt_MouseUp(sender, e); }

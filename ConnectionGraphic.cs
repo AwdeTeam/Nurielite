@@ -27,18 +27,18 @@ namespace Nurielite
 		private bool m_bIsDragging = false;
 
 		// construction
-		public ConnectionGraphic(Connection parent)
+		public ConnectionGraphic(Connection pParent)
 		{
-			m_pParent = parent;
+			m_pParent = pParent;
 			createDrawing();
 		}
 
 		// properties
 		public Connection Parent { get { return m_pParent; } set { m_pParent = value; } }
 		
-		public void setStrokeColor(Color color)
+		public void setStrokeColor(Color pColor)
 		{
-			m_brushStroke = new SolidColorBrush(color);
+			m_brushStroke = new SolidColorBrush(pColor);
 			m_lnBody.Stroke = m_brushStroke;
 		}
 
@@ -71,20 +71,20 @@ namespace Nurielite
 		}
 
 		// visually attaches connection to passed node
-		public void finishVisualConnection(Nodule n)
+		public void finishVisualConnection(Nodule pNodule)
 		{
-			adjustSecondPoint((int)(n.Graphic.CurrentX+ GraphicContainer.NODE_SIZE / 2), (int)(n.Graphic.CurrentY + GraphicContainer.NODE_SIZE / 2));
+			adjustSecondPoint((int)(pNodule.Graphic.CurrentX+ GraphicContainer.NODE_SIZE / 2), (int)(pNodule.Graphic.CurrentY + GraphicContainer.NODE_SIZE / 2));
 			m_lnBody.IsHitTestVisible = true; // make clickable
 			Master.getCanvas().Children.Remove(m_lblTypeName);
 		}
 
 		// moves the end of the line attached to passed node
-		public void adjustRelatedPoint(Nodule node)
+		public void adjustRelatedPoint(Nodule pNode)
 		{
-			Nodule origin = m_pParent.Origin;
-			Nodule end = m_pParent.End;
-			if (node.Equals(origin)) { adjustFirstPoint((int)(origin.Graphic.CurrentX + GraphicContainer.NODE_SIZE / 2), (int)(origin.Graphic.CurrentY + GraphicContainer.NODE_SIZE / 2)); }
-			else if (node.Equals(end)) { adjustSecondPoint((int)(end.Graphic.CurrentX + GraphicContainer.NODE_SIZE / 2), (int)(end.Graphic.CurrentY + GraphicContainer.NODE_SIZE / 2)); }
+			Nodule pOrigin = m_pParent.Origin;
+			Nodule pEnd = m_pParent.End;
+			if (pNode.Equals(pOrigin)) { adjustFirstPoint((int)(pOrigin.Graphic.CurrentX + GraphicContainer.NODE_SIZE / 2), (int)(pOrigin.Graphic.CurrentY + GraphicContainer.NODE_SIZE / 2)); }
+			else if (pNode.Equals(pEnd)) { adjustSecondPoint((int)(pEnd.Graphic.CurrentX + GraphicContainer.NODE_SIZE / 2), (int)(pEnd.Graphic.CurrentY + GraphicContainer.NODE_SIZE / 2)); }
 		}
 
 		// adjusts "origin" connected point
@@ -119,9 +119,9 @@ namespace Nurielite
 		{
 			if (m_bIsDragging)
 			{
-				Point p = e.GetPosition(Master.getCanvas());
-				int x = (int)p.X;
-				int y = (int)p.Y;
+				Point pMousePoint = e.GetPosition(Master.getCanvas());
+				int x = (int)pMousePoint.X;
+				int y = (int)pMousePoint.Y;
 				adjustSecondPoint(x, y);
 			}
 		}

@@ -21,14 +21,14 @@ namespace Nurielite
         private string m_sAlgName;
         private string m_sAlgPath;
         private PythonDictionary m_pHeldOptions;
-        private List<int> m_pDependancies;
+        private List<int> m_lDependencies;
 			
 		// construction
 		public PyAlgorithm(dynamic pyFile)
 		{ 
 			m_pyFile = pyFile; 
 			m_pyClass = m_pyFile.PyAlgorithmInterface(); // (this will throw RuntimeBinderException if that class not found. This exception is handled in PythonGenerator)
-            m_pDependancies = new List<int>();
+            m_lDependencies = new List<int>();
             // TODO: check that the file has all the needed functions
 		}
 		private PyAlgorithm() // NOTE: this is just so that things don't crash if use loads invalid py file or class isn't found (program should then just pass this back instead and display an error message)
@@ -58,30 +58,30 @@ namespace Nurielite
 			return pOptions;
 		}
 
-		public void setOptions(Dictionary<string, dynamic> pOptions)
+		public void setOptions(Dictionary<string, dynamic> dOptions)
 		{
 			if (m_pyClass == null) { return; }
 			
 			// convert options to python dictionary
 			PythonDictionary pPyOptions = new PythonDictionary();
 
-			foreach (string sKey in pOptions.Keys) { pPyOptions.Add(sKey, pOptions[sKey]); }
+			foreach (string sKey in dOptions.Keys) { pPyOptions.Add(sKey, dOptions[sKey]); }
 			m_pyClass.setOptions(pPyOptions);
 		}
 
 		public Dictionary<string, string> getMetaData()
 		{
-			Dictionary<string, string> pMetaData = new Dictionary<string, string>();
-			if (m_pyClass == null) { return pMetaData; }
+			Dictionary<string, string> dMetaData = new Dictionary<string, string>();
+			if (m_pyClass == null) { return dMetaData; }
 
 			// call getMetaData from IronPython interface
 			dynamic pPyMetaData = m_pyClass.getMetaData();
 
 			PythonDictionary pPyDictMetaData = (PythonDictionary)pPyMetaData;
 
-			foreach (dynamic pData in pPyDictMetaData.Keys) { pMetaData.Add((string)pData, (string)pPyDictMetaData.get(pData)); }
+			foreach (dynamic pData in pPyDictMetaData.Keys) { dMetaData.Add((string)pData, (string)pPyDictMetaData.get(pData)); }
 
-			return pMetaData;
+			return dMetaData;
 		}
 
 		public string generateRunnableCode()
@@ -97,27 +97,27 @@ namespace Nurielite
 
 		public Dictionary<string, string> generateCodeLibraries()
 		{
-			Dictionary<string, string> pLibraries = new Dictionary<string, string>();
-			if (m_pyClass == null) { return pLibraries; }
+			Dictionary<string, string> dLibraries = new Dictionary<string, string>();
+			if (m_pyClass == null) { return dLibraries; }
 
 			// call generateCodeLibraries on ironPython interface 
 			dynamic pPyLibraries = m_pyClass.generateCodeLibraries();
 			PythonDictionary pPyDictLibraries = (PythonDictionary)pPyLibraries;			
 
 			// TODO: don't forget try catches in case programmer forgot to return stuff from function! (not that that happened or anything, this is hypothetical, of course)
-			foreach (dynamic pData in pPyDictLibraries.Keys) { pLibraries.Add((string)pData, (string)pPyDictLibraries.get(pData)); }
+			foreach (dynamic pData in pPyDictLibraries.Keys) { dLibraries.Add((string)pData, (string)pPyDictLibraries.get(pData)); }
 			
-			return pLibraries;
+			return dLibraries;
 		}
 
 		public static PyAlgorithm getUnloadedAlgorithm() { return new PyAlgorithm(); }
 
-        public PyAlgorithm setDependancies(List<int> pDependancies)
+        public PyAlgorithm setDependancies(List<int> lDependencies)
         {
-            m_pDependancies = pDependancies;
+            m_lDependencies = lDependencies;
             return this;
         }
 
-        public List<int> getDependancies() { return m_pDependancies; }
+        public List<int> getDependancies() { return m_lDependencies; }
     }
 }

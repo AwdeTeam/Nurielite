@@ -17,104 +17,77 @@ namespace Nurielite
     /// </remarks>
     class AlgorithmLoader
     {
-
 		//NOTE: python file path can be reconstructed by eFamily/sName/sName.py
 		//NOTE: THIS IS ENTRYPOINT FOR NEW BLOCK
-		public static void loadAlgorithmBlock(string sName, AlgorithmType eFamily, int numInputs, int numOutputs)
+		public static void loadAlgorithmBlock(string sName, AlgorithmType eFamily, int iNumInputs, int iNumOutputs)
 		{
+			// load the python algorithm 
 			PythonGenerator pPyGen = new PythonGenerator();
-			//PyAlgorithm pPyAlgorithm = pPyGen.loadPythonAlgorithm(Master.PATH_TO_THETHING + "/" + eFamily.ToString() + "/" + sName, sName + ".py");
 			PyAlgorithm pPyAlgorithm = pPyGen.loadPythonAlgorithm(eFamily.ToString() + "/" + sName, sName + ".py");
 
-            Dictionary<string, string> d = pPyAlgorithm.getMetaData();
-            List<string> inputNames = new List<string>();
-            string outputName = "";
-            if(d.ContainsKey("Default")) //TODO add error handling
+			// get algorithm meta data for default nodule labels (should be under key "default")
+            Dictionary<string, string> dAlgMetaData = pPyAlgorithm.getMetaData();
+            List<string> lInputNames = new List<string>();
+            string sOutputNames = "";
+            if(dAlgMetaData.ContainsKey("Default")) //TODO add error handling
             {
-                string rawXML = d["Default"];
-                XElement xml = XElement.Parse(rawXML);
-                XElement inputs = xml.Element("inputs");
-                foreach (XElement element in inputs.Elements("input"))
-                    inputNames.Add(element.Value);
-                outputName = xml.Element("output").Value;
+                string sRawLabelsXml = dAlgMetaData["Default"];
+                XElement pLabelsXml = XElement.Parse(sRawLabelsXml);
+                XElement pInputRootXml = pLabelsXml.Element("inputs");
+                foreach (XElement pElement in pInputRootXml.Elements("input"))
+                    lInputNames.Add(pElement.Value);
+                sOutputNames = pLabelsXml.Element("output").Value;
             }
             else
             {
-                outputName = (numOutputs == 1) ? "unnamed datatype" : "";
-                for (int i = 0; i < numInputs; i++)
-                    inputNames.Add("unnamed datatype");
+				// if no labels provided, set default "unnamed datatype"
+                sOutputNames = (iNumOutputs == 1) ? "unnamed datatype" : "";
+                for (int i = 0; i < iNumInputs; i++) 
+                    lInputNames.Add("unnamed datatype");
             }
 
-			Block pBlock = AlgorithmLoader.generateBlock(sName, eFamily, numInputs, numOutputs, inputNames, outputName);
+			Block pBlock = AlgorithmLoader.generateBlock(sName, eFamily, iNumInputs, iNumOutputs, lInputNames, sOutputNames);
 			pBlock.PyAlgorithm = pPyAlgorithm;
 			Master.Blocks.Add(pBlock);
 		}
 	
-        private static Block generateBlock(string sName, AlgorithmType eFamily, int numInputs, int numOutputs, List<string> inputNames, string outputName)
+        private static Block generateBlock(string sName, AlgorithmType eFamily, int iNumInputs, int iNumOutputs, List<string> lInputNames, string sOutputName)
         {
-            if(numInputs > inputNames.Count)
+			// ensure proper label count
+            if(iNumInputs > lInputNames.Count)
             {
-                for (int i = inputNames.Count; i < numInputs; i++)
-                    inputNames.Add("unnamed datatype");
+                for (int i = lInputNames.Count; i < iNumInputs; i++)
+                    lInputNames.Add("unnamed datatype");
             }
-            else if(numInputs < inputNames.Count)
+            else if(iNumInputs < lInputNames.Count)
             {
-                inputNames.RemoveRange(numInputs, inputNames.Count - numInputs);
+                lInputNames.RemoveRange(iNumInputs, lInputNames.Count - iNumInputs);
             }
 
-            Color color = Colors.Gray;
+			// set the block color by algorithm family
+            Color pColor = Colors.Gray;
             switch(eFamily)
             {
                 case AlgorithmType.Classifier:
-                {
-                    color = Colors.SeaGreen;
+                    pColor = Colors.SeaGreen;
                     break;
-                }
-
                 case AlgorithmType.Clustering:
-                {
-                    color = Colors.Turquoise;
+                    pColor = Colors.Turquoise;
                     break;
-                }
-
                 case AlgorithmType.DimensionReduction:
-                {
-                    color = Colors.Thistle;
+                    pColor = Colors.Thistle;
                     break;
-                }
-
                 case AlgorithmType.Operation:
-                {
-                    color = Colors.SkyBlue;
+                    pColor = Colors.SkyBlue;
                     break;
-                }
-
                 case AlgorithmType.Input:
-                {
-                    color = Colors.Violet;
+                    pColor = Colors.Violet;
                     break;
-                }
-
                 case AlgorithmType.Output:
-                {
-                    color = Colors.Violet;
+                    pColor = Colors.Violet;
                     break;
-                }
             }
-            return new Block(inputNames, outputName, sName, eFamily, color);
+            return new Block(lInputNames, sOutputName, sName, eFamily, pColor);
         }
-
-        /*public static Block generateBlock(string name, string path, int family, Datatype[] inputs, Datatype[] outputs)
-        {
-            return generateBlock(name, path, (AlgorithmType) family, inputs, outputs);
-        }
-
-        public static Block load(string path)
-        {
-            string filePath = path;
-            StreamReader sr = new StreamReader(filePath);
-            string[] data = sr.ReadLine().Split(',');
-            return generateBlock(data[0], path, AlgorithmType.Input, null, null);
-        }*/
     }
 }

@@ -74,8 +74,6 @@ namespace Nurielite
 		}
 
 		// -- PROPERTIES --
-        /*public double CurrentX { get { return Canvas.GetLeft(m_pRecBody); } }
-        public double CurrentY { get { return Canvas.GetTop(m_pRecBody); } }*/
         public double CurrentX { get { return Canvas.GetLeft(m_pCanvasParent); } }
         public double CurrentY { get { return Canvas.GetTop(m_pCanvasParent); } }
         public double RelativeX { get { return m_dRelativeX; } set { m_dRelativeX = value; } }
@@ -90,14 +88,14 @@ namespace Nurielite
 		// -- FUNCTIONS --
 
 		// finds what offset should be for given node
-		public int getNodeOffsetX(bool isInput, int groupNum)
+		public int getNodeOffsetX(bool isInput, int iGroupNum)
 		{
-			if (isInput) { return m_iInputNoduleOffset + groupNum * GraphicContainer.NODE_SIZE; }
-			else { return m_iOutputNoduleOffset + groupNum * GraphicContainer.NODE_SIZE; }
+			if (isInput) { return m_iInputNoduleOffset + iGroupNum * GraphicContainer.NODE_SIZE; }
+			else { return m_iOutputNoduleOffset + iGroupNum * GraphicContainer.NODE_SIZE; }
 		}
-		public int getNodeOffsetY(bool isInput)
+		public int getNodeOffsetY(bool bIsInput)
 		{
-			if (isInput) { return -(GraphicContainer.NODE_SIZE); }
+			if (bIsInput) { return -(GraphicContainer.NODE_SIZE); }
 			else { return (int)m_pRecBody.Height; }
 		}
 
@@ -156,15 +154,7 @@ namespace Nurielite
 			Canvas.SetLeft(m_pLblContent, GraphicContainer.REP_BOARD_PADDING_LEFT);
 			Canvas.SetTop(m_pLblContent, GraphicContainer.REP_BOARD_PADDING_TOP);
 
-			//move(iX, iY);
-
-			// ADD ALL THE THINGS!!
-			/*Canvas cnvs = Master.getCanvas();
-			cnvs.Children.Add(m_pRecBody);
-			cnvs.Children.Add(m_pRecBoard);
-			cnvs.Children.Add(m_pLblID);
-			cnvs.Children.Add(m_pLblContent);
-			cnvs.Children.Add(m_pLblName);*/
+			// add all the things!
 			m_pCanvasParent.Children.Add(m_pRecBody);
 			m_pCanvasParent.Children.Add(m_pRecBoard);
 			m_pCanvasParent.Children.Add(m_pLblID);
@@ -186,21 +176,6 @@ namespace Nurielite
 			Canvas.SetLeft(m_pCanvasParent, dX);
 			Canvas.SetTop(m_pCanvasParent, dY);
 			
-			/*Canvas.SetLeft(m_pRecBody, dX);
-			Canvas.SetTop(m_pRecBody, dY);
-
-			Canvas.SetLeft(m_pRecBoard, dX + GraphicContainer.REP_BOARD_PADDING_LEFT);
-			Canvas.SetTop(m_pRecBoard, dY + GraphicContainer.REP_BOARD_PADDING_TOP);
-
-			Canvas.SetLeft(m_pLblID, dX);
-			Canvas.SetTop(m_pLblID, dY);
-
-			Canvas.SetLeft(m_pLblName, dX + m_pRecBody.Width + 2);
-			Canvas.SetTop(m_pLblName, dY + (m_pRecBody.Height / 2) - (m_pLblName.Height / 2));
-
-			Canvas.SetLeft(m_pLblContent, dX + GraphicContainer.REP_BOARD_PADDING_LEFT);
-			Canvas.SetTop(m_pLblContent, dY + GraphicContainer.REP_BOARD_PADDING_TOP);*/
-
 			// move nodes
 			foreach (Nodule n in m_pBlkParent.Nodules) { n.Graphic.move(dX, dY); }
 		}
@@ -234,16 +209,16 @@ namespace Nurielite
 
 		private Color lightenColor(Color pColor, float fFactor)
 		{
-			float red = (255 - pColor.R) * fFactor + pColor.R;
-			float green = (255 - pColor.G) * fFactor + pColor.G;
-			float blue = (255 - pColor.B) * fFactor + pColor.B;
-			return Color.FromArgb(pColor.A, (byte)red, (byte)green, (byte)blue);
+			float fRed = (255 - pColor.R) * fFactor + pColor.R;
+			float fGreen = (255 - pColor.G) * fFactor + pColor.G;
+			float fBlue = (255 - pColor.B) * fFactor + pColor.B;
+			return Color.FromArgb(pColor.A, (byte)fRed, (byte)fGreen, (byte)fBlue);
 		}
 
         private void editBlock(Block pBlock)
         {
-            BlockEditorWin popup = new BlockEditorWin(pBlock);
-            popup.Show();
+            BlockEditorWin pPopup = new BlockEditorWin(pBlock);
+            pPopup.Show();
         }
 
 		// -- EVENT HANDLERS --
@@ -257,11 +232,9 @@ namespace Nurielite
 				m_pRecBody.Stroke = m_pBrushBorderSelected;
 
 				// get relative coordinates
-				Point p = e.GetPosition(Master.getCanvas());
-				/*m_dRelativeX = p.X - Canvas.GetLeft(m_pRecBody);
-				m_dRelativeY = p.Y - Canvas.GetTop(m_pRecBody);*/
-				m_dRelativeX = p.X - Canvas.GetLeft(m_pCanvasParent);
-				m_dRelativeY = p.Y - Canvas.GetTop(m_pCanvasParent);
+				Point pMousePoint = e.GetPosition(Master.getCanvas());
+				m_dRelativeX = pMousePoint.X - Canvas.GetLeft(m_pCanvasParent);
+				m_dRelativeY = pMousePoint.Y - Canvas.GetTop(m_pCanvasParent);
 
 				Master.setDraggingBlock(true, this);
 			}
@@ -275,9 +248,9 @@ namespace Nurielite
 		{
 			if (m_bIsDragging)
 			{
-				Point p = e.GetPosition(Master.getCanvas());
-				double x = p.X - m_dRelativeX;
-				double y = p.Y - m_dRelativeY;
+				Point pMousePoint = e.GetPosition(Master.getCanvas());
+				double x = pMousePoint.X - m_dRelativeX;
+				double y = pMousePoint.Y - m_dRelativeY;
 				move(x, y);
 			}
 		}

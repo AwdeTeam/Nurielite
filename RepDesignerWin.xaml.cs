@@ -22,12 +22,12 @@ namespace Nurielite
     /// </summary>
 	public partial class RepDesignerWin : Window
 	{
-		private MainWindow m_parent;
+		private MainWindow m_pParent;
         private int m_iNumOut = 1;
 
-		public RepDesignerWin(MainWindow parent)
+		public RepDesignerWin(MainWindow pParent)
 		{
-			m_parent = parent;
+			m_pParent = pParent;
 			InitializeComponent();
 
 			//loadAlgorithmOptions(PyAlgorithm.getUnloadedAlgorithm()); // DEBUG
@@ -72,15 +72,14 @@ namespace Nurielite
 
 			// get all algorithm names from folder structure
 			
-			List<DirectoryInfo> pAlgorithmDirs = new DirectoryInfo("./" + cmbAlgorithmType.SelectedItem.ToString()).EnumerateDirectories().ToList();
-			List<string> pAlgorithms = new List<string>();
-			foreach (DirectoryInfo pDI in pAlgorithmDirs) { pAlgorithms.Add(pDI.Name); }
+			List<DirectoryInfo> lAlgorithmDirs = new DirectoryInfo("./" + cmbAlgorithmType.SelectedItem.ToString()).EnumerateDirectories().ToList();
+			List<string> lAlgorithms = new List<string>();
+			foreach (DirectoryInfo pDI in lAlgorithmDirs) { lAlgorithms.Add(pDI.Name); }
 
 			// populate combo box
 			cmbAlgorithmSpecific.IsEnabled = true;
-			cmbAlgorithmSpecific.ItemsSource = pAlgorithms;
+			cmbAlgorithmSpecific.ItemsSource = lAlgorithms;
 			lblType.Content = cmbAlgorithmType.SelectedItem.ToString();
-
 		}
 	}
 }

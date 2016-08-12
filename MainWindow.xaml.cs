@@ -24,19 +24,17 @@ namespace Nurielite
 	public partial class MainWindow : Window
 	{
 		// member variables
-		private bool m_isTyping = false; // meant to counteract window auto focusing textbox even if already typing there
-		private bool m_isTypingNotAvail = false; // set to true if need to type elsewhere so doesn't auto put cursor in console when start to type
+		private bool m_bIsTyping = false; // meant to counteract window auto focusing textbox even if already typing there
+		private bool m_bIsTypingNotAvailable = false; // set to true if need to type elsewhere so doesn't auto put cursor in console when start to type
 
-		private List<string> m_commandHistory = new List<string>();
-		private int m_commandIndex = 0; // keeps track of where in command history you are
+		private List<string> m_lCommandHistory = new List<string>();
+		private int m_iCommandIndex = 0; // keeps track of where in command history you are
 
-		private GraphicContainer m_gc = new GraphicContainer();
+		private GraphicContainer m_pGraphicContainer = new GraphicContainer();
 
 		// construction
 		public MainWindow()
 		{
-
-		
 			InitializeComponent();
             btnToggleVerbose.Content = "Verbose: " + ((Master.VerboseMode) ? "\u2713" : "\u274C");
 			cmd_clearConsole();
@@ -56,16 +54,16 @@ namespace Nurielite
             testBayesBlock();            //3
             testTrainerOutputBlock();    //4
 
-            int iy = 0;
-            int ix = 100;
-            int sy = 150;
+            int iY = 0;
+            int iX = 100;
+            int sy = 150; // sy??? as in sigh?? what is this magic number?
             int sx = 100;
 
-			Master.Blocks[0].Graphic.move(ix -  0, iy + 0*sy);
-			Master.Blocks[1].Graphic.move(ix - sx, iy + 1*sy);
-			Master.Blocks[2].Graphic.move(ix + sx, iy + 1*sy);
-            Master.Blocks[3].Graphic.move(ix - sx, iy + 2*sy);
-            Master.Blocks[4].Graphic.move(ix -  0, iy + 3*sy);
+			Master.Blocks[0].Graphic.move(iX -  0, iY + 0*sy);
+			Master.Blocks[1].Graphic.move(iX - sx, iY + 1*sy);
+			Master.Blocks[2].Graphic.move(iX + sx, iY + 1*sy);
+            Master.Blocks[3].Graphic.move(iX - sx, iY + 2*sy);
+            Master.Blocks[4].Graphic.move(iX -  0, iY + 3*sy);
 
 			Master.Blocks[0].connectTo(Master.Blocks[1], 0);
 			Master.Blocks[0].connectTo(Master.Blocks[2], 0);
@@ -76,46 +74,17 @@ namespace Nurielite
             log("Testing Blocks Loaded");
 		}
 
-		public void testInputBlock()
-		{
-			AlgorithmLoader.loadAlgorithmBlock("FileInput", AlgorithmType.Input, 0, 1);
-		}
-
-		public void testOutputBlock()
-		{
-			AlgorithmLoader.loadAlgorithmBlock("FileOutput", AlgorithmType.Output, 1, 0);
-		}
-
-        public void testTrainerOutputBlock()
-        {
-            AlgorithmLoader.loadAlgorithmBlock("TrainerOutput", AlgorithmType.Output, 2, 0);
-        }
-
-		public void testOpBlock()
-		{
-			AlgorithmLoader.loadAlgorithmBlock("ScalarAdd", AlgorithmType.Operation, 1, 1);
-		}
-
-        public void testJoinBlock()
-        {
-            AlgorithmLoader.loadAlgorithmBlock("SimpleJoin", AlgorithmType.Operation, 2, 1);
-        }
-
-        public void testMaskBlock()
-        {
-            AlgorithmLoader.loadAlgorithmBlock("Mask", AlgorithmType.Operation, 1, 1);
-        }
-
-        public void testBayesBlock()
-        {
-            AlgorithmLoader.loadAlgorithmBlock("NaiveBayes", AlgorithmType.Classifier, 1, 1);
-        }
+		public void testInputBlock() { AlgorithmLoader.loadAlgorithmBlock("FileInput", AlgorithmType.Input, 0, 1); }
+		public void testOutputBlock() { AlgorithmLoader.loadAlgorithmBlock("FileOutput", AlgorithmType.Output, 1, 0); }
+        public void testTrainerOutputBlock() { AlgorithmLoader.loadAlgorithmBlock("TrainerOutput", AlgorithmType.Output, 2, 0); }
+		public void testOpBlock() { AlgorithmLoader.loadAlgorithmBlock("ScalarAdd", AlgorithmType.Operation, 1, 1); }
+        public void testJoinBlock() { AlgorithmLoader.loadAlgorithmBlock("SimpleJoin", AlgorithmType.Operation, 2, 1); }
+        public void testMaskBlock() { AlgorithmLoader.loadAlgorithmBlock("Mask", AlgorithmType.Operation, 1, 1); }
+        public void testBayesBlock() { AlgorithmLoader.loadAlgorithmBlock("NaiveBayes", AlgorithmType.Classifier, 1, 1); }
 		
-        //END STUFF
-
 		// properties
 		public Canvas MainCanvas { get { return world; } }
-		public GraphicContainer getGraphicContainer() { return m_gc; }
+		public GraphicContainer getGraphicContainer() { return m_pGraphicContainer; }
 		
 		// ------------------------------------
 		//  EVENT HANDLERS
@@ -123,14 +92,14 @@ namespace Nurielite
 
         private void Button_Click_addNode(object sender, RoutedEventArgs e)
         {
-            RepDesignerWin popup = new RepDesignerWin(this);
-            popup.Show();
+            RepDesignerWin pPopup = new RepDesignerWin(this);
+            pPopup.Show();
         }
 
         private void Button_Click_generatePython(object sender, RoutedEventArgs e)
         {
             Master.log(" ");
-            InterGraph graph = new InterGraph();
+            InterGraph pGraph = new InterGraph();
 
 			//find first input node
 			Block pFirstBlock = null;
@@ -140,12 +109,12 @@ namespace Nurielite
 			}
 			if (pFirstBlock == null) { throw new Exception("THERE'S NO INPUT NODES."); }
 
-			new InterNode(pFirstBlock, graph);
+			new InterNode(pFirstBlock, pGraph);
 			
-            List<PyAlgorithm> algs = graph.topoSort();
-            if (Master.VerboseMode) log("Count: " + algs.Count);
+            List<PyAlgorithm> lAlgs = pGraph.topoSort();
+            if (Master.VerboseMode) log("Count: " + lAlgs.Count);
 			
-            (new PythonGenerator()).generatePythonCode(algs, Master.PATH_TO_THETHING, "COMPILED");
+            (new PythonGenerator()).generatePythonCode(lAlgs, Master.PATH_TO_THETHING, "COMPILED");
         }
 
         private void CheckBox_VerboseToggle(object sender, RoutedEventArgs e)
@@ -157,11 +126,10 @@ namespace Nurielite
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (m_isTypingNotAvail) { return; }
-			if (m_isTyping) { return; }
-            //if (Popup1.IsOpen) { return; }
+			if (m_bIsTypingNotAvailable) { return; }
+			if (m_bIsTyping) { return; }
 
-			m_isTyping = true;
+			m_bIsTyping = true;
 			txtConsoleCommand.Focus();
 			txtConsoleCommand.CaretIndex = txtConsoleCommand.Text.Length; // move cursor to end of line
 		}
@@ -173,37 +141,37 @@ namespace Nurielite
 			if (e.Key == Key.Enter) { enterConsoleCommand(); }
 			else if (e.Key == Key.Up || e.Key == Key.Down) // scroll command history
 			{
-				if (e.Key == Key.Up) { m_commandIndex--; }
-				else { m_commandIndex++; }
-				if (m_commandIndex < 0 || m_commandIndex >= m_commandHistory.Count) { txtConsoleCommand.Text = ""; }
-				else { txtConsoleCommand.Text = m_commandHistory[m_commandIndex]; }
+				if (e.Key == Key.Up) { m_iCommandIndex--; }
+				else { m_iCommandIndex++; }
+				if (m_iCommandIndex < 0 || m_iCommandIndex >= m_lCommandHistory.Count) { txtConsoleCommand.Text = ""; }
+				else { txtConsoleCommand.Text = m_lCommandHistory[m_iCommandIndex]; }
 			}
 			else if (e.Key == Key.Escape) { txtConsoleCommand.Text = ""; }
 		}
 
 		private void txtConsoleCommand_LostFocus(object sender, RoutedEventArgs e)
 		{
-			m_isTyping = false;
+			m_bIsTyping = false;
 		}
 
 		// technically window_mousemove
-		private void world_MouseMove(object sender, MouseEventArgs e) { m_gc.evt_MouseMove(sender, e); }
-		private void world_MouseDown(object sender, MouseButtonEventArgs e) { m_gc.evt_MouseDown(sender, e); }
-		private void world_MouseUp(object sender, MouseButtonEventArgs e) { m_gc.evt_MouseUp(sender, e); }
+		private void world_MouseMove(object sender, MouseEventArgs e) { m_pGraphicContainer.evt_MouseMove(sender, e); }
+		private void world_MouseDown(object sender, MouseButtonEventArgs e) { m_pGraphicContainer.evt_MouseDown(sender, e); }
+		private void world_MouseUp(object sender, MouseButtonEventArgs e) { m_pGraphicContainer.evt_MouseUp(sender, e); }
 
 
 		// ------------------------------------
 		//  FUNCTIONS
 		// ------------------------------------
 
-		public void setCommandPrompt(string prompt) { txtConsoleCommand.Text = prompt; txtConsoleCommand.CaretIndex = txtConsoleCommand.Text.Length; }
+		public void setCommandPrompt(string sPrompt) { txtConsoleCommand.Text = sPrompt; txtConsoleCommand.CaretIndex = txtConsoleCommand.Text.Length; }
 
-		public void log(string message) { log(message, Colors.DarkCyan); }
-		public void log(string message, Color color) 
+		public void log(string sMessage) { log(sMessage, Colors.DarkCyan); }
+		public void log(string sMessage, Color pColor) 
 		{
-			Run r = new Run(message);
-			r.Foreground = new SolidColorBrush(color);
-			lblConsole.Document.Blocks.Add(new Paragraph(r));
+			Run pRun = new Run(sMessage);
+			pRun.Foreground = new SolidColorBrush(pColor);
+			lblConsole.Document.Blocks.Add(new Paragraph(pRun));
 			lblConsole.ScrollToEnd();
 		}
 		
@@ -212,19 +180,19 @@ namespace Nurielite
 		private void enterConsoleCommand()
 		{
 			// first get command
-			string command = txtConsoleCommand.Text;
+			string sCommand = txtConsoleCommand.Text;
 			txtConsoleCommand.Text = "";
 
 			// add to console
-			log("> " + command, Colors.White);
+			log("> " + sCommand, Colors.White);
 			txtConsoleCommand.Focus(); // make sure command line retains focus
 
 			// add to command history
-			m_commandHistory.Add(command);
-			m_commandIndex = m_commandHistory.Count;
+			m_lCommandHistory.Add(sCommand);
+			m_iCommandIndex = m_lCommandHistory.Count;
 
 			// check for and run command
-			try { parseCommand(command); }
+			try { parseCommand(sCommand); }
 			catch (Exception e)
 			{
 				log(">>> COMMAND PARSING FAILED", Colors.Red);
@@ -238,47 +206,47 @@ namespace Nurielite
 		//   list, combining multiple into one 'word' if quotes were detected)
 		private void parseCommand(string command)
 		{
-			List<string> prePassWords = new List<string>(); // used for handling quoted text
-			List<string> words = new List<string>();
+			List<string> lPrePassWords = new List<string>(); // used for handling quoted text
+			List<string> lWords = new List<string>();
 
-			List<string> keys = new List<string>();
-			List<string> vals = new List<string>();
+			List<string> lKeys = new List<string>();
+			List<string> lVals = new List<string>();
 
 			// get all words within quotes and condense
-			prePassWords = command.Split(' ').ToList();
-			for (int i = 0; i < prePassWords.Count; i++)
+			lPrePassWords = command.Split(' ').ToList();
+			for (int i = 0; i < lPrePassWords.Count; i++)
 			{
-				string word = prePassWords[i];
-				if (word.Contains("\""))
+				string sWord = lPrePassWords[i];
+				if (sWord.Contains("\""))
 				{
 					// check for just one word in quotes
-					if (word.Substring(word.IndexOf("\"") + 1).Contains("\"")) { word = word.Replace("\"", ""); words.Add(word); continue; }
+					if (sWord.Substring(sWord.IndexOf("\"") + 1).Contains("\"")) { sWord = sWord.Replace("\"", ""); lWords.Add(sWord); continue; }
 
 					// go through and append into single 'word' until hit another quote
-					string nextWord = prePassWords[i + 1];
+					string sNextWord = lPrePassWords[i + 1];
 					do
 					{
 						i++;
-						nextWord = prePassWords[i];
-						word += " " + nextWord;
+						sNextWord = lPrePassWords[i];
+						sWord += " " + sNextWord;
 					}
-					while (!nextWord.Contains("\""));
+					while (!sNextWord.Contains("\""));
 
 					// remove both quotes
-					word = word.Replace("\"","");
+					sWord = sWord.Replace("\"","");
 				}
-				words.Add(word);
+				lWords.Add(sWord);
 				//log("adding " + word, Colors.Gray); // DEBUG
 			}
 
 			// separate into keys and vals
-			foreach (string word in words)
+			foreach (string sWord in lWords)
 			{
-				if (word.Length == 0) { return; }
-				if (word[0] == '-') { vals.Add(word.Substring(1)); }
-				else { keys.Add(word); }
+				if (sWord.Length == 0) { return; }
+				if (sWord[0] == '-') { lVals.Add(sWord.Substring(1)); }
+				else { lKeys.Add(sWord); }
 			}
-			try { handleCommand(keys, vals); }
+			try { handleCommand(lKeys, lVals); }
 			catch (Exception e) 
 			{ 
 				log(">>> COMMAND FAILED", Colors.Red);
@@ -289,11 +257,11 @@ namespace Nurielite
 		// NOTE: rough command syntax convention: [VERB] [NOUN] [-VALSLIST]
 		// NOTE: No need to make basic validation checks for if keys[1] exists etc, try catch in parseCommand will handle
 		// based on parsed command, figure out what function to execute
-		private void handleCommand(List<string> keys, List<string> vals)
+		private void handleCommand(List<string> lKeys, List<string> lVals)
 		{
-			if (keys[0] == "exit" || keys[0] == "quit") { cmd_exit(); }
-			else if (keys[0] == "help") { cmd_printHelp(); }
-			else if (keys[0] == "clear" || keys[0] == "cls") { cmd_clearConsole(); }
+			if (lKeys[0] == "exit" || lKeys[0] == "quit") { cmd_exit(); }
+			else if (lKeys[0] == "help") { cmd_printHelp(); }
+			else if (lKeys[0] == "clear" || lKeys[0] == "cls") { cmd_clearConsole(); }
 			/*else if (keys[0] == "add")
 			{
 				
@@ -305,37 +273,37 @@ namespace Nurielite
 					addRep(ins, outs);
 				}
 			}*/
-			else if (keys[0] == "edit")
+			else if (lKeys[0] == "edit")
 			{
-				if (keys[1] == "rep" || keys[1] == "representation")
+				if (lKeys[1] == "rep" || lKeys[1] == "representation")
 				{
-					int id = Int32.Parse(vals[0]);
-					string attr = vals[1];
-					string val = vals[2];
+					int iID = Int32.Parse(lVals[0]);
+					string sAttribute = lVals[1];
+					string sValue = lVals[2];
 
-					Block r = Master.Blocks[id];
+					Block pBlock = Master.Blocks[iID];
 
-					if (attr == "lbl") 
+					if (sAttribute == "lbl") 
 					{
-						r.Name = val;
-						log("Updated block label to '" + val + "'");
+						pBlock.Name = sValue;
+						log("Updated block label to '" + sValue + "'");
 					}
-					else if (attr == "color") 
+					else if (sAttribute == "color") 
 					{
-                        r.Graphic.BaseColor = ((SolidColorBrush)(new BrushConverter().ConvertFrom("#" + val))).Color; 
-						log("Updated block color to #" + val);
+                        pBlock.Graphic.BaseColor = ((SolidColorBrush)(new BrushConverter().ConvertFrom("#" + sValue))).Color; 
+						log("Updated block color to #" + sValue);
 					}
 				}
 			}
-            else if(keys[0] == "list")
+            else if(lKeys[0] == "list")
             {
-                if(keys.Count == 0)
+                if(lKeys.Count == 0)
                 {
                     log("hmm");
-                    keys.Add("");
+                    lKeys.Add("");
                 }
 
-                switch (keys[1])
+                switch (lKeys[1])
                 {
                     case "blk":
                     case "blocks":
@@ -352,14 +320,14 @@ namespace Nurielite
 
         private string listBlocks()
         {
-            string r = "";
+            string sBlockString = "";
             for(int i = 0; i < Master.Blocks.Count; i++)
             {
-                r += "\t" + Master.Blocks[i].ID + ")";
-                r += Master.Blocks[i].Name + ", ";
+                sBlockString += "\t" + Master.Blocks[i].ID + ")";
+                sBlockString += Master.Blocks[i].Name + ", ";
                 //r += Master.Blocks[i].Family + ": " + Master.Blocks[i].AlgorithmName + "\n";
             }
-            return r;
+            return sBlockString;
         }
 
 
