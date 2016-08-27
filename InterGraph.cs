@@ -6,16 +6,22 @@ using System.Threading.Tasks;
 
 namespace Nurielite
 {
-    class InterGraph
+	/// <summary>
+	/// Temporary graph of internodes (<see cref="InterNode"/>) that is constructed and topologically sorted for the creation of the final python code.
+	/// </summary>
+    public class InterGraph
     {
         private List<InterNode> m_inodes;
 
+		/// <summary>
+		/// Initializes a new graph of internodes.
+		/// </summary>
         public InterGraph()
         {
             m_inodes = new List<InterNode>();
         }
 
-        /*  Thank you Wikipedia!
+		/*  Thank you Wikipedia!
          * 
          *	L ← Empty list that will contain the sorted elements
          *	S ← Set of all nodes with no incoming edges
@@ -32,87 +38,91 @@ namespace Nurielite
          *	    return L (a topologically sorted order)
          */
 
-        public List<PyAlgorithm> topoSort() //This might break if there are cycles, 
-                                            //so we need to check for them further up the chain
-        {
-            Master.log("Running topological sort...");
+		/// <summary>
+		/// Sorts the graph of python algorithms into a linear list.
+		/// </summary>
+		public List<PyAlgorithm> topoSort() //This might break if there are cycles, 
+											//so we need to check for them further up the chain
+		{
+			Master.log("Running topological sort...");
 
-            if (m_inodes == null)
-                return new List<PyAlgorithm>();
+			if (m_inodes == null)
+				return new List<PyAlgorithm>();
 
-            List<InterNode> L = new List<InterNode>();
-            List<InterNode> S = new List<InterNode>();
+			List<InterNode> L = new List<InterNode>();
+			List<InterNode> S = new List<InterNode>();
 
-            foreach (InterNode n in m_inodes)
-                if (n.inDegree() == 0)
-                    S.Add(n);
+			foreach (InterNode n in m_inodes)
+				if (n.inDegree() == 0)
+					S.Add(n);
 
-            List<PyAlgorithm> algs = new List<PyAlgorithm>();
+			List<PyAlgorithm> algs = new List<PyAlgorithm>();
 
-            while(S.Count > 0)
-            {
-                InterNode n = S.ElementAt(0);
-                S.Remove(n);
+			while (S.Count > 0)
+			{
+				InterNode n = S.ElementAt(0);
+				S.Remove(n);
 
-                L.Add(n);
-                foreach(InterNode m in n.getOutgoing())
-                {
-                    m.disconnect(n);
-                    if (m.inDegree() == 0)
-                        S.Add(m);
-                }
-            }
+				L.Add(n);
+				foreach (InterNode m in n.getOutgoing())
+				{
+					m.disconnect(n);
+					if (m.inDegree() == 0)
+						S.Add(m);
+				}
+			}
 
-            
 
-            foreach (InterNode n in L)
-                algs.Add(n.getAlgorithm().setDependancies(getSortedDependancies(n, L)));
 
-            return algs;
-        }
+			foreach (InterNode n in L)
+				algs.Add(n.getAlgorithm().setDependancies(getSortedDependancies(n, L)));
 
-        private List<int> getSortedDependancies(InterNode n, List<InterNode> L)
-        {
-            List<int> sorted = new List<int>();
-            foreach(int x in n.Dependancies)
-            {
-                for (int i = 0; i < L.Count; i++)
-                    if (L[i].getCore().ID == x)
-                        sorted.Add(i);
-            }
-            return sorted;
-        }
+			return algs;
+		}
 
-        public InterNode get(Block r) 
-        {
-            foreach (InterNode n in m_inodes)
-                if (n.getCore().Equals(r))
-                    return n;
-            return null;
-        }
+		private List<int> getSortedDependancies(InterNode n, List<InterNode> L)
+		{
+			List<int> sorted = new List<int>();
+			foreach (int x in n.Dependancies)
+			{
+				for (int i = 0; i < L.Count; i++)
+					if (L[i].getCore().ID == x)
+						sorted.Add(i);
+			}
+			return sorted;
+		}
 
-        public Boolean contains(InterNode n) { return m_inodes.Contains(n); }
-        public void append(InterNode n) { 
-            m_inodes.Add(n);
-            if (Master.VerboseMode) Master.log("Appending InterNode with ID " + n.getCore().ID + " to graph");
-        }
+		public InterNode get(Block pBlock)
+		{
+			foreach (InterNode pInterNode in m_inodes)
+				if (pInterNode.getCore().Equals(pBlock))
+					return pInterNode;
+			return null;
+		}
 
-        internal bool contains(Block r)
-        {
-            foreach (InterNode i in m_inodes)
-                if (i.getCore().ID == r.ID)
-                    return true;
+		public Boolean contains(InterNode n) { return m_inodes.Contains(n); }
+		public void append(InterNode n)
+		{
+			m_inodes.Add(n);
+			if (Master.VerboseMode) Master.log("Appending InterNode with ID " + n.getCore().ID + " to graph");
+		}
 
-            return false;
-        }
+		internal bool contains(Block r)
+		{
+			foreach (InterNode i in m_inodes)
+				if (i.getCore().ID == r.ID)
+					return true;
 
-        internal bool contains(int id)
-        {
-            foreach (InterNode i in m_inodes)
-                if (i.getCore().ID == id)
-                    return true;
+			return false;
+		}
 
-            return false;
-        }
-    }
+		internal bool contains(int id)
+		{
+			foreach (InterNode i in m_inodes)
+				if (i.getCore().ID == id)
+					return true;
+
+			return false;
+		}
+	}
 }

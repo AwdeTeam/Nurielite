@@ -10,15 +10,22 @@ using System.Xml.Linq;
 namespace Nurielite
 {
     /// <summary>
-    /// Builds a Block from a set of constraints
+    /// Entrypoint class for adding a block associated with a python algorithm to the interface.
     /// </summary>
     /// <remarks>
-    /// So... this class might be pretty much pointless as it's basically just a constructor for Block
+    /// Loading an algorithm block loads EVERYTHING about an pyalgorithm interface (<see cref="PyAlgorithm"/>, meaning if changes are made without recreating the block, they are NOT applied to this.
     /// </remarks>
     class AlgorithmLoader
     {
 		//NOTE: python file path can be reconstructed by eFamily/sName/sName.py
 		//NOTE: THIS IS ENTRYPOINT FOR NEW BLOCK
+		/// <summary>
+		/// Entrypoint function for adding a block associated with a python algorithm to the interface.
+		/// </summary>
+		/// <param name="sName">Name of the algorithm</param>
+		/// <param name="eFamily">Type of algorithm</param>
+		/// <param name="iNumInputs">Number of block inputs</param>
+		/// <param name="iNumOutputs">Number of block outputs</param>
 		public static void loadAlgorithmBlock(string sName, AlgorithmType eFamily, int iNumInputs, int iNumOutputs)
 		{
 			// load the python algorithm 

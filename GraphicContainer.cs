@@ -10,26 +10,50 @@ using System.Windows.Shapes;
 
 namespace Nurielite
 {
+	/// <summary>
+	/// This class is the "central hub" for all display canvas event handlers. It takes any associated events from MainWindow and distributes them to the graphical elements as needed.
+	/// </summary>
 	public class GraphicContainer
 	{
-		/*private bool m_isDraggingRepresentation;
-		private RepresentationGraphic m_draggingRepresentation;*/
-
 		// this class is "central hub" for all event handlers. Takes any events from MainWindow and distributes as necessary.
 		// (handles dragging controls, etc)
 		// ONLY GOAL OF EVENT HANDLERS HERE ARE TO CALL/ROUTE THE APPROPRIATE EVENT HANDLERS ON COMPONENTS (unless global thing like panning)
 
 		// graphical data constants
 		// NOTE: apparently const implicitly make these "static"
-		public const int NODE_SIZE = 10;
+		/// <summary>
+		/// Diameter of a nodule
+		/// </summary>
+		public const int NODULE_SIZE = 10;
 
-		public const int REP_MINIMUM_WIDTH = 85;
-		public const int REP_MINIMUM_HEIGHT = 80;
-		public const int REP_BOARD_PADDING_TOP = 24;
-		public const int REP_BOARD_PADDING_LEFT = 6;
+		/// <summary>
+		/// Width of a block graphic.
+		/// </summary>
+		public const int BLOCK_MINIMUM_WIDTH = 85;
+		/// <summary>
+		/// Height of a block graphic.
+		/// </summary>
+		public const int BLOCK_MINIMUM_HEIGHT = 80;
+		/// <summary>
+		/// Amount of padding from the top on the inside of a block graphic.
+		/// </summary>
+		public const int BLOCK_BOARD_PADDING_TOP = 24;
+		/// <summary>
+		/// Amount of padding from the left on the inside of a block graphic.
+		/// </summary>
+		public const int BLOCK_BOARD_PADDING_LEFT = 6;
 
-		public const int REP_Z_LEVEL = 10;
-		public const int NODE_Z_LEVEL = 10;
+		/// <summary>
+		/// The default Z level of a block graphic. 
+		/// </summary>
+		public const int BLOCK_Z_LEVEL = 10;
+		/// <summary>
+		/// The default Z level of a nodule graphic.
+		/// </summary>
+		public const int NODULE_Z_LEVEL = 10;
+		/// <summary>
+		/// The default Z level of a connection graphic.
+		/// </summary>
 		public const int CONNECTION_Z_LEVEL = 9;
 
 		// member variables
@@ -43,23 +67,37 @@ namespace Nurielite
 
 		private Dictionary<int, BlockGraphic> m_dBlockGraphics = new Dictionary<int, BlockGraphic>();
 
-		public GraphicContainer() { }
-
 		// PROPERTIES
-		public BlockGraphic getBlockGraphic(int iID) { return m_dBlockGraphics[iID]; }
+		/// <summary>
+		/// Adds a block graphic to the display canvas.
+		/// </summary>
+		/// <param name="pBlockGraphic">The block graphic to add.</param>
 		public void addBlockGraphic(BlockGraphic pBlockGraphic) { m_dBlockGraphics.Add(pBlockGraphic.Parent.ID, pBlockGraphic); }
 
+		/// <summary>
+		/// Sets the dragging status of a particular block graphic. 
+		/// </summary>
+		/// <param name="bDragging">Determines whether the block graphic should act as though it is being dragged or not.</param>
+		/// <param name="pBlockGraphic">The block graphic to change the property of.</param>
 		public void setDraggingBlock(bool bDragging, BlockGraphic pBlockGraphic)
 		{
 			m_bIsDraggingBlock = bDragging;
 			m_pDraggingBlock = pBlockGraphic;
 		}
 
+		/// <summary>
+		/// Sets the dragging status of a connection graphic.
+		/// </summary>
+		/// <param name="bDragging">Determines whether the connection graphic should act as though it is being dragged or not.</param>
+		/// <param name="pConnectionGraphic">The connection graphic to change the property of.</param>
 		public void setDraggingConnection(bool bDragging, ConnectionGraphic pConnectionGraphic)
 		{
 			m_bIsDraggingConnection = bDragging;
 			m_pDraggingConnection = pConnectionGraphic;
 		}
+		/// <summary>
+		/// Returns the connection graphic of the connection that is currently being dragged.
+		/// </summary>
 		public ConnectionGraphic getDraggingConnection() { return m_pDraggingConnection; }
 
 		// EVENT HANDLERS

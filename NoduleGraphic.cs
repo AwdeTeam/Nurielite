@@ -27,8 +27,8 @@ namespace Nurielite
 		public NoduleGraphic(Nodule pParent)
 		{
 			m_pParent = pParent;
-			m_iOffsetX = pParent.Parent.Graphic.getNodeOffsetX(pParent.IsInput, pParent.GroupNum);
-			m_iOffsetY = pParent.Parent.Graphic.getNodeOffsetY(pParent.IsInput);
+			m_iOffsetX = pParent.Parent.Graphic.getNoduleOffsetX(pParent.IsInput, pParent.GroupNum);
+			m_iOffsetY = pParent.Parent.Graphic.getNoduleOffsetY(pParent.IsInput);
 
 			createDrawing();
 		}
@@ -44,10 +44,10 @@ namespace Nurielite
 			m_pBody.Fill = m_brushFill;
 			m_pBody.Stroke = m_brushBorder;
 			m_pBody.StrokeThickness = 2;
-			m_pBody.Height = GraphicContainer.NODE_SIZE;
-			m_pBody.Width = GraphicContainer.NODE_SIZE;
+			m_pBody.Height = GraphicContainer.NODULE_SIZE;
+			m_pBody.Width = GraphicContainer.NODULE_SIZE;
             m_pBody.ToolTip = m_pParent.Name;
-			Canvas.SetZIndex(m_pBody, GraphicContainer.NODE_Z_LEVEL);
+			Canvas.SetZIndex(m_pBody, GraphicContainer.NODULE_Z_LEVEL);
 
 			// inital position
 			move(m_pParent.Parent.Graphic.CurrentX, m_pParent.Parent.Graphic.CurrentY);

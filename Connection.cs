@@ -10,6 +10,9 @@ using System.Windows.Input;
 
 namespace Nurielite
 {
+	/// <summary>
+	/// Represents a pathway of data, flowing out of one python algorithm and into another.
+	/// </summary>
 	public class Connection
 	{
 		// member variables
@@ -23,6 +26,10 @@ namespace Nurielite
 		private ConnectionGraphic m_pGraphic;
 
 		// construction
+		/// <summary>
+		/// Initializes a new connection originating from specified nodule.
+		/// </summary>
+		/// <param name="pStart">The nodule to start the connection from.</param>
 		public Connection(Nodule pStart)
 		{
             if (Master.VerboseMode) Master.log("Connection initialized");
@@ -41,17 +48,37 @@ namespace Nurielite
 		}
 
 		// properties
+		/// <summary>
+		/// The first nodule referred to during the creation of this connection. This property should only be used during the creation of the connection.(<see cref="Nodule"/>.)
+		/// </summary>
 		public Nodule Origin { get { return m_pOrigin; } set { m_pOrigin = value; } }
+		/// <summary>
+		/// The second nodule referred to during the creation of this connection. This property should only be used during the creation of the connection.
+		/// </summary>
 		public Nodule End { get { return m_pEnd; } set { m_pEnd = value; } }
+		/// <summary>
+		/// The terminal nodule for the data connection. (Data flows through connection TO this nodule.)
+		/// </summary>
 		public Nodule InputNodule { get { return m_pInNodule; } set { m_pInNodule = value; } }
+		/// <summary>
+		/// The introductory nodule for the data connection. (Data flows through connection FROM this nodule.)
+		/// </summary>
 		public Nodule OutputNodule { get { return m_pOutNodule; } set { m_pOutNodule = value; } }
+		/// <summary>
+		/// Represents whether the connection has been created and finalized between the nodules or not.
+		/// </summary>
 		public bool IsComplete { get { return m_bCompleted; } set { m_bCompleted = value; } }
+		/// <summary>
+		/// GUI/Visual controller associated with this connection. (<see cref="ConnectionGraphic"/>)
+		/// </summary>
 		public ConnectionGraphic Graphic { get { return m_pGraphic; } set { m_pGraphic = value; } }
 		
 		// -- FUNCTIONS --
 
-		// finishes creating connection/adds connection to both involved nodes
-		// returns true on success, false on failure
+		/// <summary>
+		/// Finalizes the creation process of a connection between nodules, and adds a connection reference inside the involved nodules. Returns true on success, false on failure.
+		/// </summary>
+		/// <param name="pOther">The end nodule (<see cref="Connection.End"/>) to connect to the origin nodule.</param>
 		public bool completeConnection(Nodule pOther)
 		{
 			m_pEnd = pOther;
@@ -81,7 +108,12 @@ namespace Nurielite
 			return true;
 		}
 
-		// connection must already have been created
+		/// <summary>
+		/// Safely remove the connection from all involved nodules and deletes the visual representation.
+		/// </summary>
+		/// <remarks>
+		/// Connection must have already been created and finalized.
+		/// </remarks>
         public void removeConnection()
         {
             // remove all the things! (effectively delete connection)

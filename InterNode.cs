@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Nurielite
 {
-    class InterNode
+	/// <summary>
+	/// Vertex representation in an intergraph of a block and its algorithm.
+	/// </summary>
+    public class InterNode
     {
         private LinkedList<InterNode> m_pInNodes;
         private LinkedList<InterNode> m_pOutNodes;
@@ -14,6 +17,11 @@ namespace Nurielite
         private Block m_pCore;
         private InterGraph m_pMaster;
 
+		/// <summary>
+		/// Initializes an internode.
+		/// </summary>
+		/// <param name="core"></param>
+		/// <param name="master"></param>
         public InterNode(Block core, InterGraph master)
         {
             if (!master.contains(core.ID))
