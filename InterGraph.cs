@@ -42,7 +42,7 @@ namespace Nurielite
 		/// Sorts the graph of python algorithms into a linear list.
 		/// </summary>
 		public List<PyAlgorithm> topoSort() //This might break if there are cycles, 
-											//so we need to check for them further up the chain
+											//so we need to check for them further up the chain //TODO we still have to do this
 		{
 			Master.log("Running topological sort...");
 
@@ -80,6 +80,55 @@ namespace Nurielite
 			return algs;
 		}
 
+        /// <summary>
+        /// Finds the internode in the intergraph corresponding to the passed block.
+        /// </summary>
+        /// <param name="pBlock">The block to serve as the search key.</param>
+        /// <returns>If the block is in the graph, returns an internode based around that block. Otherwise returns null.</returns>
+        public InterNode get(Block pBlock)
+        {
+            foreach (InterNode pInterNode in m_inodes)
+                if (pInterNode.getCore().Equals(pBlock))
+                    return pInterNode;
+            return null;
+        }
+
+        /// <summary>
+        /// Checks to see is the passed internode is in the graph.
+        /// </summary>
+        /// <param name="pInterNode">The internode to perform the test.</param>
+        /// <returns>True if the internode is in the graph, false otherwise.</returns>
+        public Boolean contains(InterNode pInterNode) { return m_inodes.Contains(pInterNode); }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pBlock"></param>
+        /// <returns></returns>
+        public Boolean contains(Block pBlock)
+        {
+            foreach (InterNode i in m_inodes)
+                if (i.getCore().ID == pBlock.ID)
+                    return true;
+
+            return false;
+        }
+
+        public Boolean contains(int id)
+        {
+            foreach (InterNode i in m_inodes)
+                if (i.getCore().ID == id)
+                    return true;
+
+            return false;
+        }
+
+        public void append(InterNode n)
+        {
+            m_inodes.Add(n);
+            if (Master.VerboseMode) Master.log("Appending InterNode with ID " + n.getCore().ID + " to graph");
+        }
+
 		private List<int> getSortedDependancies(InterNode n, List<InterNode> L)
 		{
 			List<int> sorted = new List<int>();
@@ -90,39 +139,6 @@ namespace Nurielite
 						sorted.Add(i);
 			}
 			return sorted;
-		}
-
-		public InterNode get(Block pBlock)
-		{
-			foreach (InterNode pInterNode in m_inodes)
-				if (pInterNode.getCore().Equals(pBlock))
-					return pInterNode;
-			return null;
-		}
-
-		public Boolean contains(InterNode n) { return m_inodes.Contains(n); }
-		public void append(InterNode n)
-		{
-			m_inodes.Add(n);
-			if (Master.VerboseMode) Master.log("Appending InterNode with ID " + n.getCore().ID + " to graph");
-		}
-
-		internal bool contains(Block r)
-		{
-			foreach (InterNode i in m_inodes)
-				if (i.getCore().ID == r.ID)
-					return true;
-
-			return false;
-		}
-
-		internal bool contains(int id)
-		{
-			foreach (InterNode i in m_inodes)
-				if (i.getCore().ID == id)
-					return true;
-
-			return false;
 		}
 	}
 }
