@@ -79,7 +79,7 @@ namespace Nurielite
 			// populate combo box
 			cmbAlgorithmSpecific.IsEnabled = true;
 			cmbAlgorithmSpecific.ItemsSource = lAlgorithms;
-			lblType.Content = cmbAlgorithmType.SelectedItem.ToString();
+			//lblType.Content = cmbAlgorithmType.SelectedItem.ToString();
 		}
 	}
 }

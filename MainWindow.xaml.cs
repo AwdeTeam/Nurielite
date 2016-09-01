@@ -36,7 +36,7 @@ namespace Nurielite
 		public MainWindow()
 		{
 			InitializeComponent();
-            btnToggleVerbose.Content = "Verbose: " + ((Master.VerboseMode) ? "\u2713" : "\u274C");
+            //btnToggleVerbose.Content = "Verbose: " + ((Master.VerboseMode) ? "\u2713" : "\u274C");
 			cmd_clearConsole();
 			Master.assignWindow(this);
 
@@ -120,7 +120,7 @@ namespace Nurielite
         private void CheckBox_VerboseToggle(object sender, RoutedEventArgs e)
         {
             Master.VerboseMode = !Master.VerboseMode;
-            btnToggleVerbose.Content = "Verbose: " + ((Master.VerboseMode) ? "\u2713" : "\u274C");
+            //btnToggleVerbose.Content = "Verbose: " + ((Master.VerboseMode) ? "\u2713" : "\u274C");
         }
 
 		// If user starts typing (and wasn't typing in some other field), put cursor in command line bar
@@ -347,5 +347,21 @@ namespace Nurielite
 			log("edit rep[resentation] -[id] -[attr] -[value]\n\tattr: color, lbl", Colors.Yellow);
 		}
 		private void cmd_clearConsole() { lblConsole.Document.Blocks.Clear(); }
-    }
+
+		private void btnConsoleToggle_Click(object sender, RoutedEventArgs e)
+		{
+			if (grdConsole.Width == 0)
+			{
+				grdConsole.Width = 300;
+				pnlConsoleDisplayed.Visibility = Visibility.Visible;
+				pnlConsoleHidden.Visibility = Visibility.Hidden;
+			}
+			else
+			{
+				grdConsole.Width = 0;
+				pnlConsoleDisplayed.Visibility = Visibility.Hidden;
+				pnlConsoleHidden.Visibility = Visibility.Visible;
+			}
+		}
+	}
 }

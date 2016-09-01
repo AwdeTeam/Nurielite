@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Block Creator" 
-		Height="185" Width="487.2"
-		MinHeight="185" MinWidth="600"
+		Height="220" Width="230"
+		MinHeight="220" MinWidth="230"
 		WindowStartupLocation="CenterScreen">
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -20,7 +20,8 @@
 			<StackPanel Grid.Column="0">
 				<Label Content="Name:" Margin="10" Padding="0"/>
 				<Label Content="Type:" Margin="10" Padding="0"/>
-				<Label Name="lblType" Content="Operation:" Margin="10" Padding="0"/>
+				<Label Name="lblType" Content="Algorithm:" Margin="10" Padding="0"/>
+				<Label Content="Inputs:" Margin="10" Padding="0"/>
 			</StackPanel>
 			
 
@@ -29,6 +30,7 @@
 				<TextBox Name="txtNameInput" Text="unnamed" Width="120" Margin="10" Padding="0" />
 				<ComboBox Name="cmbAlgorithmType" Margin="8" Padding="2" Loaded="cmbAlgorithmType_Loaded" SelectionChanged="cmbAlgorithmType_SelectionChanged"/>
 				<ComboBox Name="cmbAlgorithmSpecific" Margin="8" Padding="2"/>
+				<TextBox Name="numInputs" TextWrapping="Wrap" Text="1" Margin="10" Width="120"/>
 			</StackPanel>
 
             <Button Grid.ColumnSpan="2" Content="Create Block" Margin="10" VerticalAlignment="Bottom" Click="Button_Click_ConfirmNew" />
@@ -38,10 +40,10 @@
 		<Grid Grid.Column="1">
 			<StackPanel Orientation="Horizontal" Margin="0,0,320.6,0.2">
 				<!-- inputs list -->
-				<StackPanel>
+				<!--<StackPanel>
                     <Label Content="Inputs" HorizontalAlignment="Center" Margin="10" Padding="0"/>
                     <TextBox Name="numInputs" Height="18" TextWrapping="Wrap" Text="1" Width="32"/>
-                </StackPanel>
+                </StackPanel>-->
 				
 				<!-- <DataGrid Name="MultiplicityGrid" VerticalAlignment="Top" Margin="5,35,5,0" Height="100" Width="58"/> -->
                 <!-- outputs list -->

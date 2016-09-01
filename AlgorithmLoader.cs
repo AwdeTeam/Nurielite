@@ -55,6 +55,10 @@ namespace Nurielite
 
 			Block pBlock = AlgorithmLoader.generateBlock(sName, eFamily, iNumInputs, iNumOutputs, lInputNames, sOutputNames);
 			pBlock.PyAlgorithm = pPyAlgorithm;
+
+			//attempt to fill meta data of block from algorithm interface
+			//if (dAlgMetaData.ContainsKey("Version")) { pBlock.Version = dAlgMetaData["Version"]; }
+			
 			Master.Blocks.Add(pBlock);
 		}
 	
