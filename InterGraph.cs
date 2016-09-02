@@ -96,15 +96,15 @@ namespace Nurielite
         /// <summary>
         /// Checks to see is the passed internode is in the graph.
         /// </summary>
-        /// <param name="pInterNode">The internode to perform the test.</param>
+        /// <param name="pInterNode">The internode to check against.</param>
         /// <returns>True if the internode is in the graph, false otherwise.</returns>
         public Boolean contains(InterNode pInterNode) { return m_inodes.Contains(pInterNode); }
 
         /// <summary>
-        /// 
+        /// Checks to see if the passed block is represented in the graph.
         /// </summary>
-        /// <param name="pBlock"></param>
-        /// <returns></returns>
+        /// <param name="pBlock">The block to check against.</param>
+        /// <returns>True if the block is represented in the graph, false otherwise.</returns>
         public Boolean contains(Block pBlock)
         {
             foreach (InterNode i in m_inodes)
@@ -114,19 +114,28 @@ namespace Nurielite
             return false;
         }
 
-        public Boolean contains(int id)
+        /// <summary>
+        /// Checks to see if any internode in the graph has the passes ID.
+        /// </summary>
+        /// <param name="id">The ID to check.</param>
+        /// <returns>True if the ID is in the graph, false otherwise.</returns>
+        public Boolean contains(int iID)
         {
             foreach (InterNode i in m_inodes)
-                if (i.getCore().ID == id)
+                if (i.getCore().ID == iID)
                     return true;
 
             return false;
         }
 
-        public void append(InterNode n)
+        /// <summary>
+        /// Adds the passed internode to the graph.
+        /// </summary>
+        /// <param name="pNode">The internode to append.</param>
+        public void append(InterNode pNode)
         {
-            m_inodes.Add(n);
-            if (Master.VerboseMode) Master.log("Appending InterNode with ID " + n.getCore().ID + " to graph");
+            m_inodes.Add(pNode);
+            if (Master.VerboseMode) Master.log("Appending InterNode with ID " + pNode.getCore().ID + " to graph");
         }
 
 		private List<int> getSortedDependancies(InterNode n, List<InterNode> L)
