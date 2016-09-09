@@ -11,6 +11,9 @@ using System.Windows.Input;
 
 namespace Nurielite
 {
+    /// <summary>
+    /// Graphical representation of a <see cref="Nodule"/> in the <see cref="MainWindow"/>.
+    /// </summary>
 	public class NoduleGraphic
 	{
 		private Ellipse m_pBody = new Ellipse();
@@ -24,6 +27,12 @@ namespace Nurielite
 		private int m_iOffsetY = 0;
 
 		// construction
+
+        /// <summary>
+        /// Builds a new NoduleGraphic based off of the passed <see cref="Nodule"/>.
+        /// </summary>
+        /// <param name="pParent">Nodule that will serve as the base of the graphical representation.</param>
+        /// <remarks>'Parent' seems like a bad name as it implies a false relationship between the logic and the graphic. Change?</remarks>
 		public NoduleGraphic(Nodule pParent)
 		{
 			m_pParent = pParent;
@@ -34,7 +43,17 @@ namespace Nurielite
 		}
 
 		// properties
+
+        /// <summary>
+        /// The X position of the nodule graphic within the Canvas.
+        /// </summary>
+        /// <seealso cref="MainWindow"/>
 		public double CurrentX { get { return Canvas.GetLeft(m_pBody); } }
+
+        /// <summary>
+        /// The Y position of the nodule graphic within the Canvas.
+        /// </summary>
+        /// <seealso cref="MainWindow"/>
 		public double CurrentY { get { return Canvas.GetTop(m_pBody); } }
 
 		// -- FUNCTIONS --
@@ -60,8 +79,17 @@ namespace Nurielite
 			m_pBody.MouseUp += new MouseButtonEventHandler(evt_MouseUp);
 		}
 
+        /// <summary>
+        /// Removes this graphic from the Canvas.
+        /// </summary>
 		public void deleteGraphic() { Master.getCanvas().Children.Remove(m_pBody); }
 
+
+        /// <summary>
+        /// Changes the position of this graphic by (dX, dY).
+        /// </summary>
+        /// <param name="dX">The change in X position.</param>
+        /// <param name="dY">The change in Y position.</param>
 		public void move(double dX, double dY)
 		{
 			Canvas.SetLeft(m_pBody, dX + m_iOffsetX);
@@ -71,6 +99,10 @@ namespace Nurielite
 			foreach (Connection pConnection in m_pParent.Connections) { pConnection.Graphic.adjustRelatedPoint(m_pParent); }
 		}
 
+        /// <summary>
+        /// Ideally sets the tooltip for the nodule.  Does not work right now.
+        /// </summary>
+        /// <param name="sTooltip">The tooltip for the nodule graphic.</param>
         public void setTooltip(string sTooltip) //Not working, fix later
         {
             m_pBody.ToolTip = sTooltip;

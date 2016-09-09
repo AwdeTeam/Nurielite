@@ -13,6 +13,9 @@ using Microsoft.Scripting.Hosting;
 
 namespace Nurielite
 {
+    /// <summary>
+    /// An interface to the PyAlgorithm, implemented in python.  This handles generic algorithms with a specific form.
+    /// </summary>
 	public class PyAlgorithm
 	{
 		// member variables

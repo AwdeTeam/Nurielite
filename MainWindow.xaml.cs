@@ -46,7 +46,7 @@ namespace Nurielite
 			this.MouseMove += world_MouseMove;
 
 			// set path 
-			Directory.SetCurrentDirectory(Master.PATH_TO_THETHING);
+			Directory.SetCurrentDirectory(Master.ALGORITHM_PATH);
 
 			testInputBlock();            //0
             testMaskBlock();             //1
@@ -114,7 +114,7 @@ namespace Nurielite
             List<PyAlgorithm> lAlgs = pGraph.topoSort();
             if (Master.VerboseMode) log("Count: " + lAlgs.Count);
 			
-            (new PythonGenerator()).generatePythonCode(lAlgs, Master.PATH_TO_THETHING, "COMPILED");
+            (new PythonGenerator()).generatePythonCode(lAlgs, Master.ALGORITHM_PATH, "COMPILED");
         }
 
         private void CheckBox_VerboseToggle(object sender, RoutedEventArgs e)
