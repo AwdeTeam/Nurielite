@@ -14,7 +14,7 @@ using Microsoft.Scripting.Hosting;
 namespace Nurielite
 {
     /// <summary>
-    /// An interface to the PyAlgorithm, implemented in python.  This handles generic algorithms with a specific form.
+    /// A direct C# representation of a python PyAlgorithmInterface class. This gives access to all the normal functions available in the python interface.
     /// </summary>
 	public class PyAlgorithm
 	{
@@ -27,6 +27,10 @@ namespace Nurielite
         private List<int> m_lDependencies;
 			
 		// construction
+		/// <summary>
+		/// Constructs a PyAlgorithm instance from the passed python code file (which should contain the PyAlgorithmInterface class)
+		/// </summary>
+		/// <param name="pyFile">PyAlgorithmInterface class python file.</param>
 		public PyAlgorithm(dynamic pyFile)
 		{ 
 			m_pyFile = pyFile; 
@@ -42,10 +46,20 @@ namespace Nurielite
 		}
 
         //properties
+		/// <summary>
+		/// The name of the algorithm.
+		/// </summary>
         public string AlgorithmName { get { return m_sAlgName; } set { m_sAlgName = value; } }
+		/// <summary>
+		/// The relative filepath (based on algorithm family name and algorith name) to the PyAlgorithmInterface file
+		/// </summary>
         public string AlgorithmPath { get { return m_sAlgPath; } set { m_sAlgPath = value; } }
 
         //functions
+		/// <summary>
+		/// Gets the dictionary of algorithm options from the PyAlgorithmInterface.
+		/// </summary>
+		/// <returns>The dictionary of algorithm options from the PyAlgorithmInterface</returns>
 		public Dictionary<string, dynamic> getOptions()
 		{
 			Dictionary<string, dynamic> pOptions = new Dictionary<string, dynamic>();
@@ -61,6 +75,10 @@ namespace Nurielite
 			return pOptions;
 		}
 
+		/// <summary>
+		/// Updates the algorithm options in the interface.
+		/// </summary>
+		/// <param name="dOptions">Updated dictionary of algorithm options.</param>
 		public void setOptions(Dictionary<string, dynamic> dOptions)
 		{
 			if (m_pyClass == null) { return; }
@@ -72,6 +90,10 @@ namespace Nurielite
 			m_pyClass.setOptions(pPyOptions);
 		}
 
+		/// <summary>
+		/// Gets the dictionary of meta data (version, author, etc.) from the PyAlgorithmInterface.
+		/// </summary>
+		/// <returns>Dictionary of meta data.</returns>
 		public Dictionary<string, string> getMetaData()
 		{
 			Dictionary<string, string> dMetaData = new Dictionary<string, string>();
@@ -87,6 +109,10 @@ namespace Nurielite
 			return dMetaData;
 		}
 
+		/// <summary>
+		/// Runs the ironpython PyAlgorithmInterface method for generating the code that runs the represented algorithm.
+		/// </summary>
+		/// <returns>Python code that runs the algorithm.</returns>
 		public string generateRunnableCode()
 		{
 			// in generated python incoming data should be labeled as IN_DATA, and the PythonGenerator will take care of changing it as needed
@@ -98,6 +124,11 @@ namespace Nurielite
 			return (string)pCode;
 		}
 
+		/// <summary>
+		/// Calls the ironpython PyAlgorithmInterface method for getting all import references and the code associated with them.
+		/// </summary>
+		/// <remarks>If the value for a key is a blank string, it is a system/external library, and the code should NOT be copied to a local file.</remarks>
+		/// <returns>Returns the dictionary with imports as the keys and associated library code as values.</returns>
 		public Dictionary<string, string> generateCodeLibraries()
 		{
 			Dictionary<string, string> dLibraries = new Dictionary<string, string>();
@@ -113,14 +144,27 @@ namespace Nurielite
 			return dLibraries;
 		}
 
+		/// <summary>
+		/// Gets a null algorithm.
+		/// </summary>
+		/// <returns>Null PyAlgorithm.</returns>
 		public static PyAlgorithm getUnloadedAlgorithm() { return new PyAlgorithm(); }
 
+		/// <summary>
+		/// Establishes which algorithms this pyalgorithm depends on for input. NOTE: This is used in the toposort
+		/// </summary>
+		/// <param name="lDependencies">We assume it's the IDs of the algorithms...</param>
+		/// <returns>Returns an instance of this pyalgorithm.</returns>
         public PyAlgorithm setDependancies(List<int> lDependencies)
         {
             m_lDependencies = lDependencies;
             return this;
         }
 
+		/// <summary>
+		/// Gets the list of algorithms this pyalgorithm depends on for input. NOTE: This is used in the toposort
+		/// </summary>
+		/// <returns>Returns the list of algorithm ids this pyalgorithm depends on for input.</returns>
         public List<int> getDependancies() { return m_lDependencies; }
     }
 }

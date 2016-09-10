@@ -24,12 +24,7 @@ gaussnb = NaiveBayesClassifier.NaiveBayes()
 stage3OutputData = gaussnb.passToTrain(stage3InputData)
 			
 
-stage4InputData = stage2OutputData
-masker = MaskOperation.Masker()
-stage4OutputData = masker.mask(stage4InputData, [])
-		
-
-stage5InputData = [stage3OutputData,stage4OutputData]
+stage4InputData = [stage3OutputData,stage2OutputData]
 trainer = TrainerOutputOutput.TrainerOutput()
-trainer.trainAndDump(stage5InputData[0][0], stage5InputData[0][1], "C\\", stage5InputData[1], stage5InputData[0][2])
+trainer.trainAndDump(stage4InputData[0][0], stage4InputData[0][1], "C\\", stage4InputData[1], stage4InputData[0][2])
 		

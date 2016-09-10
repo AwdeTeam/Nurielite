@@ -114,7 +114,7 @@ namespace Nurielite
             List<PyAlgorithm> lAlgs = pGraph.topoSort();
             if (Master.VerboseMode) log("Count: " + lAlgs.Count);
 			
-            (new PythonGenerator()).generatePythonCode(lAlgs, Master.ALGORITHM_PATH, "COMPILED");
+            (new PythonGenerator()).generatePythonCode(lAlgs, "COMPILED");
         }
 
         private void CheckBox_VerboseToggle(object sender, RoutedEventArgs e)

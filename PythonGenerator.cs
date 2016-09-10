@@ -16,8 +16,14 @@ using Microsoft.CSharp.RuntimeBinder; // needed for RuntimeBinderException
 
 namespace Nurielite
 {
+	/// <summary>
+	/// Handles creating runnable python code for all the algorithms in the graph.  
+	/// </summary>
     class PythonGenerator
     {
+		/// <summary>
+		/// The path to the folder that contains all the algorithm family folders
+		/// </summary>
         public static string ALGORITHM_DIRECTORY = "..\\..\\Algorithms\\algorithm_correct\\";
 
 		// member variables
@@ -29,6 +35,9 @@ namespace Nurielite
 		private MemoryStream m_pErrorStream;
 
 		// construction
+		/// <summary>
+		/// Sets up the python generator and initializes ironpython.
+		/// </summary>
 		public PythonGenerator() 
 		{
 			// set up python script engine stuff
@@ -46,16 +55,31 @@ namespace Nurielite
 		
 		// properties
 		
-		// returns everything that python scripts have output since last clearRuntimeOutput()
+		/// <summary>
+		/// Gets all content written to standard output in the ironpython script.
+		/// </summary>
+		/// <returns>String of output content</returns>
 		public string getRuntimeOutput() { return readFromStream(m_pOutputStream); }
+		/// <summary>
+		/// Gets all error content written to standard error stream in the ironpython script.
+		/// </summary>
+		/// <returns>String of error content.</returns>
 		public string getRuntimeErrorOutput() { return readFromStream(m_pErrorStream); }
 		
 		// functions
+		/// <summary>
+		/// Clears all text from the standard output and error streams written to by the ironpython script  
+		/// </summary>
 		public void clearRuntimeOutput() { m_pOutputStream.SetLength(0); }
 
-		// returns index of dynamic instance (other classes can get that particular instance)
 		// TODO: don't forget to check that it contains necessary methods
 		// TODO: static?
+		/// <summary>
+		/// Initializes a PyAlgorithm based on path and name, and returns the C# algorithm interface representation. 
+		/// </summary>
+		/// <param name="sPath">RELATIVE path to algorithm.</param>
+		/// <param name="sName">Algorithm name.</param>
+		/// <returns></returns>
 		public PyAlgorithm loadPythonAlgorithm(string sPath, string sName)
 		{
 			dynamic pAlgorithm = m_pRuntime.UseFile(sPath + "\\" + sName);
@@ -75,12 +99,12 @@ namespace Nurielite
 			return PyAlgorithm.getUnloadedAlgorithm();
 		}
 
-		// TODO: make loadpython function work based off of a common inputpath as well, maybe make inputpath a class member variable?
-
-		// NOTE: eventually pass in representation list, each representation should have an associated pyAlgorithm
-		// also note that all functions in algorithms that are made to take data should on some level have the first param be previous layer data 
-		// OUTPUT PATH SHOULD NOT INCLUDE TRAILING SLASH, input path is so local files can be found (also note that output path is in relation to input path
-		public void generatePythonCode(List<PyAlgorithm> pAlgorithms, string sInputPath, string sOutputPath)
+		/// <summary>
+		/// Based on the graph and all python algorithms, this function creates the driver python file that runs the overall algorithm, and puts it and all associated files in the specified output path 
+		/// </summary>
+		/// <param name="pAlgorithms">List of connected PyAlgorithms.</param>
+		/// <param name="sOutputPath">Relative path to put the generated files. NOTE: Should not include trailing slash.</param>
+		public void generatePythonCode(List<PyAlgorithm> pAlgorithms, string sOutputPath)
 		{
 			//Directory.SetCurrentDirectory(sInputPath);
 			Master.log("Generating python...");
