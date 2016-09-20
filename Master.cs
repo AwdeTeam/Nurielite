@@ -52,14 +52,14 @@ namespace Nurielite
         /// Prints a String message to the Nurielite console.
         /// </summary>
         /// <param name="sMessage">Message to print.</param>
-		public static void log(string sMessage) { s_pWin.log(sMessage); }
+		public static void log(string sMessage) { Console.log(sMessage); }
 
         /// <summary>
         /// Prints a colored String message to the Nurielite console.
         /// </summary>
         /// <param name="sMessage">Message to print.</param>
         /// <param name="pColor">Color of the message.</param>
-		public static void log(string sMessage, Color pColor) { s_pWin.log(sMessage, pColor); }
+		public static void log(string sMessage, Color pColor) { Console.log(sMessage, pColor); }
 
         /// <summary>
         /// Gets the <see cref="GraphicContainer"/> Graphic Handler to handle graphical changes and events.

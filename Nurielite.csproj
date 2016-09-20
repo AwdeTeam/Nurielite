@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="ConnectionGraphic.cs" />
     <Compile Include="Connection.cs" />
+    <Compile Include="Console.cs" />
     <Compile Include="GraphicContainer.cs" />
     <Compile Include="InterGraph.cs" />
     <Compile Include="InterNode.cs" />

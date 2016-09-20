@@ -37,10 +37,11 @@ namespace Nurielite
 		{
 			InitializeComponent();
             //btnToggleVerbose.Content = "Verbose: " + ((Master.VerboseMode) ? "\u2713" : "\u274C");
-			cmd_clearConsole();
+			//cmd_clearConsole();
 			Master.assignWindow(this);
 
-			log("Program initialized!");
+			Console.Initialize(txtConsoleCommand, lblConsole);
+			Console.log("Program initialized!");
 
 			// canvas initially wasn't handling events properly, so adding them to window instead
 			this.MouseMove += world_MouseMove;
@@ -71,7 +72,7 @@ namespace Nurielite
             Master.Blocks[3].connectTo(Master.Blocks[4], 0);
             Master.Blocks[2].connectTo(Master.Blocks[4], 1);
 
-            log("Testing Blocks Loaded");
+            Console.log("Testing Blocks Loaded");
 		}
 
 		public void testInputBlock() { AlgorithmLoader.loadAlgorithmBlock("FileInput", AlgorithmType.Input, 0, 1); }
@@ -112,7 +113,7 @@ namespace Nurielite
 			new InterNode(pFirstBlock, pGraph);
 			
             List<PyAlgorithm> lAlgs = pGraph.topoSort();
-            if (Master.VerboseMode) log("Count: " + lAlgs.Count);
+            if (Master.VerboseMode) Console.log("Count: " + lAlgs.Count);
 			
             (new PythonGenerator()).generatePythonCode(lAlgs, "COMPILED");
         }
@@ -138,13 +139,19 @@ namespace Nurielite
 		private void txtConsoleCommand_KeyDown(object sender, KeyEventArgs e)
 		{
 			//log("Key was pressed"); // DEBUG
-			if (e.Key == Key.Enter) { enterConsoleCommand(); }
+			/*if (e.Key == Key.Enter) { enterConsoleCommand(); }
 			else if (e.Key == Key.Up || e.Key == Key.Down) // scroll command history
 			{
 				if (e.Key == Key.Up) { m_iCommandIndex--; }
 				else { m_iCommandIndex++; }
 				if (m_iCommandIndex < 0 || m_iCommandIndex >= m_lCommandHistory.Count) { txtConsoleCommand.Text = ""; }
 				else { txtConsoleCommand.Text = m_lCommandHistory[m_iCommandIndex]; }
+			}*/
+			if (e.Key == Key.Enter) { Console.enterConsoleCommand(); }
+			else if (e.Key == Key.Up || e.Key == Key.Down) // scroll command history
+			{
+				if (e.Key == Key.Up) { Console.navigateUpCommandStack(); }
+				else { Console.navigateDownCommandStack(); }
 			}
 			else if (e.Key == Key.Escape) { txtConsoleCommand.Text = ""; }
 		}
@@ -166,7 +173,7 @@ namespace Nurielite
 
 		public void setCommandPrompt(string sPrompt) { txtConsoleCommand.Text = sPrompt; txtConsoleCommand.CaretIndex = txtConsoleCommand.Text.Length; }
 
-		public void log(string sMessage) { log(sMessage, Colors.DarkCyan); }
+		/*public void log(string sMessage) { log(sMessage, Colors.DarkCyan); }
 		public void log(string sMessage, Color pColor) 
 		{
 			Run pRun = new Run(sMessage);
@@ -252,27 +259,16 @@ namespace Nurielite
 				log(">>> COMMAND FAILED", Colors.Red);
 				log(e.Message, Colors.Red);
 			}
-		}
+		}*/
 
 		// NOTE: rough command syntax convention: [VERB] [NOUN] [-VALSLIST]
 		// NOTE: No need to make basic validation checks for if keys[1] exists etc, try catch in parseCommand will handle
 		// based on parsed command, figure out what function to execute
-		private void handleCommand(List<string> lKeys, List<string> lVals)
+		/*private void handleCommand(List<string> lKeys, List<string> lVals)
 		{
 			if (lKeys[0] == "exit" || lKeys[0] == "quit") { cmd_exit(); }
 			else if (lKeys[0] == "help") { cmd_printHelp(); }
 			else if (lKeys[0] == "clear" || lKeys[0] == "cls") { cmd_clearConsole(); }
-			/*else if (keys[0] == "add")
-			{
-				
-				else if (keys[1] == "rep" || keys[1] == "representation")
-				{
-					List<string> args = vals[0].Split(',').ToList();
-					int ins = Int32.Parse(args[0]);
-					int outs = Int32.Parse(args[1]);
-					addRep(ins, outs);
-				}
-			}*/
 			else if (lKeys[0] == "edit")
 			{
 				if (lKeys[1] == "rep" || lKeys[1] == "representation")
@@ -346,7 +342,7 @@ namespace Nurielite
 			log("add rep[resentation] -[numInputs],[numOutputs]", Colors.Yellow);
 			log("edit rep[resentation] -[id] -[attr] -[value]\n\tattr: color, lbl", Colors.Yellow);
 		}
-		private void cmd_clearConsole() { lblConsole.Document.Blocks.Clear(); }
+		private void cmd_clearConsole() { lblConsole.Document.Blocks.Clear(); }*/
 
 		private void btnConsoleToggle_Click(object sender, RoutedEventArgs e)
 		{
