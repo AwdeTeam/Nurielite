@@ -30,13 +30,13 @@ class NeuralNetModel:
 	def save(self):
 		
 	
-	def load(self)
+	def load(self):
 	
 	
-	def predict()
+	def predict():
 	
 	
-	def fit()
+	def fit():
 	
 
 class Neuron:
