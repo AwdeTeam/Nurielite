@@ -1,0 +1,2 @@
+class ConsoleOutput():
+	x = None
