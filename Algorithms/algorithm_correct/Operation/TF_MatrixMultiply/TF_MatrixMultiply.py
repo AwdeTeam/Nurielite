@@ -8,7 +8,7 @@ class PyAlgorithmInterface():
 
 
 	metaData = {
-		"Name" : "TF Add",
+		"Name" : "TF Matrix Multiply",
 		"Creator" : "Benjamin Croisdale",
 		"Version" : "1.0.0"
 		}
@@ -24,12 +24,12 @@ class PyAlgorithmInterface():
 
 	def generateRunnableCode(self):
 		code = """
-OUT_DATA = tf.add(IN_DATA[0], IN_DATA[1], {NAME})
+OUT_DATA = tf.matmul(IN_DATA[0], IN_DATA[1], {NAME})
 		"""
 		return code.format(NAME=self.algOptions["name"])
 
 	def generateCodeLibraries(self):
-		f = open("TF_Add_class.py")
-		TF_Add_OperationLibrary = f.read()
-		libraries = { "TF_Add_Operation":TF_Add_OperationLibrary };
+		f = open("TF_MatrixMultiply_class.py")
+		TF_Multiply_OperationLibrary = f.read()
+		libraries = { "TF_MatrixMultiply_Operation":TF_Multiply_OperationLibrary };
 		return libraries

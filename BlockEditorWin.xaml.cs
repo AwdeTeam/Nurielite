@@ -85,6 +85,19 @@ namespace Nurielite
 							pOptionRow.Children.Add(pTextBox);
 							break;
 						}
+                    case "combo_box":
+                        {
+                            List<string> pData = pOption.Attribute("list").Value.Split(',').ToList<string>();
+                            ComboBox pCombo = new ComboBox();
+                            pCombo.ItemsSource = pData;
+                            pCombo.Uid = sPythonKey;
+                            pCombo.ToolTip = sDescription;
+                            pCombo.Margin = new Thickness(5);
+                            pCombo.Padding = new Thickness(2);
+                            pCombo.Width = 180;
+                            pOptionRow.Children.Add(pCombo);
+                            break;
+                        }
 					case "check_box":
 						{
 							CheckBox pCheckBox = new CheckBox();
@@ -232,6 +245,11 @@ namespace Nurielite
                                 dAlgOptions[sPythonKey] = sArray;
 								break;	
 							}
+                        case "combo_box":
+                            {
+                                dAlgOptions[sPythonKey] = ((ComboBox)getByName(pGuiStackPanel.Children, sPythonKey)).SelectedIndex;
+                                break;
+                            }
                         case "check_box":
                             {
 								dAlgOptions[sPythonKey] = ((CheckBox)getByName(pGuiStackPanel.Children, sPythonKey)).IsChecked.ToString();
