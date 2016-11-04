@@ -2,7 +2,7 @@ class PyAlgorithmInterface():
 
 	algOptions = {
 		"name" : "'unnamed tensor'",
-		"arg" : "[]",
+		"value" : "[]",
 		"type" : "None",
 		"shape" : "None",
 		"XML" : "<options>"+
